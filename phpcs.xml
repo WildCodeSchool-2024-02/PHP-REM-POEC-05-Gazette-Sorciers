@@ -15,7 +15,7 @@
         <message>End of line character is invalid.
 Dear Wilder using Windows, it seems you miss something in readme during project install. You should edit your IDE settings as recommended in the install instruction.</message>
     </rule>
-
+    <exclude-pattern>tests</exclude-pattern>
     <file>config/</file>
     <file>public/</file>
     <file>src/</file>
