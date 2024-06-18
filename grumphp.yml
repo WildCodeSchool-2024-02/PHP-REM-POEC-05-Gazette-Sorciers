@@ -10,3 +10,5 @@ grumphp:
                 - 'src'
             ruleset:
                 - 'phpmd.xml'
+        phpunit:
+            config_file: phpunit.xml
