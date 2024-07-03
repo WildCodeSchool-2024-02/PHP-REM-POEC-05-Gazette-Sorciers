@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="fr">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -10,8 +11,10 @@
 ></script>
 <link rel="stylesheet" href="/assets/css/style.css"> 
 <link rel="stylesheet" href="assets/css/_navbar.css" />
+    <link rel="icon" href="/assets/images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}La Gazette Du Sorcier{% endblock %}</title>
 
 
      {% block stylesheet %}{% endblock %}
@@ -19,10 +22,16 @@
 
 
 <body>
-    {% include "Home/_navbar.html.twig" %}
-    {% block content %}{% endblock %}
-    {% block javascript %}{% endblock %}
+    
+    <div class="container">
+        {% include "Home/_navbar.html.twig" %}
+        {% block content %}
+        
+        {% endblock %}
+        
+        {% include "Home/_footer.html.twig" %}
+        {% block javascript %}{% endblock %}
+    </div>
 </body>
+
 </html>
-
-
