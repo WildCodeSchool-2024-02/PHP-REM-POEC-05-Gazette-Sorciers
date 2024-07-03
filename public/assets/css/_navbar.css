@@ -9,7 +9,7 @@ body {
     align-items: center;
     padding: 0;
     flex-wrap: wrap;
-    background-color: #1D1B20;
+    background-color: #1d1b20;
 }
 
 .logo img {
@@ -19,7 +19,6 @@ body {
 .search-bar form {
     display: flex;
     align-items: center;
-    
 }
 
 .search-bar input {
@@ -30,7 +29,7 @@ body {
     width: 40vw;
     height: 32px;
     text-align: left;
-    font-weight:lighter;
+    font-weight: lighter;
     font-size: large;
     font-style: italic;
 }
@@ -68,14 +67,13 @@ body {
     color: white;
     cursor: pointer;
     font-size: 30px;
-
 }
 
 .dropdown-menu {
     display: none;
     position: absolute;
     right: 0;
-    background-color: #1D1B20;
+    background-color: #1d1b20;
     border: 1px solid #ccc;
     border-radius: 5px;
     overflow: hidden;
@@ -99,13 +97,11 @@ body {
     display: block;
 }
 
-@media (max-width: 800px) {
+@media screen AND (max-width: 800px) {
     .navbar {
-        flex-direction: column; /* Passe les éléments sur une colonne */
+        flex-direction: column;
         align-items: center;
     }
-    
-   
 
     .search-bar {
         width: 100%;
