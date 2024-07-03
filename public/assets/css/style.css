@@ -18,7 +18,6 @@ p {
 
 body {
     padding: 3rem;
-    /* padding-bottom: 1rem; */
     background-color: var(--primary-color);
 
 }
@@ -48,7 +47,7 @@ footer {
 }
 
 
-/* Media querries */
+/* Media queries */
 @media screen and (max-width: 800px) {
     footer {
         justify-content: center;
