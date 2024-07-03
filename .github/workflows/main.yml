@@ -33,6 +33,8 @@ jobs:
       # Runs a single command using the runners shell
       - name: Composer
         run: composer install
+      - name: ComposerUpdate
+        run: composer update
 
       - name: code_quality
         run: |
