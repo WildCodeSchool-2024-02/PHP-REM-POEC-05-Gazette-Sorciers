@@ -4,15 +4,23 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="/assets/images/favicon.png">
+    <script
+    src="https://kit.fontawesome.com/fd69216cb8.js"
+    crossorigin="anonymous"
+></script>
+<link rel="stylesheet" href="assets/css/_navbar.css" />
 
     <title>{% block title %}{% endblock %}</title>
 
-    <link rel="stylesheet" href="/assets/css/style.css">
-    {% block stylesheet %}{% endblock %}
+    <link rel="stylesheet" href="/assets/css/style.css"> 
+     {% block stylesheet %}{% endblock %}
 </head>
 
+
 <body>
+    {% include "Home/_navbar.html.twig" %}
+
+    {% block navbar %}{% endblock %}
     {% block content %}{% endblock %}
     {% block javascript %}{% endblock %}
 </body>
