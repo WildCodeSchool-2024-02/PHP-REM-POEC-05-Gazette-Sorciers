@@ -9,7 +9,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "twig/twig": "^3.5.1",
+        "twig/twig": "^3.0",
         "ext-pdo": "*"
     },
     "require-dev": {
