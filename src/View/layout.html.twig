@@ -16,13 +16,11 @@
 
     <title>{% block title %}La Gazette Du Sorcier{% endblock %}</title>
 
-
-     {% block stylesheet %}{% endblock %}
+    <link rel="stylesheet" href="/assets/css/style.css">
+    {% block stylesheet %}{% endblock %}
 </head>
 
-
 <body>
-    
     <div class="container">
         {% include "Home/_navbar.html.twig" %}
         {% block content %}
@@ -30,7 +28,8 @@
         {% endblock %}
         
         {% include "Home/_footer.html.twig" %}
-        {% block javascript %}{% endblock %}
+        {% block javascript %}
+        {% endblock %}
     </div>
 </body>
 
