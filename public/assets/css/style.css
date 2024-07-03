@@ -44,4 +44,13 @@ footer {
 .footer-icon {
     color: var(--text-color);
     font-size: 2.4rem;
+    cursor: pointer;
+}
+
+
+/* Media querries */
+@media screen and (max-width: 800px) {
+    footer {
+        justify-content: center;
+    }
 }
