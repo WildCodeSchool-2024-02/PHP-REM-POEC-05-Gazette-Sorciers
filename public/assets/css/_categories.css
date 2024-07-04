@@ -1,5 +1,6 @@
 .component
 {
+  margin-top: 3rem;
   padding: 0;
   outline: none;
   width: 60vw;
@@ -25,19 +26,22 @@
   grid-area: 1 / 2 / 2 / 4;
 }
 .categorie{
-  width:fit-content;
+  max-width: 70%;
   border-radius: 10px;
   background-color: var(--text-color);
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1fr 2fr 1fr ;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
 }
 .categorie p{
-  color:black;
+  color:black ;
+  font-weight: 200;
 }
 .titre
-{
+{   
+    color: var(--content-text-color); 
+    padding-top: 1rem;
     grid-area: 1 / 2 / 2 / 3;
 }
 .avatar {
@@ -56,17 +60,23 @@
 
 .categorie a
 {
+  color: var(--content-text-color); 
   text-decoration: none;
 }
 
 @media screen AND (max-width: 800px) {
   .categorie
   {
-    width: 100%;
+    width: 120vw;
   }
+  .categorie .date
+  {
+    font-size:0.7rem; 
+  }
+
   .component
   {
-    width: 80vw;
+    width: 90vw;
     margin-left: auto;
     margin-right: auto;
   }
