@@ -16,37 +16,37 @@ class CategoryController extends AbstractController
         $categoryManager = new CategoryManager();
         $categories = $categoryManager->selectAll('name');
 
-        return $this->twig->render('Categories/index.html.twig', ['categories' => $categories]);
+        return $this->twig->render('categories/index.html.twig', ['categories' => $categories]);
     }
 
     /**
-     * Show informations for a specific categorie
+     * Show informations for a specific category
      */
     public function show(int $id): string
     {
         $categoryManager = new CategoryManager();
-        $categorie = $categoryManager->selectOneById($id);
+        $category = $categoryManager->selectOneById($id);
 
-        return $this->twig->render('Categories/show.html.twig', ['categorie' => $categorie]);
+        return $this->twig->render('categories/show.html.twig', ['category' => $category]);
     }
 
     /**
-     * Edit a specific categorie
+     * Edit a specific category
      */
     public function edit(int $id): ?string
     {
         $categoryManager = new CategoryManager();
-        $categorie = $categoryManager->selectOneById($id);
+        $category = $categoryManager->selectOneById($id);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // clean $_POST data
-            $categorie = array_map('trim', $_POST);
+            $category = array_map('trim', $_POST);
 
             // TODO validations (length, format...)
             // if validation is ok, update and redirection
-            if ($this->validate(true, $categorie)) {
-                $categorie['created_at'] = (new DateTime())->format('Y-m-d H:i:s');
-                $categoryManager->update($categorie);
+            if ($this->validate(true, $category)) {
+                $category['created_at'] = (new DateTime())->format('Y-m-d H:i:s');
+                $categoryManager->update($category);
 
                 header('Location: /categories/show?id=' . $id);
                 // we are redirecting so we don't want any content rendered
@@ -54,38 +54,37 @@ class CategoryController extends AbstractController
             }
         }
 
-        return $this->twig->render('Categories/edit.html.twig', [
-            'categorie' => $categorie,
+        return $this->twig->render('categories/edit.html.twig', [
+            'category' => $category,
         ]);
     }
 
     /**
-     * Add a new categorie
+     * Add a new category
      */
     public function add(): ?string
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // clean $_POST data
-            $categorie = array_map('trim', $_POST);
-            var_dump($categorie);
+            $category = array_map('trim', $_POST);
             // TODO validations (length, format...)
 
             // if validation is ok, insert and redirection
-            if ($this->validate(false, $categorie)) {
-                $categorie['created_at'] = (new DateTime())->format('Y-m-d H:i:s');
+            if ($this->validate(false, $category)) {
+                $category['created_at'] = (new DateTime())->format('Y-m-d H:i:s');
                 $categoryManager = new CategoryManager();
-                $id = $categoryManager->insert($categorie);
+                $id = $categoryManager->insert($category);
 
                 header('Location: /categories/show?id=' . $id);
                 return null;
             }
         }
 
-        return $this->twig->render('Categories/add.html.twig');
+        return $this->twig->render('categories/add.html.twig');
     }
 
     /**
-     * Delete a specific categorie
+     * Delete a specific category
      */
     public function delete(): void
     {
@@ -99,19 +98,19 @@ class CategoryController extends AbstractController
     }
 
     //DRY way to validate data in controller
-    private function validate(bool $edit, array $categorie): bool
+    private function validate(bool $edit, array $category): bool
     {
-        if ($categorie['name'] === '' || empty($categorie['name'])) {
+        if ($category['name'] === '' || empty($category['name'])) {
             return false;
         }
 
-        if ($categorie['description'] === '' || empty($categorie['description'])) {
+        if ($category['description'] === '' || empty($category['description'])) {
             return false;
         }
 
         //check if id is set and is a valid integer only if we are in edit mode
         if ($edit) {
-            if (!isset($categorie['id'])  || !filter_var($categorie['id'], FILTER_VALIDATE_INT)) {
+            if (!isset($category['id'])  || !filter_var($category['id'], FILTER_VALIDATE_INT)) {
                 return false;
             }
         }

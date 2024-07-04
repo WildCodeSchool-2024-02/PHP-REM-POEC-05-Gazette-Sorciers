@@ -1,15 +1,15 @@
 <section class="component">
 	{% for category in categories %}
-		<article class="categorie">
+		<article class="category">
 			<img class="avatar" src="https://picsum.photos/100">
 			<h2 class="titre">
-				<a href="/categories/show?id={{ category.id_category }}">{{ category.id_category }}.
+				<a href="/categories/show?id={{ category.id }}">{{ category.id }}.
 					{{ category.name }}</a>
 			</h2>
 			<p class="date">{{ category.created_at }}</p>
 			<p class="description">{{ category.description }}</p>
 		</article>
 	{% else %}
-		<article class="categorie">Nothing to display</article>
+		<article class="category">Nothing to display</article>
 	{% endfor %}
 </section>
