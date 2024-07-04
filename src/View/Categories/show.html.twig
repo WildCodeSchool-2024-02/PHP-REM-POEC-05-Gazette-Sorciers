@@ -2,10 +2,10 @@
 
 {% block content %}
     <h1>Item {{ Category.title }}</h1>
-    <p>{{ Category.id }}. {{ Category.title }}</p>
-    <a href="/categories/edit?id={{ Category.id }}">Edit</a>
+    <p>{{ Category.id_category }}. {{ Category.title }}</p>
+    <a href="/categories/edit?id={{ Category.id_category }}">Edit</a>
     <form action="/categories/delete" method="POST">
-        <input type="hidden" name="id" value="{{ Category.id }}">
+        <input type="hidden" name="id" value="{{ Category.id_category }}">
         <button>Delete</button>
     </form>
     <a href="/categories">Back</a>

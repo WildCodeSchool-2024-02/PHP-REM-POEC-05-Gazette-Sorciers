@@ -1,6 +1,6 @@
 
 {% block content %}
-    <h1>Edit Category {{ category.name }}</h1>
+    <h1>Modification de la catégorie : {{ category.name }}</h1>
     {% include '/Categories/_form.html.twig' %}
-    <a href="/categories/show?id={{ Category.id }}">Back</a>
+    <a href="/categories/show?id={{ Category.id_category }}">Retour</a>
 {% endblock %}
