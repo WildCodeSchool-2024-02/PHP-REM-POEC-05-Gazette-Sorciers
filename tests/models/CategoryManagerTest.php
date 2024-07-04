@@ -1,16 +1,16 @@
 <?php
 
-use App\Model\ItemManager;
+use App\Model\CategoryManager;
 use PHPUnit\Framework\TestCase;
 
 require_once __DIR__ . '/../../config/db.php';
 require_once __DIR__ . '/../../config/config.php';
 
-class ItemManagerTest extends TestCase
+class CategoryManagerTest extends TestCase
 {
     public function testSelectAll(): void
     {
-        $manager = new ItemManager();
+        $manager = new CategoryManager();
         $this->assertIsArray($manager->selectAll());
     }
 }
