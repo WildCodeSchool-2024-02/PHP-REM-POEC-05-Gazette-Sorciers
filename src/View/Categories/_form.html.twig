@@ -1,10 +1,16 @@
 {# TODO : manage errors display #}
 
-<form method="post">
-	<input type="hidden" value="{{ category.id }}" name="id">
-	<label for="name">nom :</label>
-	<input type="text" value="{{ category.name }}" name="name" id="name">
-	<label for="description">description :</label>
-	<input type="description" value="{{ category.description }}" name="description" id="description">
-	<button>Submit</button>
-</form>
+<section class="component">
+	<article class="categorie">
+		<img class="avatar" src="https://picsum.photos/200">
+		<form method="post">
+			<input type="hidden" value="{{ category.id }}" name="id">
+				<label for="name">nom :</label>
+				<input class="titre" type="text" value="{{ category.name }}" name="name" id="name">
+                <label for="description">description :</label>
+                <textarea class="description" type="textarea" value="{{ category.description }}" name="description" id="description"></textarea>
+			<button class="illustration">Submit</button>
+		</form> 
+		<img class="Illustration" src="https://picsum.photos/200">
+	</article>
+</section>

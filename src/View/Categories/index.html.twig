@@ -1,10 +1,14 @@
 
-    <h1>Categories</h1>
-    <ul>
+    <section class="component">
         {% for category in categories %}
-            <li><a href="/categories/show?id={{ category.id_category }}">{{ category.id_category }}. {{ category.name }}</a></li>
+            <article class="categorie">
+                <img class="avatar"src="https://picsum.photos/200">
+                <h2><a href="/categories/show?id={{ category.id_category }}">{{ category.id_category }}. {{ category.name }}</a></h2>
+                <p class="date">{{ category.created_at }}</p>
+                <p class="description">{{ category.description }}</p>
+                <img class="illustration"src="https://picsum.photos/200">
+            </article>
         {% else %}
-            <li>Nothing to display</li>
+            <article class="categorie">Nothing to display</article>
         {% endfor %}
-    </ul>
-    <a href="/categories/add">Ajouter</a>
+    </section>
