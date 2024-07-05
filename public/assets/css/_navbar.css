@@ -1,0 +1,127 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    flex-wrap: wrap;
+    background-color: var(--primary-color);
+}
+
+.logo img {
+    height: 200px;
+}
+
+.search-bar form {
+    display: flex;
+    align-items: center;
+}
+
+.search-bar input {
+    padding: 5px 10px;
+    border-radius: 50px;
+    border: 1px solid #ccc;
+    outline: none;
+    width: 40vw;
+    height: 32px;
+    text-align: left;
+    font-weight: lighter;
+    font-size: large;
+    font-style: italic;
+}
+
+.search-bar button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    margin-left: -35px;
+    font-size: 20px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    padding-right: 70px;
+    gap: 10px;
+}
+
+.icon-button {
+    margin: 0 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 35px;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-toggle {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 30px;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #1d1b20;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px;
+    color: white;
+    width: 150px;
+    text-align: center;
+    font-size: large;
+    text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+    background-color: #333;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+@media screen AND (max-width: 800px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .search-bar {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .search-bar form {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .search-bar input {
+        width: calc(100% - 50px);
+        text-align: center;
+    }
+
+    .nav-links {
+        width: 100%;
+        justify-content: space-around;
+        padding: 30px 0;
+    }
+}

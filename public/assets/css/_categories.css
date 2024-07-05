@@ -1,0 +1,81 @@
+.component
+{
+  margin-top: 3rem;
+  padding: 0;
+  outline: none;
+  width: 60vw;
+  text-align: left;
+  font-weight: lighter;
+  font-size: large;
+  font-style: italic;
+  color:var(--primary-color);
+  display: grid;
+  gap:3rem;
+}
+
+.addForm
+{
+  background-color: #fff;
+  display: block;
+  padding: 2rem;
+  max-width: 350px;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.category{
+  max-width: 70%;
+  border-radius: 10px;
+  background-color: var(--text-color);
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr ;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+.category p{
+  color:black ;
+  font-weight: 200;
+}
+.titre
+{   
+    color: var(--content-text-color); 
+    padding-top: 1rem;
+    grid-area: 1 / 2 / 2 / 3;
+}
+.avatar {
+    grid-area: 1 / 1 / 3 / 2;
+    border-radius: 10px;
+}
+
+.description {
+    grid-area: 2 / 2 / 3 / 4;
+}
+
+.illustration { 
+  border-radius: 10px;
+  grid-area: 1 / 4 / 3 / 5;
+}
+
+.category a
+{
+  color: var(--content-text-color); 
+  text-decoration: none;
+}
+
+@media screen AND (max-width: 800px) {
+  .category
+  {
+    width: 120vw;
+  }
+  .category .date
+  {
+    font-size:0.7rem; 
+  }
+
+  .component
+  {
+    width: 90vw;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
