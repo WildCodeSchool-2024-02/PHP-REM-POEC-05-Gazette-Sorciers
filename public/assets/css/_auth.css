@@ -91,6 +91,10 @@ body{
   .register-link{
     text-align: right;
   }
+
+  .error{
+    color:rgb(202, 106, 106);
+  }
   
   
 
