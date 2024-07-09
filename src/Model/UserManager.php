@@ -34,7 +34,7 @@ class UserManager
     ) {
         $statement = $this->pdo->prepare(
             'INSERT INTO user (name, lastname, mail, password, profile_picture, created_at, id_role)' .
-            'VALUES (:name, :lastname, :mail, :password, :profilePicture, NOW(), :idRole)'
+                'VALUES (:name, :lastname, :mail, :password, :profilePicture, NOW(), :idRole)'
         );
         $statement->bindValue(':name', $name, PDO::PARAM_STR);
         $statement->bindValue(':lastname', $lastname, PDO::PARAM_STR);
@@ -47,7 +47,7 @@ class UserManager
 
     public function getRoleIdByName(string $roleName): int
     {
-        $statement = $this->pdo->prepare('SELECT id_role FROM role WHERE name = :name');
+        $statement = $this->pdo->prepare('SELECT id_privilleges FROM role WHERE name = :name');
         $statement->bindValue(':name', $roleName, PDO::PARAM_STR);
         $statement->execute();
 
