@@ -1,0 +1,23 @@
+footer {
+    position: absolute;
+    left: 0;
+    display: flex;
+    gap: 2rem;
+    transform: translateY(50%);
+
+}
+
+.footer-icon {
+    color: var(--text-color);
+    font-size: 2.4rem;
+    cursor: pointer;
+}
+ 
+@media screen and (max-width: 800px) {
+    footer {
+        padding: 15px;
+    }
+    .footer-icon{
+        font-size: 2rem;
+    }
+}
