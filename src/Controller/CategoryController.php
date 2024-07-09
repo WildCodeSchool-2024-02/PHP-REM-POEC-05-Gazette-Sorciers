@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Model\CategoryManager;
+use App\Model\PrivillegesManager;
+use App\Model\UserManager;
 use App\Controller\AbstractController;
 use DateTime;
 
@@ -35,28 +37,39 @@ class CategoryController extends AbstractController
      */
     public function edit(int $id): ?string
     {
-        $categoryManager = new CategoryManager();
-        $category = $categoryManager->selectOneById($id);
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // clean $_POST data
-            $category = array_map('trim', $_POST);
-
-            // TODO validations (length, format...)
-            // if validation is ok, update and redirection
-            if ($this->validate(true, $category)) {
-                $category['created_at'] = (new DateTime())->format('Y-m-d H:i:s');
-                $categoryManager->update($category);
-
-                header('Location: /categories/show?id=' . $id);
-                // we are redirecting so we don't want any content rendered
-                return null;
+        if (session_status() === PHP_SESSION_ACTIVE && isset($_SESSION['user'])) {
+            $privillegeManager = new PrivillegesManager();
+            if (!$privillegeManager->isUserAdmin($_SESSION['user'])) {
+                header('Location: /');
+                exit();
             }
-        }
 
-        return $this->twig->render('categories/edit.html.twig', [
-            'category' => $category,
-        ]);
+            $categoryManager = new CategoryManager();
+            $category = $categoryManager->selectOneById($id);
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                // clean $_POST data
+                $category = array_map('trim', $_POST);
+
+                // TODO validations (length, format...)
+                // if validation is ok, update and redirection
+                if ($this->validate(true, $category)) {
+                    $category['created_at'] = (new DateTime())->format('Y-m-d H:i:s');
+                    $categoryManager->update($category);
+
+                    header('Location: /categories/show?id=' . $id);
+                    // we are redirecting so we don't want any content rendered
+                    return null;
+                }
+            }
+
+            return $this->twig->render('categories/edit.html.twig', [
+                'category' => $category
+            ]);
+        } else {
+            header('Location: /login');
+            exit();
+        }
     }
 
     /**
@@ -64,25 +77,35 @@ class CategoryController extends AbstractController
      */
     public function add(): ?string
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // clean $_POST data
-            $category = array_map('trim', $_POST);
-            // TODO validations (length, format...)
-
-            // if validation is ok, insert and redirection
-            if ($this->validate(false, $category)) {
-                $category['created_at'] = (new DateTime())->format('Y-m-d H:i:s');
-                $categoryManager = new CategoryManager();
-                $id = $categoryManager->insert($category);
-
-                header('Location: /categories/show?id=' . $id);
-                return null;
+        if (session_status() === PHP_SESSION_ACTIVE && isset($_SESSION['user'])) {
+            $privillegeManager = new PrivillegesManager();
+            if (!$privillegeManager->isUserAdmin($_SESSION['user'])) {
+                header('Location: /');
+                exit();
             }
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                // clean $_POST data
+                $category = array_map('trim', $_POST);
+                // TODO validations (length, format...)
+
+                // if validation is ok, insert and redirection
+                if ($this->validate(false, $category)) {
+                    $category['created_at'] = (new DateTime())->format('Y-m-d H:i:s');
+                    $categoryManager = new CategoryManager();
+                    $id = $categoryManager->insert($category);
+
+                    header('Location: /categories/show?id=' . $id);
+                    return null;
+                }
+            }
+
+            return $this->twig->render('categories/add.html.twig');
+        } else {
+            header('Location: /login');
+            exit();
         }
-
-        return $this->twig->render('categories/add.html.twig');
     }
-
     /**
      * Delete a specific category
      */
