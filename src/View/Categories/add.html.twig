@@ -1,0 +1,13 @@
+{% extends 'layout.html.twig' %}
+
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="/assets/css/style.css"> 
+    <link rel="stylesheet" href="/assets/css/_navbar.css" />
+    <link rel="stylesheet" href="/assets/css/_categories.css" />
+    <link rel="stylesheet" href="/assets/css/_auth.css" />
+{% endblock %}
+{% block content %}
+    <h2> Ajout de catégorie </h2>
+    {% include '/Categories/_form.html.twig' %}
+{% endblock %}

@@ -1,0 +1,15 @@
+<section class="component">
+	{% for comment in comments %}
+		<article class="comment">
+			<img class="avatar" src="https://picsum.photos/100">
+			<h2 class="titre">
+				<a href="/comments/show?id={{ comment.id }}">{{ comment.content|truncate(20) }}</a>
+			</h2>
+			<p class="date">{{ comment.created_at }}</p>
+			<p class="author">Par {{ comment.id_user }}</p>
+			<p class="description">{{ comment.content|truncate(80) }}</p>
+		</article>
+	{% else %}
+		<article class="category">C'est vide 🤦</article>
+	{% endfor %}
+</section>

@@ -1,0 +1,49 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="/assets/css/_auth.css">
+{% endblock %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block content %}
+ 
+   
+    <form method="post" action="/register" enctype="multipart/form-data" class="form">
+        
+        <h1 class="form-title">S'inscrire</h1>
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+        <div class="input-container">
+        <label for="name" class="label-title">Prénom</label>
+        <input type="text" id="name" name="name" placeholder="Tapez votre prénom" >
+    </div>
+    <div class="input-container">
+        <label for="lastname" class="label-title">Nom</label>
+        <div class="input-container">
+        <input type="text" id="lastname" name="lastname" placeholder="Tapez votre nom"  >
+    </div>
+    <div class="input-container">
+        <label for="mail" class="label-title">Email</label>
+        <input type="email" id="mail" name="mail" placeholder="Tapez votre Email"  >
+        <span>
+            <svg stroke="currentColor" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+            </svg>
+          </span>
+    </div>
+    <div class="input-container">
+        <label for="password" class="label-title">Mot de passe</label>
+        <input type="password" id="password" name="password" placeholder="Tapez votre mot de passe"  >
+    </div>   
+    <div class="input-container">
+        <label for="profile_picture" class="label-title">Photo de profil</label>
+        <input type="file" id="profile_picture" name="profile_picture">
+    </div>  
+        <button type="submit" class="submit">S'inscrire</button>
+        <p  class="register-link"> 
+        <a href="/login" class="register-link">Se connecter</a></p>
+    </form>
+ 
+{% endblock %}

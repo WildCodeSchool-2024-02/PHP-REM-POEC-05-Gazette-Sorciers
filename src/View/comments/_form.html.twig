@@ -1,0 +1,18 @@
+<section class="component">
+    <form class="form" method="post">
+        <input type="hidden" value="{{ comment.id }}" name="id">
+        <div class="input-container">
+            <label for="content">Contenu :</label>
+            <textarea class="content" type="textarea" name="content" id="content">{{ comment.content }}</textarea>
+        </div>
+        <div class="input-container">
+            <label for="id_user">Auteur :</label>
+            <input class="id_user" type="number" value="{{ comment.id_user }}" name="id_user" id="id_user">
+        </div>
+        <div class="input-container">
+            <label for="id_topic">Sujet :</label>
+            <input class="id_topic" type="number" value="{{ comment.id_topic }}" name="id_topic" id="id_topic">
+        </div>
+        <button class="submit"> Envoyer </button>
+    </form>
+</section>
