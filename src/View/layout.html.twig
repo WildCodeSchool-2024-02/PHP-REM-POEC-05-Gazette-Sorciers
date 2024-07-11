@@ -23,6 +23,10 @@
     {% block stylesheet %}
     
     {% endblock %}
+    <link rel="stylesheet" href="/assets/css/style.css">
+    {% block stylesheet %}
+    
+    {% endblock %}
 </head>
 
 <body>
@@ -33,6 +37,10 @@
         {% endblock %}
 
         {% include "Home/_footer.html.twig" %}
+        {% block javascript %}
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+        {% endblock %}
         {% block javascript %}
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
