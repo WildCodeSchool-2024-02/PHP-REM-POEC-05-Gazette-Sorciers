@@ -23,8 +23,11 @@ class UserController extends AbstractController
                 //memory_cost: la quantité de mémoire à utiliser (en bytes).
                 //time_cost:le nombre de passes de l'algorithme.
                 //threads:le nombre de threads à utiliser.
-                $hashedPassword =
-                password_hash($password, PASSWORD_ARGON2I, ['memory_cost' => 1 << 17,'time_cost' => 4,'threads' => 2]);
+                $hashedPassword = password_hash($password, PASSWORD_ARGON2I, [
+                    'memory_cost' => 1 << 17,
+                    'time_cost' => 4,
+                    'threads' => 2
+                ]);
                 // Obtention de l'id du rôle "USER"
                 $userPrivilegeId = $userManager->getPrivilegeIdByName('USER');
                 // Création de l'utilisateur avec le rôle "USER"
@@ -48,9 +51,17 @@ class UserController extends AbstractController
 
             $userManager = new UserManager();
             $user = $userManager->getUserByMail($mail);
-
+            //we should'nt put the password, nor privillege into user profile session
             if ($user && password_verify($password, $user['password'])) {
-                $_SESSION['user'] = $user;
+                $_SESSION['user'] = [
+                    'id' => $user['id'],
+                    'name' => $user['name'],
+                    'lastname' => $user['lastname'],
+                    'created_at' => $user['created_at'],
+                    'mail' => $user['mail'],
+                    'profile_picture' => $user['profile_picture']
+                ];
+
                 header('Location: /');
                 exit();
             } else {
@@ -60,5 +71,12 @@ class UserController extends AbstractController
         }
 
         return $this->twig->render('Auth/login.html.twig');
+    }
+    public function logout()
+    {
+        session_destroy();
+        unset($_SESSION['user']);
+        header('Location: /');
+        exit();
     }
 }
