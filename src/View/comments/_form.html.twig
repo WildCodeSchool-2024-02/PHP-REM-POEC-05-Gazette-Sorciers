@@ -1,9 +1,17 @@
 <section class="component">
     <form class="form" method="post">
-        <input type="hidden" value="{{ comment.id }}" name="id">
+        <input type="hidden" value="{{ comment.id_comment }}" name="id_comment">
         <div class="input-container">
             <label for="content">Contenu :</label>
-            <textarea class="content" type="textarea" name="content" id="content">{{ comment.content }}</textarea>
+            <textarea type="textarea" name="content" id="content">{{ comment.content }}</textarea>
+        </div>
+        {# <div class="input-container">
+            <label for="picture">Image :</label>
+            <input type="text" name="picture" id="picture" value="{{ comment.picture }}"> 
+        </div> #}
+        <div class="input-container">
+            <label for="is_modified">Modifié :</label>
+            <input type="date" name="is_modified" id="is_modified" {{ comment.is_modified == 1 ? 'checked' : '' }}> 
         </div>
         <div class="input-container">
             <label for="id_user">Auteur :</label>
@@ -16,3 +24,5 @@
         <button class="submit"> Envoyer </button>
     </form>
 </section>
+
+<input type="date" name="" id="">
