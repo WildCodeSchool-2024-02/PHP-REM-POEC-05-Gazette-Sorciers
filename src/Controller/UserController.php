@@ -51,8 +51,6 @@ class UserController extends AbstractController
 
             $userManager = new UserManager();
             $user = $userManager->getUserByMail($mail);
-            var_dump($password);
-            var_dump($user);
 
             if ($user && password_verify($password, $user['password'])) {
                 $_SESSION['user'] = $user;
