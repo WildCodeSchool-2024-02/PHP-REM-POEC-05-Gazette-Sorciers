@@ -34,7 +34,7 @@ class UserManager
     ) {
         $statement = $this->pdo->prepare(
             'INSERT INTO user (name, lastname, mail, password, profile_picture, created_at, id_role)' .
-            'VALUES (:name, :lastname, :mail, :password, :profilePicture, NOW(), :idRole)'
+                'VALUES (:name, :lastname, :mail, :password, :profilePicture, NOW(), :idRole)'
         );
         $statement->bindValue(':name', $name, PDO::PARAM_STR);
         $statement->bindValue(':lastname', $lastname, PDO::PARAM_STR);
@@ -55,13 +55,16 @@ class UserManager
         return $role['id_role'] ?? 0;
     }
 
-    public function getUserById($id) {
-        $stmt = $this->pdo->prepare("SELECT name, lastname, password, mail, profile_picture, description FROM users WHERE id = ?");
+    public function getUserById($id)
+    {
+        $stmt = $this->pdo->prepare("SELECT name, lastname, password, mail, profile_picture, 
+        description FROM users WHERE id = ?");
         $stmt->execute([$id]);
         return $stmt->fetch();
     }
 
-    public function getUserLastComment ($id, $limit = 3) {
+    public function getUserLastComment($id, $limit = 3)
+    {
         $stmt = $this->pdo->prepare("SELECT content FROM comments WHERE user_id = ? ORDER BY created_at DESC LIMIT ?");
         $stmt->execute([$id, $limit]);
         return $stmt->fetchAll();

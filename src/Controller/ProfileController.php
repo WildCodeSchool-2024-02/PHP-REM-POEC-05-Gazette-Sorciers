@@ -1,16 +1,17 @@
 <?php
+
 namespace App\Controller;
 
 use Twig\Environment;
-use App\Model\UserModel ;
 
-
-class ProfileController extends AbstractController {
+class ProfileController extends AbstractController
+{
     protected Environment $twig;
     protected $userModel;
 
 
-    public function profile(int $id) {
+    public function profile(int $id)
+    {
         $user = $this->userModel->getUserById($id);
         $comments = $this->userModel->getUserLastComment($id);
 
