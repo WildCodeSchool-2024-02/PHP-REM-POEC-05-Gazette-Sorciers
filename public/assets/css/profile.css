@@ -1,0 +1,44 @@
+
+
+.profile-header {
+    display: flex;
+    align-items: center;
+}
+
+.profile-picture {
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.profile-section .section {
+    width: 48%;
+}
+
+.profile-section .section button {
+    display: block;
+    margin-top: 10px;
+}
+
+.profile-details {
+    margin-top: 20px;
+}
+
+.profile-details div {
+    margin-bottom: 10px;
+}
+
+.profile-details button {
+    display: block;
+    margin-top: 10px;
+}

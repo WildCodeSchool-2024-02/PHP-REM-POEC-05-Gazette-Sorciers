@@ -19,4 +19,5 @@ return [
     'categories/show' => ['CategoryController', 'show', ['id']],
     'categories/add' => ['CategoryController', 'add',],
     'categories/delete' => ['CategoryController', 'delete',],
+    'profile' => ['ProfileController','profile', ['id']],
 ];

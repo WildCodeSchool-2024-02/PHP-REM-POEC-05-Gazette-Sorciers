@@ -54,4 +54,16 @@ class UserManager
         $role = $statement->fetch(PDO::FETCH_ASSOC);
         return $role['id_role'] ?? 0;
     }
+
+    public function getUserById($id) {
+        $stmt = $this->pdo->prepare("SELECT name, lastname, password, mail, profile_picture, description FROM users WHERE id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch();
+    }
+
+    public function getUserLastComment ($id, $limit = 3) {
+        $stmt = $this->pdo->prepare("SELECT content FROM comments WHERE user_id = ? ORDER BY created_at DESC LIMIT ?");
+        $stmt->execute([$id, $limit]);
+        return $stmt->fetchAll();
+    }
 }

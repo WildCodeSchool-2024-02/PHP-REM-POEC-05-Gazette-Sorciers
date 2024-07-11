@@ -1,0 +1,55 @@
+{% extends 'layout.html.twig' %} 
+{% block stylesheet %}
+
+<link rel="stylesheet" href="/assets/css/profile.css" />
+
+{% endblock %} 
+
+{% block content %}
+
+<div class="profile-header">
+    <img
+        class="profile-picture"
+        src="{{ user.profile_picture }}"
+        alt="Profile Picture"
+        width="100"
+        height="100"
+    />
+    <div class="profile-info">
+        <h1>{{ user.username }}</h1>
+        <p>{{ user.email }}</p>
+    </div>
+</div>
+
+<div class="profile-section">
+    <div class="section">
+        <h2>Description</h2>
+        <p>{{ user.description }}</p>
+        <button>Modifier</button>
+    </div>
+    <div class="section">
+        <h2>Historique</h2>
+        <ul>
+            {% for comment in comments %}
+            <li>{{ comment.content }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div class="profile-details">
+    <div>
+        <strong>Nom d'utilisateur :</strong> {{ user.username }}
+        <button>Modifier</button>
+    </div>
+    <div>
+        <strong>Mot de passe :</strong> ********
+        <button>Modifier</button>
+    </div>
+    <div>
+        <strong>Adresse email :</strong> {{ user.email }}
+        <button>Modifier</button>
+    </div>
+
+    {% endblock %}
+</div>
