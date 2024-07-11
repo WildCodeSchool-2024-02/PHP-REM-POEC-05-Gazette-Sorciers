@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Model\CategoryManager;
-use App\Model\PrivillegesManager;
+use App\Model\PrivilegeManager;
 use App\Model\UserManager;
 use App\Controller\AbstractController;
 use DateTime;
@@ -42,8 +42,8 @@ class CategoryController extends AbstractController
             exit();
         }
 
-        $privillegeManager = new PrivillegesManager();
-        if (!$privillegeManager->isUserAdmin($_SESSION['user'])) {
+        $privilegeManager = new PrivilegeManager();
+        if (!$privilegeManager->isUserAdmin($this->user['id_privilege'])) {
             header('Location: /');
             exit();
         }
@@ -83,8 +83,8 @@ class CategoryController extends AbstractController
             exit();
         }
 
-        $privillegeManager = new PrivillegesManager();
-        if (!$privillegeManager->isUserAdmin($_SESSION['user'])) {
+        $privilegeManager = new PrivilegeManager();
+        if (!$privilegeManager->isUserAdmin($this->user['id_privilege'])) {
             header('Location: /');
             exit();
         }
@@ -117,8 +117,8 @@ class CategoryController extends AbstractController
             exit();
         }
 
-        $privillegeManager = new PrivillegesManager();
-        if (!$privillegeManager->isUserAdmin($_SESSION['user'])) {
+        $privilegeManager = new PrivilegeManager();
+        if (!$privilegeManager->isUserAdmin($_SESSION['user'])) {
             header('Location: /');
             exit();
         }
