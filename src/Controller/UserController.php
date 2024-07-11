@@ -26,9 +26,10 @@ class UserController extends AbstractController
                 $hashedPassword =
                 password_hash($password, PASSWORD_ARGON2I, ['memory_cost' => 1 << 17,'time_cost' => 4,'threads' => 2]);
                 // Obtention de l'id du rôle "USER"
-                $userRoleId = $userManager->getRoleIdByName('USER');
+              
+                $userPrivilegeId = $userManager->getPrivilegeIdByName('USER');
                 // Création de l'utilisateur avec le rôle "USER"
-                $userManager->createUser($name, $lastname, $mail, $hashedPassword, $profilePicture, $userRoleId);
+                $userManager->createUser($name, $lastname, $mail, $hashedPassword, $profilePicture, $userPrivilegeId);
                 // Redirection vers la page de connexion
                 header('Location: /login');
                 exit();
