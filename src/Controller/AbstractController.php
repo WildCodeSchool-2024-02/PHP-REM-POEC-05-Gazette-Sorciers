@@ -6,6 +6,7 @@ use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 use App\Model\UserManager;
+
 /**
  * Initialized some Controller common features (Twig...)
  */
