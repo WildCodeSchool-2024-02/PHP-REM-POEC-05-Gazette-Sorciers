@@ -3,8 +3,9 @@
 namespace App\Controller;
 
 use App\Model\UserManager;
+use PDO;
 
-class RegisterController extends AbstractController
+class UserController extends AbstractController
 {
     public function register()
     {
@@ -22,12 +23,13 @@ class RegisterController extends AbstractController
                 //memory_cost: la quantité de mémoire à utiliser (en bytes).
                 //time_cost:le nombre de passes de l'algorithme.
                 //threads:le nombre de threads à utiliser.
-                $hashedPassword =
-                password_hash($password, PASSWORD_ARGON2I, ['memory_cost' => 1 << 17,'time_cost' => 4,'threads' => 2]);
+                $hashedPassword = password_hash($password, PASSWORD_ARGON2I, ['memory_cost' => 1 << 17,
+                                                                              'time_cost' => 4, 
+                                                                              'threads' => 2]);
                 // Obtention de l'id du rôle "USER"
-                $userRoleId = $userManager->getRoleIdByName('USER');
+                $userPrivilegeId = $userManager->getPrivilegeIdByName('USER');
                 // Création de l'utilisateur avec le rôle "USER"
-                $userManager->createUser($name, $lastname, $mail, $hashedPassword, $profilePicture, $userRoleId);
+                $userManager->createUser($name, $lastname, $mail, $hashedPassword, $profilePicture, $userPrivilegeId);
                 // Redirection vers la page de connexion
                 header('Location: /login');
                 exit();
@@ -37,5 +39,27 @@ class RegisterController extends AbstractController
             }
         }
         return $this->twig->render('Auth/register.html.twig');
+    }
+
+    public function login()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $mail = $_POST['mail'] ?? '';
+            $password = $_POST['password'] ?? '';
+
+            $userManager = new UserManager();
+            $user = $userManager->getUserByMail($mail);
+
+            if ($user && password_verify($password, $user['password'])) {
+                $_SESSION['user'] = $user;
+                header('Location: /');
+                exit();
+            } else {
+                $error = 'Email ou mot de passe invalide';
+                return $this->twig->render('Auth/login.html.twig', ['error' => $error]);
+            }
+        }
+
+        return $this->twig->render('Auth/login.html.twig');
     }
 }
