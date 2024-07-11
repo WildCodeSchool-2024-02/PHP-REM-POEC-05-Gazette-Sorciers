@@ -30,29 +30,29 @@ class UserManager
         string $mail,
         string $password,
         ?string $profilePicture,
-        int $idRole
+        int $idPrivilege
     ) {
         $statement = $this->pdo->prepare(
-            'INSERT INTO user (name, lastname, mail, password, profile_picture, created_at, id_role)' .
-                'VALUES (:name, :lastname, :mail, :password, :profilePicture, NOW(), :idRole)'
+            'INSERT INTO user (name, lastname, mail, password, profile_picture, created_at, id_privilleges)' .
+                'VALUES (:name, :lastname, :mail, :password, :profilePicture, NOW(), :idPrivilege)'
         );
         $statement->bindValue(':name', $name, PDO::PARAM_STR);
         $statement->bindValue(':lastname', $lastname, PDO::PARAM_STR);
         $statement->bindValue(':mail', $mail, PDO::PARAM_STR);
         $statement->bindValue(':password', $password, PDO::PARAM_STR);
         $statement->bindValue(':profilePicture', $profilePicture, PDO::PARAM_STR);
-        $statement->bindValue(':idRole', $idRole, PDO::PARAM_INT);
+        $statement->bindValue(':idPrivilege', $idPrivilege, PDO::PARAM_INT);
         $statement->execute();
     }
 
-    public function getRoleIdByName(string $roleName): int
+    public function getPrivilegeIdByName(string $privilegeName): int
     {
-        $statement = $this->pdo->prepare('SELECT id_role FROM role WHERE name = :name');
-        $statement->bindValue(':name', $roleName, PDO::PARAM_STR);
+        $statement = $this->pdo->prepare('SELECT id FROM privilleges WHERE name = :name');
+        $statement->bindValue(':name', $privilegeName, PDO::PARAM_STR);
         $statement->execute();
 
-        $role = $statement->fetch(PDO::FETCH_ASSOC);
-        return $role['id_role'] ?? 0;
+        $privilege = $statement->fetch(PDO::FETCH_ASSOC);
+        return $privilege['id'] ?? 0;
     }
 
     public function getUserById($id)
