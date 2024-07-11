@@ -95,11 +95,8 @@ class CategoryController extends AbstractController
 
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // clean $_POST data
             $category = array_map('trim', $_POST);
-            // TODO validations (length, format...)
 
-            // if validation is ok, insert and redirection
             if ($this->validate(false, $category)) {
                 $category['created_at'] = (new DateTime())->format('Y-m-d H:i:s');
                 $categoryManager = new CategoryManager();
