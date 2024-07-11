@@ -51,9 +51,17 @@ class UserController extends AbstractController
 
             $userManager = new UserManager();
             $user = $userManager->getUserByMail($mail);
-
+            //we should'nt put the password, nor privillege into user profile session
             if ($user && password_verify($password, $user['password'])) {
-                $_SESSION['user'] = $user;
+                $_SESSION['user'] = [
+                    'id' => $user['id'],
+                    'name' => $user['name'],
+                    'lastname' => $user['lastname'],
+                    'created_at' => $user['created_at'],
+                    'mail' => $user['mail'],
+                    'profile_picture' => $user['profile_picture']
+                ];
+
                 header('Location: /');
                 exit();
             } else {

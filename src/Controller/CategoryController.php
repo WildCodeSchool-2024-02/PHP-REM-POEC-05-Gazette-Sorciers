@@ -43,7 +43,9 @@ class CategoryController extends AbstractController
         }
 
         $privilegeManager = new PrivilegeManager();
-        if (!$privilegeManager->isUserAdmin($this->user['id_privilege'])) {
+        $userManager = new UserManager();
+        $user = $userManager->selectOneById($this->user['id']);
+        if (!$privilegeManager->isUserAdmin($user['id_privilege'])) {
             header('Location: /');
             exit();
         }
@@ -84,10 +86,13 @@ class CategoryController extends AbstractController
         }
 
         $privilegeManager = new PrivilegeManager();
-        if (!$privilegeManager->isUserAdmin($this->user['id_privilege'])) {
+        $userManager = new UserManager();
+        $user = $userManager->selectOneById($this->user['id']);
+        if (!$privilegeManager->isUserAdmin($user['id_privilege'])) {
             header('Location: /');
             exit();
         }
+
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // clean $_POST data
@@ -118,10 +123,13 @@ class CategoryController extends AbstractController
         }
 
         $privilegeManager = new PrivilegeManager();
-        if (!$privilegeManager->isUserAdmin($_SESSION['user'])) {
+        $userManager = new UserManager();
+        $user = $userManager->selectOneById($this->user['id']);
+        if (!$privilegeManager->isUserAdmin($user['id_privilege'])) {
             header('Location: /');
             exit();
         }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = trim($_POST['id']);
             $categoryManager = new CategoryManager();
