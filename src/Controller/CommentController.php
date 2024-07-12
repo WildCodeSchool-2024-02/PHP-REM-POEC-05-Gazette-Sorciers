@@ -14,7 +14,7 @@ class CommentController extends AbstractController
     public function index(): string
     {
         $commentManager = new CommentManager();
-        $comments = $commentManager->selectAll('created_at DESC');
+        $comments = $commentManager->selectAll('created_at');
 
         return $this->twig->render('comments/index.html.twig', ['comments' => $comments]);
     }

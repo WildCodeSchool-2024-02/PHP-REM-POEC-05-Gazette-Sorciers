@@ -1,6 +1,8 @@
-{% block content %}
-    <h1>Modification du commentaire : {{ comment.content|truncate(20) }}</h1>
-    {% include '/Comments/_form.html.twig' with {'comment': comment, 'is_edit': true} %}
+{% extends 'layout.html.twig' %}
 
-    <a href="/comments/show?id={{ comment.id }}">Retour</a>
+{% block content %}
+<h1>Modification du commentaire : {{ comment.content }}</h1>
+{% include '/Comments/_form.html.twig' with {'comment': comment, 'is_edit': true} %}
+
+<a href="/comments/show?id={{ comment.id }}">Retour</a>
 {% endblock %}

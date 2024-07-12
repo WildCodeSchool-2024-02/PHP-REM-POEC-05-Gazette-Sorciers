@@ -7,6 +7,7 @@ use PDO;
 class CommentManager extends AbstractManager
 {
     public const TABLE = 'comment';
+    
 
     /**
      * Insert new comment in database
