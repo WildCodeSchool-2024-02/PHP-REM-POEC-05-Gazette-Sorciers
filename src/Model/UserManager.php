@@ -3,17 +3,11 @@
 namespace App\Model;
 
 use PDO;
+use App\Model\AbstractManager;
 
-class UserManager
+class UserManager extends AbstractManager
 {
-    private PDO $pdo;
-
-    public function __construct()
-    {
-        $connection = new Connection();
-        $this->pdo = $connection->getConnection();
-    }
-
+    public const TABLE = 'user';
     public function getUserByMail(string $mail): ?array
     {
         $statement = $this->pdo->prepare('SELECT * FROM user WHERE mail = :mail');
@@ -34,7 +28,7 @@ class UserManager
     ) {
         $statement = $this->pdo->prepare(
             'INSERT INTO user (name, lastname, mail, password, profile_picture, created_at, id_privilege)' .
-            'VALUES (:name, :lastname, :mail, :password, :profilePicture, NOW(), :idPrivilege)'
+
         );
         $statement->bindValue(':name', $name, PDO::PARAM_STR);
         $statement->bindValue(':lastname', $lastname, PDO::PARAM_STR);
