@@ -7,20 +7,17 @@
         </div>
         {# <div class="input-container">
             <label for="picture">Image :</label>
-            <input type="text" name="picture" id="picture" value="{{ comment.picture }}"> 
+            <input type="text" name="picture" id="picture" value="{{ comment.picture }}">
         </div> #}
         <div class="input-container">
             <label for="is_modified">Modifié :</label>
-            <input type="date" name="is_modified" id="is_modified" {{ comment.is_modified == 1 ? 'checked' : '' }}> 
+            <input type="checkbox" name="is_modified" id="is_modified" {{ comment.is_modified==1 ? 'checked' : '' }}>
         </div>
-        <div class="input-container">
-            <label for="id_user">Auteur :</label>
-            <input class="id_user" type="number" value="{{ comment.id_user }}" name="id_user" id="id_user">
-        </div>
-        <div class="input-container">
-            <label for="id_topic">Sujet :</label>
-            <input class="id_topic" type="number" value="{{ comment.id_topic }}" name="id_topic" id="id_topic">
-        </div>
+
+        <input class="id_user" type="hidden" value="{{ comment.id_user }}" name="id_user" id="id_user">
+
+        <input class="id_topic" type="hidden" value="{{ comment.id_topic }}" name="id_topic" id="id_topic">
+
         <button class="submit"> Envoyer </button>
     </form>
 </section>
