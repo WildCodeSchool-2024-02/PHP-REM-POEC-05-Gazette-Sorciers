@@ -8,7 +8,7 @@
   font-weight: lighter;
   font-size: large;
   font-style: italic;
-  color:var(--dark);
+  color:var(--primary-color);
   display: grid;
   gap:3rem;
 }
