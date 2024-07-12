@@ -1,0 +1,27 @@
+.component {
+    width: 80%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.comment {
+    margin: 2rem;
+    box-shadow: var(--content-text-color) 0px 5px 15px;
+    
+    padding: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: var(--content-text-color);
+}
+
+@media screen and (max-width: 800px) {
+    .component {
+        width: 90%;
+        grid-template-columns: 1fr;
+    }
+    
+}
