@@ -100,6 +100,7 @@ class TopicController extends AbstractController
         $extension = pathinfo($topicFile['name'], PATHINFO_EXTENSION);
         $authorizedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
         $maxFileSize = 2000000;
+        $errors = [];
 
         if ($topic['title'] === '' || empty($topic['title'])) {
             $errors[] = 'Votre titre est vide !';
@@ -120,6 +121,6 @@ class TopicController extends AbstractController
         if (file_exists($topicFile['tmp_name']) && strlen($topicFile['name']) + 20 > 100) {
             $errors[] = "Le nom de votre fichier doit faire moins de 50 caractères ";
         }
-        return $errors ?? [];
+        return $errors;
     }
 }
