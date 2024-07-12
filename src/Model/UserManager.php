@@ -34,7 +34,7 @@ class UserManager
     ) {
         $statement = $this->pdo->prepare(
             'INSERT INTO user (name, lastname, mail, password, profile_picture, created_at, id_privilege)' .
-            'VALUES (:name, :lastname, :mail, :password, :profilePicture, NOW(), :idPrivilege)'
+                'VALUES (:name, :lastname, :mail, :password, :profilePicture, NOW(), :idPrivilege)'
         );
         $statement->bindValue(':name', $name, PDO::PARAM_STR);
         $statement->bindValue(':lastname', $lastname, PDO::PARAM_STR);
