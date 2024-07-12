@@ -1,0 +1,22 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+<section class="component">
+	{% if topics is defined %}
+		{% for topic in topics %}
+			<article class="category">
+				<img class="avatar" src="https://picsum.photos/100">
+				<h2 class="titre">
+					<a href="/topics/show?id={{ topic.id }}">{{ topic.id }}.
+						{{ topic.title }}</a>
+				</h2>
+				<p class="date">{{ topic.created_at }}</p>
+				<p class="description">{{ topic.content }}</p>
+			</article>
+		{% endfor %}
+	{% else %}
+		<article class="category">C'est vide 🤦</article>
+    {% endif %}
+</section>
+
+{% endblock %}

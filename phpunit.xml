@@ -3,8 +3,6 @@
     <testsuites>
         <testsuite name="Project Test Suite">
         <exclude> ./tests/models/ItemManagerTest.php</exclude>
-        
-        
             <directory>tests</directory>
         </testsuite>
     </testsuites>
