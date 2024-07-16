@@ -19,5 +19,5 @@ return [
     'topics' => ['TopicController', 'index', ['id']],
     'topics/add' => ['TopicController', 'add', ['id']],
     'topics/show' => ['TopicController', 'show', ['id']], // affichage d'un topic et ses commentaires
-    'profile' => ['ProfileController','profile', ['id']],
+    'profile' => ['ProfileController', 'profile', ['id']],
 ];
