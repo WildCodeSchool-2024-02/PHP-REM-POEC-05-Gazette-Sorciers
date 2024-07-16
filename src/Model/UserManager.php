@@ -48,4 +48,27 @@ class UserManager extends AbstractManager
         $privilege = $statement->fetch(PDO::FETCH_ASSOC);
         return $privilege['id'] ?? 0;
     }
+
+    public function getAllUsers(): array
+    {
+        $statement = $this->pdo->query('SELECT * FROM user');
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getUserById(int $id): ?array
+    {
+        $statement = $this->pdo->prepare('SELECT * FROM user WHERE id = :id');
+        $statement->bindValue(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
+
+        $user = $statement->fetch(PDO::FETCH_ASSOC);
+        return $user ?: null;
+    }
+
+    public function deleteUserById(int $id): void
+    {
+        $statement = $this->pdo->prepare('DELETE FROM user WHERE id = :id');
+        $statement->bindValue(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
+    }
 }
