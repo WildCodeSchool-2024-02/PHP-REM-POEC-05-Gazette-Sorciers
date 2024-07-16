@@ -1,95 +1,47 @@
-{% extends 'layout.html.twig' %}
-
-{% block stylesheet %}
-<link rel="stylesheet" href="/assets/css/_table.css">
-<link rel="stylesheet" href="/assets/css/_modal.css">
-{% endblock %}
-
-{% block content %}
+{% extends 'layout.html.twig' %} {% block stylesheet %}
+<link rel="stylesheet" href="/assets/css/_table.css" />
+<link rel="stylesheet" href="/assets/css/_modal.css" />
+{% endblock %} {% block content %}
 <h1>Liste des utilisateurs</h1>
 {% if users is empty %}
-    <p>Aucun utilisateur trouvé.</p>
+<p>Aucun utilisateur trouvé.</p>
 {% else %}
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Email</th>
-                <th>Date de création</th>
-                <th>Rôle</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for user in users %}
-                <tr id="user-{{ user.id }}">
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.name }}</td>
-                    <td>{{ user.lastname }}</td>
-                    <td>{{ user.mail }}</td>
-                    <td>{{ user.created_at }}</td>
-                    <td>{{ user.id_privilege }}</td>
-                    <td>
-                        <button class="button-delete" data-user-id="{{ user.id }}" data-user-name="{{ user.name }}" data-user-lastname="{{ user.lastname }}">Supprimer</button>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-{% endif %}
-
-<div id="myModal" class="modal">
-    <div class="modal-card">
-        <button class="exit-button"><span class="svgIconCross">&times;</span></button>
-        <h3 class="modal-heading form-title">Confirmation de suppression</h3>
-        <p class="modal-para">Êtes-vous sûr de vouloir supprimer l'utilisateur <span id="modal-user-name"></span> <span id="modal-user-lastname"></span> ?</p>
-        <div class="button-wrapper">
-            <form method="post" action="/users/delete" id="delete-form" class="form">
-                <input type="hidden" name="id" id="delete-user-id">
-                <button type="submit" class="modal-button submit">Supprimer</button>
-            </form>
-            <button type="button" class="modal-button submit button-cancel" id="cancel-button">Annuler</button>
-        </div>
-    </div>
-</div>
-{% endblock %}
-
-{% block javascript %}
-<script>
-// Script pour gérer la fenêtre modale
-document.addEventListener('DOMContentLoaded', function() {
-    let modal = document.getElementById("myModal");
-    let span = document.getElementsByClassName("exit-button")[0];
-    let cancelBtn = document.getElementById("cancel-button");
-    let deleteButtons = document.querySelectorAll('.button-delete[data-user-id]');
-
-    deleteButtons.forEach(function(button) {
-        button.onclick = function() {
-            let userId = this.getAttribute('data-user-id');
-            let userName = this.getAttribute('data-user-name');
-            let userLastname = this.getAttribute('data-user-lastname');
-            document.getElementById('modal-user-name').textContent = userName;
-            document.getElementById('modal-user-lastname').textContent = userLastname;
-            document.getElementById('delete-user-id').value = userId;
-            modal.style.display = "block";
-        }
-    });
-
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    cancelBtn.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-});
-</script>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Email</th>
+            <th>Date de création</th>
+            <th>Rôle</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr id="user-{{ user.id }}">
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.lastname }}</td>
+            <td>{{ user.mail }}</td>
+            <td>{{ user.created_at }}</td>
+            <td>{{ user.id_privilege }}</td>
+            <td>
+                <button
+                    class="button-delete"
+                    data-user-id="{{ user.id }}"
+                    data-user-name="{{ user.name }}"
+                    data-user-lastname="{{ user.lastname }}"
+                >
+                    Supprimer
+                </button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %} {% include 'Users/_modal.html.twig' %} {% endblock %} {% block
+javascript %}
+<script src="/assets/js/modal.js"></script>
 {% endblock %}
