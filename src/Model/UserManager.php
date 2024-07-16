@@ -57,16 +57,18 @@ class UserManager
 
     public function getUserById($id)
     {
-        $stmt = $this->pdo->prepare("SELECT name, lastname, password, mail, profile_picture, 
-        description FROM users WHERE id = ?");
-        $stmt->execute([$id]);
-        return $stmt->fetch();
+        $statement = $this->pdo->prepare("SELECT name, lastname, password, profile_picture FROM user WHERE id = :id");
+        $statement->bindValue('id', $id, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetch();
+        
     }
 
     public function getUserLastComment($id, $limit = 3)
-    {
-        $stmt = $this->pdo->prepare("SELECT content FROM comments WHERE user_id = ? ORDER BY created_at DESC LIMIT ?");
-        $stmt->execute([$id, $limit]);
-        return $stmt->fetchAll();
-    }
+{
+    $sql = "SELECT content FROM comment WHERE id = ? ORDER BY created_at DESC LIMIT " . intval($limit);
+    $statement = $this->pdo->prepare($sql);
+    $statement->execute([$id]);
+    return $statement->fetchAll();
+}
 }

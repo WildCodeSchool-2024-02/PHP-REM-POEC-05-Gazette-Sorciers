@@ -6,15 +6,18 @@
 {% endblock %} 
 
 {% block content %}
-
+<div class="profile-page">
 <div class="profile-header">
     <img
         class="profile-picture"
-        src="{{ user.profile_picture }}"
+        {# src="{{ user.profile_picture }}" #}
+        src="/assets/images/pp.jpg"
         alt="Profile Picture"
-        width="100"
-        height="100"
+        width="200"
+        height="200"
     />
+    <button class="pic-btn"><i class="fa-solid fa-pen-to-square"></i></button>
+
     <div class="profile-info">
         <h1>{{ user.username }}</h1>
         <p>{{ user.email }}</p>
@@ -50,6 +53,7 @@
         <strong>Adresse email :</strong> {{ user.email }}
         <button>Modifier</button>
     </div>
-
-    {% endblock %}
 </div>
+</div>
+    {% endblock %}
+

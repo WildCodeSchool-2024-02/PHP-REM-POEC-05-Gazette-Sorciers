@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Model\UserManager;
 use Twig\Environment;
 
 class ProfileController extends AbstractController
@@ -12,6 +13,7 @@ class ProfileController extends AbstractController
 
     public function profile(int $id)
     {
+        $this->userModel = new UserManager;
         $user = $this->userModel->getUserById($id);
         $comments = $this->userModel->getUserLastComment($id);
 
