@@ -51,7 +51,8 @@ class UserManager extends AbstractManager
 
     public function getAllUsers(): array
     {
-        $statement = $this->pdo->query('SELECT * FROM user');
+        $statement = $this->pdo->query('SELECT id, name, lastname, mail, profile_picture, created_at, ' .
+            'id_privilege FROM user');
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
