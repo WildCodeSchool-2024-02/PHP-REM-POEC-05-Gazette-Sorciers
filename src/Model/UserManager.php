@@ -61,14 +61,13 @@ class UserManager
         $statement->bindValue('id', $id, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetch();
-        
     }
 
     public function getUserLastComment($id, $limit = 3)
-{
-    $sql = "SELECT content FROM comment WHERE id = ? ORDER BY created_at DESC LIMIT " . intval($limit);
-    $statement = $this->pdo->prepare($sql);
-    $statement->execute([$id]);
-    return $statement->fetchAll();
-}
+    {
+        $sql = "SELECT content FROM comment WHERE id = ? ORDER BY created_at DESC LIMIT " . intval($limit);
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute([$id]);
+        return $statement->fetchAll();
+    }
 }

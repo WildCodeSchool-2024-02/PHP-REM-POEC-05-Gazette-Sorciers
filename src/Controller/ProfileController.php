@@ -13,7 +13,7 @@ class ProfileController extends AbstractController
 
     public function profile(int $id)
     {
-        $this->userModel = new UserManager;
+        $this->userModel = new UserManager();
         $user = $this->userModel->getUserById($id);
         $comments = $this->userModel->getUserLastComment($id);
 
