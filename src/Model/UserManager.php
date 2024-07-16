@@ -3,17 +3,11 @@
 namespace App\Model;
 
 use PDO;
+use App\Model\AbstractManager;
 
-class UserManager
+class UserManager extends AbstractManager
 {
-    private PDO $pdo;
-
-    public function __construct()
-    {
-        $connection = new Connection();
-        $this->pdo = $connection->getConnection();
-    }
-
+    public const TABLE = 'user';
     public function getUserByMail(string $mail): ?array
     {
         $statement = $this->pdo->prepare('SELECT * FROM user WHERE mail = :mail');
@@ -33,7 +27,7 @@ class UserManager
         int $idPrivilege
     ) {
         $statement = $this->pdo->prepare(
-            'INSERT INTO user (name, lastname, mail, password, profile_picture, created_at, id_privilleges)' .
+            'INSERT INTO user (name, lastname, mail, password, profile_picture, created_at, id_privilege)' .
                 'VALUES (:name, :lastname, :mail, :password, :profilePicture, NOW(), :idPrivilege)'
         );
         $statement->bindValue(':name', $name, PDO::PARAM_STR);
@@ -47,7 +41,7 @@ class UserManager
 
     public function getPrivilegeIdByName(string $privilegeName): int
     {
-        $statement = $this->pdo->prepare('SELECT id FROM privilleges WHERE name = :name');
+        $statement = $this->pdo->prepare('SELECT id FROM privilege WHERE name = :name');
         $statement->bindValue(':name', $privilegeName, PDO::PARAM_STR);
         $statement->execute();
 

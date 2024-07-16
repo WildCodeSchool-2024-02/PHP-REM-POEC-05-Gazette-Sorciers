@@ -1,0 +1,16 @@
+{% extends 'layout.html.twig' %}
+{% block stylesheet %} <link rel="stylesheet" href="/assets/css/topic.css" />{% endblock %} 
+
+{% block content %}
+<div class="component">
+<section class="topic">
+	<h1>{{topic.title}}</h1>
+	<div class="content">
+		{{topic.content}}
+	</div>
+	<div>
+		<img class="picture" src="{{'/' ~ topic.picture}}">
+	</div>
+</section>
+</div>
+{% endblock %}
