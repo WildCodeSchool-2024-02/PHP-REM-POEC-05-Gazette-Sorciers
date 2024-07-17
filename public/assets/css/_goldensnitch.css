@@ -1,0 +1,8 @@
+#vifdor {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: url('/public/assets/images/giphy.gif') no-repeat center center / contain;
+    transition: transform 1s ease-in-out;
+    z-index: 9999;
+}

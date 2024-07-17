@@ -16,13 +16,12 @@ class ProfileController extends AbstractController
         $this->userModel = new UserManager();
         $user = $this->userModel->getUserById($id);
         $comments = $this->userModel->getUserLastComment($id);
-        
         // Vérifier si un message flash est présent
         $message = null;
         if (isset($_SESSION['flash_message'])) {
             $message = $_SESSION['flash_message'];
             // Effacer le message après l'affichage
-            unset($_SESSION['flash_message']); 
+            unset($_SESSION['flash_message']);
         }
         return $this->twig->render('UserProfile/profile.html.twig', [
             'user' => $user,
@@ -44,10 +43,9 @@ class ProfileController extends AbstractController
 
             if ($name && $lastname && $mail && $description) {
                 $this->userModel->updateUser($id, $name, $lastname, $mail, $password, $description);
-                
                 // Ajouter un message flash
                 $_SESSION['flash_message'] = 'Votre profil a été mis à jour !';
-                
+
                 header('Location: /profile?id=' . $id);
                 exit();
             }
