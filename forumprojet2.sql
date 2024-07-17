@@ -1,6 +1,7 @@
-drop database if exists projet2forum;
-create database projet2forum;
+DROP DATABASE IF EXISTS projet2forum;
+CREATE DATABASE projet2forum;
 use projet2forum;
+
 drop table if exists category;
 drop table if exists privilege;
 drop table if exists `user`;
@@ -30,6 +31,7 @@ CREATE TABLE `user`(
    `mail` VARCHAR(50) NOT NULL,
    `created_at` DATETIME NOT NULL,
    `password` VARCHAR(255) NOT NULL,
+   `description` TEXT,
    `profile_picture` VARCHAR(50),
    `id_privilege` INT NOT NULL,
    PRIMARY KEY(`id`),
@@ -62,7 +64,6 @@ CREATE TABLE `comment`(
    FOREIGN KEY(id_user) REFERENCES `user`(`id`),
    FOREIGN KEY(id_topic) REFERENCES topic(`id`)
 );
-use projet2forum;
 
 
 INSERT INTO `privilege` VALUES
@@ -70,14 +71,14 @@ INSERT INTO `privilege` VALUES
 (2,'MODERATOR'),
 (1,'USER');
 
-INSERT INTO `user` VALUES 
-(5,'John','Doe','john.doe@gmail.com','2024-07-11 12:39:23','$argon2i$v=19$m=131072,t=4,p=2$bnlCUXN5Zm16dGd6L3pUUw$F3l/QRr2ZIF+NVnAVmnxOl3HyimLfc5bve0FKyx7xPw',NULL,3),
-(6,'John','Cena','tadadadaaa@unmail.com','2024-07-11 17:44:15','$argon2i$v=19$m=131072,t=4,p=2$bkNoUFZLcVFpaWpoVllZYw$9+yu+STMN2ufKHZChQQRQarfEw/2ml5hrZFVW1wEY+o',NULL,1),
-(7,'Chuck','Norris','God@unmail.com','2024-07-11 17:45:24','$argon2i$v=19$m=131072,t=4,p=2$czBzUW1uZjJHTHMxWHhqQw$VQZe4CpY6kGQx1LY4+PRko1KnyhmRYyMZHat2hUL4gA',NULL,1),
-(8,'Tom','Jedusor','voldemort@unmail.com','2024-07-11 17:47:11','$argon2i$v=19$m=131072,t=4,p=2$cGFjczA3YU54MWxqNWdJdA$683ASk3r0pejmGeRutKEVAuL4sYVLmRYvKc0PkMR8jE',NULL,1),
-(9,'Albus','Dumbledor','HogwartsPatreon@unmail.com','2024-07-11 17:47:59','$argon2i$v=19$m=131072,t=4,p=2$NTN0ZTBjbmoySTVCbGE0Wg$yB9rJsIyOHSgT/AbdKNiNPAkEYnXOdYwImrEgHRyIYI',NULL,1),
-(10,'Rubéus','Agrid','dresseurDepokemon@unmail.com','2024-07-11 18:05:03','$argon2i$v=19$m=131072,t=4,p=2$ZVo0aWNHR2FpODFxdk5PUQ$FDYPgQ/DLAu/+/4zTWOtKjSQQ8OkKd+wd2uvmrsiVC4',NULL,1),
-(11,'Severus','Rogue','AlchemistCooker@unmail.com','2024-07-11 18:07:25','$argon2i$v=19$m=131072,t=4,p=2$Y1lES3RtYVpmMnRtdU5nRA$C0mxkuN3aCe7H4xEq6vYfnsCtb2/SVmavVjgpiKswOs',NULL,1);
+INSERT INTO `user`(id,name,lastname,mail,created_at,password,profile_picture,id_privilege,description) VALUES 
+(5,'John','Doe','john.doe@gmail.com','2024-07-11 12:39:23','$argon2i$v=19$m=131072,t=4,p=2$bnlCUXN5Zm16dGd6L3pUUw$F3l/QRr2ZIF+NVnAVmnxOl3HyimLfc5bve0FKyx7xPw',NULL,3,"à défaut d'avoir un nom, on a un cadavre."),
+(6,'John','Cena','tadadadaaa@unmail.com','2024-07-11 17:44:15','$argon2i$v=19$m=131072,t=4,p=2$bkNoUFZLcVFpaWpoVllZYw$9+yu+STMN2ufKHZChQQRQarfEw/2ml5hrZFVW1wEY+o',NULL,1,"and his name is JOHN SEEEENAAAA !!!!"),
+(7,'Chuck','Norris','God@unmail.com','2024-07-11 17:45:24','$argon2i$v=19$m=131072,t=4,p=2$czBzUW1uZjJHTHMxWHhqQw$VQZe4CpY6kGQx1LY4+PRko1KnyhmRYyMZHat2hUL4gA',NULL,1,"Dieu dit que la lumière soit, Chuck Norris répondit \" et on dit merci ! \"."),
+(8,'Tom','Jedusor','voldemort@unmail.com','2024-07-11 17:47:11','$argon2i$v=19$m=131072,t=4,p=2$cGFjczA3YU54MWxqNWdJdA$683ASk3r0pejmGeRutKEVAuL4sYVLmRYvKc0PkMR8jE',NULL,1, "Muggles, muggles everywhere !"),
+(9,'Albus','Dumbledor','HogwartsPatreon@unmail.com','2024-07-11 17:47:59','$argon2i$v=19$m=131072,t=4,p=2$NTN0ZTBjbmoySTVCbGE0Wg$yB9rJsIyOHSgT/AbdKNiNPAkEYnXOdYwImrEgHRyIYI',NULL,1,"Directeur d'école de 157 ans cherche petite sorcière \" assistante \", 53 ans mini..."),
+(10,'Rubéus','Agrid','dresseurDepokemon@unmail.com','2024-07-11 18:05:03','$argon2i$v=19$m=131072,t=4,p=2$ZVo0aWNHR2FpODFxdk5PUQ$FDYPgQ/DLAu/+/4zTWOtKjSQQ8OkKd+wd2uvmrsiVC4',NULL,1," Dites, vous n'auriez pas vu une acromantula par hasard ?"),
+(11,'Severus','Rogue','AlchemistCooker@unmail.com','2024-07-11 18:07:25','$argon2i$v=19$m=131072,t=4,p=2$Y1lES3RtYVpmMnRtdU5nRA$C0mxkuN3aCe7H4xEq6vYfnsCtb2/SVmavVjgpiKswOs',NULL,1, "It's LeviosAAAHHHH !! HAAAAAA !!!");
 
 INSERT INTO `category` VALUES
 (1,'La magie','On dirait de la magie !','2024-07-11 12:58:37'),

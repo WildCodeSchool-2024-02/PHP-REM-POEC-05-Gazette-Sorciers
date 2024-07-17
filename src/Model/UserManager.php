@@ -51,7 +51,7 @@ class UserManager extends AbstractManager
 
     public function getUserById($id)
     {
-        $statement = $this->pdo->prepare("SELECT name, lastname, password, 
+        $statement = $this->pdo->prepare("SELECT name, lastname, password, description,
         profile_picture, mail, created_at FROM user WHERE id = :id");
         $statement->bindValue('id', $id, PDO::PARAM_INT);
         $statement->execute();
