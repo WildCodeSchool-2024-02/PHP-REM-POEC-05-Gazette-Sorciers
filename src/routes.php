@@ -23,4 +23,5 @@ return [
     'users/confirm-delete/{id}' => ['UserController', 'confirmDelete', ['id']],
     'users/delete' => ['UserController', 'delete'],
     'profile' => ['ProfileController', 'profile', ['id']],
+    'profile/edit' => ['ProfileController', 'editProfile', ['id']],
 ];

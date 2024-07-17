@@ -79,4 +79,29 @@ class UserManager extends AbstractManager
         $statement->bindValue(':id', $id, PDO::PARAM_INT);
         $statement->execute();
     }
+
+    public function updateUser(int $id, string $name, string $lastname, string $mail, string $password, string $description)
+    {
+        $sql = "UPDATE " . self::TABLE . " SET name = :name, lastname = :lastname, mail = :mail, description = :description WHERE id = :id";
+        if ($password) {
+            $sql = "UPDATE " . self::TABLE . " SET name = :name, lastname = :lastname, mail = :mail, password = :password, description = :description WHERE id = :id";
+        }
+
+        $statement = $this->pdo->prepare($sql);
+        $statement->bindValue(':name', $name, PDO::PARAM_STR);
+        $statement->bindValue(':lastname', $lastname, PDO::PARAM_STR);
+        $statement->bindValue(':mail', $mail, PDO::PARAM_STR);
+        $statement->bindValue(':description', $description, PDO::PARAM_STR);
+        $statement->bindValue(':id', $id, PDO::PARAM_INT);
+        if ($password) {
+            $hashedPassword = password_hash($password, PASSWORD_ARGON2I, [
+                'memory_cost' => 1 << 17,
+                'time_cost' => 4,
+                'threads' => 2
+            ]);
+            $statement->bindValue(':password', $hashedPassword, PDO::PARAM_STR);
+        }
+        $statement->execute();
+    }
+
 }
