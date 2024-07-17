@@ -1,9 +1,6 @@
-{% extends 'layout.html.twig' %} 
-{% block stylesheet %}
+{% extends 'layout.html.twig' %} {% block stylesheet %}
 <link rel="stylesheet" href="/assets/css/profile.css" />
-{% endblock %} 
-
-{% block content %}
+{% endblock %} {% block content %}
 <div class="profile-page">
     <div class="profile-header">
         <h1 class="profile-title">Mon Profil</h1>
@@ -11,21 +8,41 @@
         <div class="profile-picture-container">
             <img
                 class="profile-picture"
-                {# src="{{ user.profile_picture }}" #}
+                {#
+                image
+                source
+                uniquement
+                pour
+                illustrer,
+                la
+                photo
+                de
+                profil
+                est
+                à
+                appeler
+                #}
                 src=" /assets/images/pp.jpg"
                 alt="Profile Picture"
             />
-            <button class="pic-btn"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="pic-btn">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </button>
         </div>
     </div>
-    
+
     <div class="profile-main">
         <div class="profile-info-section">
             <h2 class="sub-title">Mes infos</h2>
-            <p><strong>Pseudo:</strong> {{ user.name ~ ' ' ~ user.lastname }}</p>
+            <p>
+                <strong>Pseudo:</strong> {{ user.name ~ ' ' ~ user.lastname }}
+            </p>
             <p><strong>Adresse email:</strong> {{ user.mail }}</p>
             <p><strong>Mot de passe:</strong> ********</p>
-            <p><strong>Membre depuis le:</strong> {{ user.created_at | date("d/m/Y") }}</p>
+            <p>
+                <strong>Membre depuis le:</strong>
+                {{ user.created_at | date("d/m/Y") }}
+            </p>
             <p><strong>Description:</strong> {{ user.description }}</p>
             <button class="edit-button">Modifier mes infos</button>
         </div>
@@ -37,7 +54,10 @@
                 <li>
                     <h3 class="sub-title">TITRE DU TOPIC</h3>
                     <p>{{ comment.content }}</p>
-                    <p class="comment-date">Publié le {{ comment.date | date("d/m/Y") }} à {{ comment.date | date("H:i") }}</p>
+                    <p class="comment-date">
+                        Publié le {{ comment.date | date("d/m/Y") }} à
+                        {{ comment.date | date("H:i") }}
+                    </p>
                 </li>
                 {% endfor %}
             </ul>
@@ -45,5 +65,3 @@
     </div>
 </div>
 {% endblock %}
-
-
