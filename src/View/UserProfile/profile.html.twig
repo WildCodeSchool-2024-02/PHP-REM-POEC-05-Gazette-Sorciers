@@ -4,24 +4,14 @@
 <div class="profile-page">
     <div class="profile-header">
         <h1 class="profile-title">Mon Profil</h1>
-
+        {% if message %}
+        <div class="profile-update-message">
+            {{ message }}
+        </div>
+        {% endif %}
         <div class="profile-picture-container">
             <img
                 class="profile-picture"
-                {#
-                image
-                source
-                uniquement
-                pour
-                illustrer,
-                la
-                photo
-                de
-                profil
-                est
-                à
-                appeler
-                #}
                 src=" /assets/images/pp.jpg"
                 alt="Profile Picture"
             />

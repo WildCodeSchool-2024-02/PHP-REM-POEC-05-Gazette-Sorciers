@@ -52,7 +52,7 @@ class UserManager extends AbstractManager
     public function getUserById($id)
     {
         $statement = $this->pdo->prepare("SELECT name, lastname, password, description,
-        profile_picture, mail, created_at FROM user WHERE id = :id");
+        profile_picture, mail, created_at, id FROM user WHERE id = :id");
         $statement->bindValue('id', $id, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetch();
@@ -80,11 +80,19 @@ class UserManager extends AbstractManager
         $statement->execute();
     }
 
-    public function updateUser(int $id, string $name, string $lastname, string $mail, string $password, string $description)
-    {
-        $sql = "UPDATE " . self::TABLE . " SET name = :name, lastname = :lastname, mail = :mail, description = :description WHERE id = :id";
+    public function updateUser(
+        int $id,
+        string $name,
+        string $lastname,
+        string $mail,
+        string $password,
+        string $description
+    ) {
+        $sql = "UPDATE " . self::TABLE . " SET name = :name, lastname = :lastname, 
+        mail = :mail, description = :description WHERE id = :id";
         if ($password) {
-            $sql = "UPDATE " . self::TABLE . " SET name = :name, lastname = :lastname, mail = :mail, password = :password, description = :description WHERE id = :id";
+            $sql = "UPDATE " . self::TABLE . " SET name = :name, lastname = :lastname, 
+            mail = :mail, password = :password, description = :description WHERE id = :id";
         }
 
         $statement = $this->pdo->prepare($sql);
@@ -103,5 +111,4 @@ class UserManager extends AbstractManager
         }
         $statement->execute();
     }
-
 }

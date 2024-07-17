@@ -16,30 +16,25 @@ class ProfileController extends AbstractController
         $this->userModel = new UserManager();
         $user = $this->userModel->getUserById($id);
         $comments = $this->userModel->getUserLastComment($id);
-
+        
+        // Vérifier si un message flash est présent
+        $message = null;
+        if (isset($_SESSION['flash_message'])) {
+            $message = $_SESSION['flash_message'];
+            // Effacer le message après l'affichage
+            unset($_SESSION['flash_message']); 
+        }
         return $this->twig->render('UserProfile/profile.html.twig', [
             'user' => $user,
-            'comments' => $comments
+            'comments' => $comments,
+            'message' => $message,
         ]);
     }
     public function editProfile(int $id)
     {
-        $id = (int)($id);
-        var_dump($id);
-        // Arrêter l'exécution pour vérifier la valeur de l'id
-        // die('ID after conversion');
-        // Vérifier si l'id est valide
-        if ($id <= 0) {
-            // Gérer l'erreur si l'id n'est pas valide
-            return $this->twig->render('error.html.twig', [
-                'message' => 'ID utilisateur invalide.'
-            ]);
-        }
         $this->userModel = new UserManager();
-        
+
         $user = $this->userModel->getUserById($id);
-        var_dump($user);
-        die('User fetched');
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = $_POST['name'] ?? '';
             $lastname = $_POST['lastname'] ?? '';
@@ -49,6 +44,10 @@ class ProfileController extends AbstractController
 
             if ($name && $lastname && $mail && $description) {
                 $this->userModel->updateUser($id, $name, $lastname, $mail, $password, $description);
+                
+                // Ajouter un message flash
+                $_SESSION['flash_message'] = 'Votre profil a été mis à jour !';
+                
                 header('Location: /profile?id=' . $id);
                 exit();
             }
@@ -57,5 +56,5 @@ class ProfileController extends AbstractController
         return $this->twig->render('UserProfile/editProfile.html.twig', [
             'user' => $user
         ]);
-        }
+    }
 }
