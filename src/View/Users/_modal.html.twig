@@ -1,0 +1,33 @@
+<div id="myModal" class="modal">
+    <div class="modal-card">
+        <button class="exit-button">
+            <span class="svgIconCross">&times;</span>
+        </button>
+        <h3 class="modal-heading form-title">Confirmation de suppression</h3>
+        <p class="modal-para">
+            Êtes-vous sûr de vouloir supprimer l'utilisateur
+            <span id="modal-user-name"></span>
+            <span id="modal-user-lastname"></span> ?
+        </p>
+        <div class="button-wrapper">
+            <form
+                method="post"
+                action="/users/delete"
+                id="delete-form"
+                class="form"
+            >
+                <input type="hidden" name="id" id="delete-user-id" />
+                <button type="submit" class="modal-button submit">
+                    Supprimer
+                </button>
+            </form>
+            <button
+                type="button"
+                class="modal-button submit button-cancel"
+                id="cancel-button"
+            >
+                Annuler
+            </button>
+        </div>
+    </div>
+</div>

@@ -79,4 +79,25 @@ class UserController extends AbstractController
         header('Location: /');
         exit();
     }
+
+
+    public function listUsers()
+    {
+        $userManager = new UserManager();
+        $users = $userManager->getAllUsers();
+
+        return $this->twig->render('Users/index.html.twig', ['users' => $users]);
+    }
+    public function delete()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'];
+            $userManager = new UserManager();
+            $userManager->deleteUserById($id);
+            header('Location: /users');
+            exit();
+        }
+        header('Location: /users');
+        exit();
+    }
 }
