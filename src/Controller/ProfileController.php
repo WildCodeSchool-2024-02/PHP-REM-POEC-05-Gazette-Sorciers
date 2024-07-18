@@ -35,7 +35,6 @@ class ProfileController extends AbstractController
             'user' => $user,
             'comments' => $comments,
             'message' => $message,
-            'profile_picture' => $defaultImages,
         ]);
     }
     public function editProfile(int $id)
