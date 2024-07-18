@@ -13,9 +13,15 @@ class ProfileController extends AbstractController
 
     public function profile(int $id)
     {
+        if (!isset($_SESSION['user']) || $_SESSION['user']['id'] !== $id) {
+            header('Location: /login');
+            exit();
+        }
+
         $this->userModel = new UserManager();
         $user = $this->userModel->getUserById($id);
         $comments = $this->userModel->getUserLastComment($id);
+
         // Vérifier si un message flash est présent
         $message = null;
         if (isset($_SESSION['flash_message'])) {
@@ -35,11 +41,15 @@ class ProfileController extends AbstractController
             'user' => $user,
             'comments' => $comments,
             'message' => $message,
-            'profile_picture' => $defaultImages,
         ]);
     }
     public function editProfile(int $id)
     {
+        if (!isset($_SESSION['user']) || $_SESSION['user']['id'] !== $id) {
+            header('Location: /login');
+            exit();
+        }
+
         $this->userModel = new UserManager();
 
         $user = $this->userModel->getUserById($id);
