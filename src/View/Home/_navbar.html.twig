@@ -1,9 +1,9 @@
         <nav class="navbar">
             <div class="logo">
-                <img
+                <a href="\"><img
                     src="\assets\images\logo1.png"
                     alt="La Gazette du Sorcier"
-                />
+                /></a>
             </div>
             <div class="search-bar">
                 <form action="#" method="get">
@@ -24,9 +24,18 @@
                 <a href="#" class="icon-button">
                     <i class="fa-regular fa-bell"></i>
                 </a>
-                <a href="#" class="icon-button">
+                {# <a href="#" class="icon-button" id="profile-icon">
                     <i class="fa-regular fa-user"></i>
-                </a>
+                </a> #}
+                {% if user is defined %}
+    <a href="/profile?id={{ user.id }}" class="icon-button">
+        <i class="fa-regular fa-user"></i>
+    </a>
+    {% else %}
+    <a href="/login" class="profile-icon">
+        <i class="fa-solid fa-user"></i>
+    </a>
+    {% endif %}
                 <div class="dropdown">
                     <button class="dropdown-toggle">
                         <i class="fa-solid fa-bars"></i>
