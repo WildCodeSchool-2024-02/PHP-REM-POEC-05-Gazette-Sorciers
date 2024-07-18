@@ -1,0 +1,28 @@
+<section class="form-container">
+    <div class="form-wrapper">
+        <form id="contactForm" action="/contact" method="post" class="form">
+            <h1 class="form-title">Contactez-nous</h1>
+            <div id="formMessages">
+                {% if error %}
+                    <p id="serverError" class="error">{{ error }}</p>
+                {% endif %}
+                {% if success %}
+                    <p id="serverSuccess" class="success">{{ success }}</p>
+                {% endif %}
+            </div>
+            <div class="input-container">
+                <label for="name" class="label-title">Nom :</label>
+                <input type="text" id="name" name="name">
+            </div>
+            <div class="input-container">
+                <label for="email" class="label-title">Email :</label>
+                <input type="email" id="email" name="email">
+            </div>
+            <div class="input-container">
+                <label for="message" class="label-title">Message :</label>
+                <textarea id="message" name="message"></textarea>
+            </div>
+            <button type="submit" class="submit">Envoyer</button>
+        </form>
+    </div>
+</section>

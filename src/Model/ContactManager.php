@@ -8,7 +8,8 @@ class ContactManager extends AbstractManager
 
     public function saveContact(string $name, string $email, string $message): void
     {
-        $query = "INSERT INTO " . self::TABLE . " (name, email, message) VALUES (:name, :email, :message)";
+        $query = "INSERT INTO " . self::TABLE . " (name, email, message, created_at) 
+        VALUES (:name, :email, :message, NOW())";
         $statement = $this->pdo->prepare($query);
         $statement->bindValue(':name', $name, \PDO::PARAM_STR);
         $statement->bindValue(':email', $email, \PDO::PARAM_STR);

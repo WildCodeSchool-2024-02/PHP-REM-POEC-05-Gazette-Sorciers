@@ -1,45 +1,11 @@
-{% extends 'layout.html.twig' %}
-
-{% block title %}Contact{% endblock %}
-
+{% extends 'layout.html.twig' %} 
+{% block title %}Contact{% endblock %} 
 {% block stylesheet %}
-<link rel="stylesheet" href="/assets/css/_form.css">
-<link rel="stylesheet" href="/assets/css/_mod.css">
-{% endblock %}
-
-{% block content %}
-<div class="form-container">
-    <div class="form-wrapper">
-        <form id="contactForm" action="/contact" method="post" class="form">
-            <h1 class="form-title">Contactez-nous</h1>
-            {% block error %}
-                {% if error %}
-                    <p class="error">{{ error }}</p>
-                {% endif %}
-            {% endblock %}
-            <div class="input-container">
-                <label for="name" class="label-title">Nom :</label>
-                <input type="text" id="name" name="name">
-            </div>
-            <div class="input-container">
-                <label for="email" class="label-title">Email :</label>
-                <input type="email" id="email" name="email">
-            </div>
-            <div class="input-container">
-                <label for="message" class="label-title">Message :</label>
-                <textarea id="message" name="message"></textarea>
-            </div>
-            <button type="submit" class="submit">Envoyer</button>
-        </form>
-    </div>
-</div>
-
-<!-- Modal -->
-<dialog id="confirmationModal">
-    <p>Votre message a été envoyé avec succès !</p>
-    <button id="closeButton" class="submit">Fermer</button>
-</dialog>
-{% endblock %}
+<link rel="stylesheet" href="/assets/css/style.css" />
+<link rel="stylesheet" href="/assets/css/_form.css" />
+<link rel="stylesheet" href="/assets/css/_mod.css" />
+{% endblock %} {% block content %} {% include 'Contact/_form.html.twig' %} {%
+include 'Contact/_modal.html.twig' %} {% endblock %} 
 
 {% block javascript %}
 <script src="/assets/js/mod.js"></script>
