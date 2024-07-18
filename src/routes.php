@@ -22,4 +22,5 @@ return [
     'users' => ['UserController', 'listUsers'],
     'users/confirm-delete/{id}' => ['UserController', 'confirmDelete', ['id']],
     'users/delete' => ['UserController', 'delete'],
+    'contact' => ['ContactController', 'contact'],
 ];
