@@ -1,25 +1,21 @@
-<section class="component">
-    <form class="form" method="post">
-        <input type="hidden" value="{{ comment.id_comment }}" name="id_comment">
-        <div class="input-container">
-            <label for="content">Contenu :</label>
-            <textarea type="textarea" name="content" id="content">{{ comment.content }}</textarea>
-        </div>
-        {# <div class="input-container">
-            <label for="picture">Image :</label>
-            <input type="text" name="picture" id="picture" value="{{ comment.picture }}">
-        </div> #}
-        <div class="input-container">
-            <label for="is_modified">Modifié :</label>
-            <input type="checkbox" name="is_modified" id="is_modified" {{ comment.is_modified==1 ? 'checked' : '' }}>
-        </div>
+<form class="form form-center form-100" method="post">
+    <input type="hidden" value="{{ comment.id_comment }}" name="id_comment">
+    <div class="input-container">
+        <label for="content">Contenu :</label>
+        <textarea type="textarea" name="content" id="content">{{ comment.content }}</textarea>
+    </div>
+    <div class="input-container">
+        <label for="picture">Image</label>
+        <input type="file" name="picture" id="" accept=".jpg, .jpeg, .png, .gif">
+    </div>
 
-        <input class="id_user" type="hidden" value="{{ comment.id_user }}" name="id_user" id="id_user">
+    <input type="hidden" name="created_at" value="{{ comment.created_at }}">
 
-        <input class="id_topic" type="hidden" value="{{ comment.id_topic }}" name="id_topic" id="id_topic">
+    <input type="hidden" name="is_modified" value="{{ comment.is_modified }}">
 
-        <button class="submit"> Envoyer </button>
-    </form>
-</section>
+    <input class="id_user" type="hidden" value="{{ comment.id_user }}" name="id_user" id="id_user">
 
-<input type="date" name="" id="">
+    <input class="id_topic" type="hidden" value="{{ comment.id_topic }}" name="id_topic" id="id_topic">
+
+    <button class="submit"> Envoyer </button>
+</form>
