@@ -23,10 +23,19 @@ class ProfileController extends AbstractController
             // Effacer le message après l'affichage
             unset($_SESSION['flash_message']);
         }
+
+        if (empty($user['profile_picture'])) {
+            $defaultImages = [
+                '/assets/images/default-1.png',
+                '/assets/images/default-2.jpg',
+            ];
+            $user['profile_picture'] = $defaultImages[array_rand($defaultImages)];
+        }
         return $this->twig->render('UserProfile/profile.html.twig', [
             'user' => $user,
             'comments' => $comments,
             'message' => $message,
+            'profile_picture' => $defaultImages,
         ]);
     }
     public function editProfile(int $id)
