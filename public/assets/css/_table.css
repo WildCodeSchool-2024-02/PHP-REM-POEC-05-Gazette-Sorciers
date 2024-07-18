@@ -1,0 +1,51 @@
+h1 {
+  color: #cfcfcf;
+  text-align: center;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #a2a4a5;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #e8e7e7;
+}
+
+tr:hover {
+  background-color: #cac9c9;
+}
+
+ .button-delete   {
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.button-delete {
+  background-color: #deb31a;
+}
+
+

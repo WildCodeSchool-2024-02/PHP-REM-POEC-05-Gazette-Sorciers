@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 // list of accessible routes of your application, add every new route here
 // key : route to match
 // values : 1. controller name
@@ -13,11 +14,12 @@ return [
     'items/show' => ['ItemController', 'show', ['id']],
     'items/add' => ['ItemController', 'add',],
     'items/delete' => ['ItemController', 'delete',],
-    'login' => ['AuthController', 'login',],
-    'register' => ['RegisterController', 'register',],
     'categories' => ['CategoryController', 'index',],
+    'login' => ['UserController', 'login',],
+    'logout' => ['UserController', 'logout',],
+    'register' => ['UserController', 'register',],
     'categories/edit' => ['CategoryController', 'edit', ['id']],
-    'categories/show' => ['CategoryController', 'show', ['id']],
+    'categories/show' => ['CategoryController', 'show', ['id']], // listings des topics par categorie
     'categories/add' => ['CategoryController', 'add',],
     'categories/delete' => ['CategoryController', 'delete',],
     'comments' => ['CommentController', 'index',],
@@ -25,4 +27,10 @@ return [
     'comments/show' => ['CommentController', 'show', ['id']],
     'comments/add' => ['CommentController', 'add',],
     'comments/delete' => ['CommentController', 'delete',],
+    'topics' => ['TopicController', 'index', ['id']],
+    'topics/add' => ['TopicController', 'add', ['id']],
+    'topics/show' => ['TopicController', 'show', ['id']], // affichage d'un topic et ses commentaires
+    'users' => ['UserController', 'listUsers'],
+    'users/confirm-delete/{id}' => ['UserController', 'confirmDelete', ['id']],
+    'users/delete' => ['UserController', 'delete'],
 ];

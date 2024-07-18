@@ -1,0 +1,9 @@
+{% extends 'layout.html.twig' %}
+{% block stylesheet %}
+<link rel="stylesheet" href="/assets/css/topic.css">
+{% endblock %}
+{% block content %}
+    <div class="card">
+        {% include 'Topic/_form.html.twig' %}
+    </div>
+{% endblock %}

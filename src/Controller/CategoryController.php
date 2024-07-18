@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Model\CategoryManager;
+use App\Model\PrivilegeManager;
+use App\Model\UserManager;
 use App\Controller\AbstractController;
 use DateTime;
 
@@ -35,6 +37,20 @@ class CategoryController extends AbstractController
      */
     public function edit(int $id): ?string
     {
+        if (!$this->user) {
+            header('Location: /login');
+            exit();
+        }
+
+        $privilegeManager = new PrivilegeManager();
+        $userManager = new UserManager();
+        $user = $userManager->selectOneById($this->user['id']);
+        if (!$privilegeManager->isUserAdmin($user['id_privilege'])) {
+            header('Location: /');
+            exit();
+        }
+
+
         $categoryManager = new CategoryManager();
         $category = $categoryManager->selectOneById($id);
 
@@ -55,7 +71,7 @@ class CategoryController extends AbstractController
         }
 
         return $this->twig->render('categories/edit.html.twig', [
-            'category' => $category,
+            'category' => $category
         ]);
     }
 
@@ -64,12 +80,23 @@ class CategoryController extends AbstractController
      */
     public function add(): ?string
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // clean $_POST data
-            $category = array_map('trim', $_POST);
-            // TODO validations (length, format...)
+        if (!$this->user) {
+            header('Location: /login');
+            exit();
+        }
 
-            // if validation is ok, insert and redirection
+        $privilegeManager = new PrivilegeManager();
+        $userManager = new UserManager();
+        $user = $userManager->selectOneById($this->user['id']);
+        if (!$privilegeManager->isUserAdmin($user['id_privilege'])) {
+            header('Location: /');
+            exit();
+        }
+
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $category = array_map('trim', $_POST);
+
             if ($this->validate(false, $category)) {
                 $category['created_at'] = (new DateTime())->format('Y-m-d H:i:s');
                 $categoryManager = new CategoryManager();
@@ -82,12 +109,24 @@ class CategoryController extends AbstractController
 
         return $this->twig->render('categories/add.html.twig');
     }
-
     /**
      * Delete a specific category
      */
     public function delete(): void
     {
+        if (!$this->user) {
+            header('Location: /login');
+            exit();
+        }
+
+        $privilegeManager = new PrivilegeManager();
+        $userManager = new UserManager();
+        $user = $userManager->selectOneById($this->user['id']);
+        if (!$privilegeManager->isUserAdmin($user['id_privilege'])) {
+            header('Location: /');
+            exit();
+        }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = trim($_POST['id']);
             $categoryManager = new CategoryManager();
