@@ -1,0 +1,37 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="/assets/css/editProfile.css" />
+{% endblock %}
+{% block title %}Modifier le Profil{% endblock %}
+{% block content %}
+<div class="edit-profile-page">
+    <div class="edit-profile-header">
+        <h1 class="edit-profile-title">Modifier mon Profil</h1>
+    </div>
+
+    <div class="edit-profile-main">
+        <form class="edit-profile-form" action="/profile/edit?id={{ user.id }}" method="POST">
+            <h2 class="sub-title">Mes infos</h2>
+
+            <label for="name">Prénom :</label>
+            <input type="text" id="name" name="name" value="{{ user.name }}" required>
+
+            <label for="lastname">Nom :</label>
+            <input type="text" id="lastname" name="lastname" value="{{ user.lastname }}" required>
+
+            <label for="mail">Adresse email :</label>
+            <input type="email" id="mail" name="mail" value="{{ user.mail }}" required>
+
+            <label for="password">Mot de passe (laissez vide pour ne pas changer) :</label>
+            <input type="password" id="password" name="password">
+
+            <label for="description">Description :</label>
+            <textarea id="description" name="description" required>{{ user.description }}</textarea>
+
+            <input type="submit" value="Enregistrer les modifications">
+        </form>
+    </div>
+</div>
+{% endblock %}
+
