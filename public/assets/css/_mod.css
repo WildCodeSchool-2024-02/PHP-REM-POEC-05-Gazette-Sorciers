@@ -1,0 +1,28 @@
+::backdrop {
+    background: url("https://images.pexels.com/photos/8389962/pexels-photo-8389962.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") center center/cover no-repeat;
+    opacity: 0.4;
+  }
+  #confirmationModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;  
+}
+
+#confirmationModal p {
+    margin-bottom: 10px;
+}
+
+#closeButton {
+    margin-top: 10px;
+}
+
+.message-modal{
+    color: rgb(94, 92, 92);
+}
