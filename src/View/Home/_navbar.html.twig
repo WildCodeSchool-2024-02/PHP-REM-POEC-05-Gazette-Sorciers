@@ -23,13 +23,13 @@
         <a href="#" class="icon-button">
             <i class="fa-regular fa-bell"></i>
         </a>
-        {% if user is defined %}
+        {% if user is defined and user.id is not null %}
         <a href="/profile?id={{ user.id }}" class="icon-button">
             <i class="fa-regular fa-user"></i>
         </a>
         {% else %}
-        <a href="/login" class="profile-icon">
-            <i class="fa-solid fa-user"></i>
+        <a href="/login" class="icon-button">
+            <i class="fa-regular fa-user"></i>
         </a>
         {% endif %}
         <div class="dropdown">
@@ -44,7 +44,7 @@
                 {% if user is defined and user.id is not null %}
                 <li><a href="/logout">Déconnexion</a></li>
                 {% else %}
-                <li><a href="/login">Connexion</a></li> 
+                <li><a href="/login">Se connecter</a></li> 
                 <li><a href="/register">S'inscrire</a></li> 
                 {% endif %}
                 
