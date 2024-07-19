@@ -38,13 +38,20 @@
     padding-bottom: 20px;
 }
 
-.input-container input, .form button {
+.input-container textarea {
+    display: block;
+}
+
+.input-container input,
+.form button,
+.input-container textarea {
     outline: none;
     border: 1px solid #e5e7eb;
     margin: 8px 0;
 }
 
-.input-container input {
+.input-container input,
+.input-container textarea {
     background-color: #fff;
     padding: 1rem;
     padding-right: 3rem;

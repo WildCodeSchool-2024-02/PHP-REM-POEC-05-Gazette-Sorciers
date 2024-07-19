@@ -1,17 +1,16 @@
-{% extends 'layout.html.twig' %} 
+{% extends 'layout.html.twig' %}
 
 {% block stylesheet %}
-<link rel="stylesheet" href="/assets/css/style.css" />
-<link rel="stylesheet" href="/assets/css/_auth.css" />
-<link rel="stylesheet" href="/assets/css/_form.css" />
+<link rel="stylesheet" href="/assets/css/_auth.css">
 {% endblock %}
- 
+
 {% block title %}Inscription{% endblock %}
 
 {% block content %}
-<section class="form-container">
-    <div class="form-wrapper">
-    <form method="post" action="/register" enctype="multipart/form-data" class="form">  
+ 
+   
+    <form method="post" action="/register" enctype="multipart/form-data" class="form">
+        
         <h1 class="form-title">S'inscrire</h1>
         {% if error %}
         <p class="error">{{ error }}</p>
@@ -46,7 +45,5 @@
         <p  class="register-link"> 
         <a href="/login" class="register-link">Se connecter</a></p>
     </form>
-</div>
-</section>
  
 {% endblock %}
