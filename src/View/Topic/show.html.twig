@@ -9,7 +9,9 @@
 		{{topic.content}}
 	</div>
 	<div>
-		<img class="picture" src="{{'/' ~ topic.picture}}">
+		 {% if topic.picture is not null %}
+		 <img class="picture" src="{{'/' ~ topic.picture}}">
+		{% endif %}
 	</div>
 </section>
 </div>

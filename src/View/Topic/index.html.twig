@@ -1,13 +1,15 @@
 {% extends 'layout.html.twig' %}
-
+{% block stylesheet %}
+<link rel="stylesheet" href="/assets/css/topic.css">
+{% endblock %}
 {% block content %}
-<section class="component">
+<section class="topic-component">
 	{% if topics is defined %}
 		{% for topic in topics %}
-			<article class="category">
+			<article class="topic">
 				<img class="avatar" src="https://picsum.photos/100">
-				<h2 class="titre">
-					<a href="/topics/show?id={{ topic.id }}">{{ topic.id }}.
+				<h2>
+					<a class="title" href="/topics/show?id={{ topic.id }}">{{ topic.id }}.
 						{{ topic.title }}</a>
 				</h2>
 				<p class="date">{{ topic.created_at }}</p>
