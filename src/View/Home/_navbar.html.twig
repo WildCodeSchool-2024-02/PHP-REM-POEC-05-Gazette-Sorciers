@@ -37,18 +37,16 @@
                 <i class="fa-solid fa-bars"></i>
             </button>
             <div class="dropdown-menu">
-                <a href="#">Contact</a>
                 <a href="/users">Gestion d'utilisateur</a>
+                <a href="/contact">Contact</a>
                 <a href="#">A propos</a>
                 <a href="#">Mentions Légales</a>
                 {% if user is defined and user.id is not null %}
                 <li><a href="/logout">Déconnexion</a></li>
                 {% else %}
-                <li><a href="/login">Se connecter</a></li> 
-                <li><a href="/register">S'inscrire</a></li> 
+                <li><a href="/login">Se connecter</a></li>
+                <li><a href="/register">S'inscrire</a></li>
                 {% endif %}
-                
-
             </div>
         </div>
     </div>
