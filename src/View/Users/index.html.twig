@@ -1,46 +1,50 @@
 {% extends 'layout.html.twig' %} {% block stylesheet %}
 <link rel="stylesheet" href="/assets/css/_table.css" />
 <link rel="stylesheet" href="/assets/css/_modal.css" />
-{% endblock %} {% block content %}
+{% endblock %} 
+
+{% block content %}
 <h1>Liste des utilisateurs</h1>
 {% if users is empty %}
 <p>Aucun utilisateur trouvé.</p>
 {% else %}
-<table>
-    <thead>
+<div class="table-wrapper">
+    <table>
+      <thead>
         <tr>
-            <th>ID</th>
-            <th>Nom</th>
-            <th>Prénom</th>
-            <th>Email</th>
-            <th>Date de création</th>
-            <th>Rôle</th>
-            <th>Actions</th>
+          <th>ID</th>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Email</th>
+          <th>Date de création</th>
+          <th>Rôle</th>
+          <th>Actions</th>
         </tr>
-    </thead>
-    <tbody>
+      </thead>
+      <tbody>
         {% for user in users %}
         <tr id="user-{{ user.id }}">
-            <td>{{ user.id }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.lastname }}</td>
-            <td>{{ user.mail }}</td>
-            <td>{{ user.created_at }}</td>
-            <td>{{ user.id_privilege }}</td>
-            <td>
-                <button
-                    class="button-delete"
-                    data-user-id="{{ user.id }}"
-                    data-user-name="{{ user.name }}"
-                    data-user-lastname="{{ user.lastname }}"
-                >
-                    Supprimer
-                </button>
-            </td>
+          <td data-label="ID">{{ user.id }}</td>
+          <td data-label="Nom">{{ user.name }}</td>
+          <td data-label="Prénom">{{ user.lastname }}</td>
+          <td data-label="Email">{{ user.mail }}</td>
+          <td data-label="Date de création">{{ user.created_at }}</td>
+          <td data-label="Rôle">{{ user.id_privilege }}</td>
+          <td data-label="Actions">
+            <button
+              class="button-delete"
+              data-user-id="{{ user.id }}"
+              data-user-name="{{ user.name }}"
+              data-user-lastname="{{ user.lastname }}"
+            >
+              Supprimer
+            </button>
+          </td>
         </tr>
         {% endfor %}
-    </tbody>
-</table>
+      </tbody>
+    </table>
+  </div>
 {% endif %} {% include 'Users/_modal.html.twig' %} {% endblock %} {% block
 javascript %}
 <script src="/assets/js/modal.js"></script>

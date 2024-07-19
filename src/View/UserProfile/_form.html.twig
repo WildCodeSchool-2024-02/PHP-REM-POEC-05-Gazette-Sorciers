@@ -1,0 +1,14 @@
+<section class="component">
+	<form class="form" method="post">
+		<input type="hidden" value="{{ category.id }}" name="id">
+		<div class="input-container">
+			<label for="name">nom :</label>
+			<input class="titre" type="text" value="{{ category.name }}" name="name" id="name">
+		</div>
+		<div class="input-container">
+			<label for="description">description :</label>
+			<textarea class="description" type="textarea" name="description" id="description">{{ category.description }}</textarea>
+		</div>
+		<button class="submit"> Envoyer </button>
+	</form>
+</section>

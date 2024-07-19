@@ -33,4 +33,7 @@ return [
     'users' => ['UserController', 'listUsers'],
     'users/confirm-delete/{id}' => ['UserController', 'confirmDelete', ['id']],
     'users/delete' => ['UserController', 'delete'],
+    'contact' => ['ContactController', 'contact'],
+    'profile' => ['ProfileController', 'profile', ['id']],
+    'profile/edit' => ['ProfileController', 'editProfile', ['id']],
 ];
