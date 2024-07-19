@@ -1,4 +1,3 @@
-document.addEventListener("DOMContentLoaded", function() {
     const vifdor = document.getElementById('vifdor');
     let vifdorWidth = vifdor.offsetWidth;
     let vifdorHeight = vifdor.offsetHeight;
@@ -30,5 +29,5 @@ document.addEventListener("DOMContentLoaded", function() {
         vifdorWidth = vifdor.offsetWidth;
         vifdorHeight = vifdor.offsetHeight;
     });
-});
+
 

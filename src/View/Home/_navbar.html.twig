@@ -41,16 +41,14 @@
                 <a href="/users">Gestion d'utilisateur</a>
                 <a href="#">A propos</a>
                 <a href="#">Mentions Légales</a>
-                {% if app.session.get('user') is defined %}
+                {% if user is defined and user.id is not null %}
                 <li><a href="/logout">Déconnexion</a></li>
                 {% else %}
-                <li><a href="/login">Connexion</a></li>
-                {% endif %} {% if app.session.get('user') is defined %} {% set
-                userData = app.session.get('user') %}
-                <p>Utilisateur connecté : {{ userData.name }}</p>
-                {% else %}
-                <p>Aucun utilisateur connecté</p>
+                <li><a href="/login">Connexion</a></li> 
+                <li><a href="/register">S'inscrire</a></li> 
                 {% endif %}
+                
+
             </div>
         </div>
     </div>
