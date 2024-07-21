@@ -1,22 +1,3 @@
-
-.card{
-  display: flex;
-  justify-content: center;
-}
-
-.title{
-  margin-bottom: 2rem;
-  color: var(--content-text-color);
-}
-
-textarea {
-    resize: none;
-    border-radius: 20px;
-    height: 10em;
-    width: 100%;
-    padding: 5px;
-}
-
 .topic-component{
     display: flex;
     justify-content: center;
@@ -29,14 +10,49 @@ textarea {
     border-radius: 10px;
     background-color: var(--text-color);
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 1fr;
     grid-column-gap: 0px;
-    grid-row-gap: 0px;
+    padding-right: 1em;
 }
- p{
-    color: var(--primary-color);
- }
 
+.topic-card
+{
+    color: var(--primary-color);
+    max-width: 70%;
+    border-radius: 10px;
+    background-color: var(--text-color);
+    display: grid;
+    grid-template-columns: 4fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    padding-right: 1em;
+    justify-items: center;
+}
+
+.date{
+    color: var(--primary-color);
+    align-self: self-end;
+    justify-self: end;
+}
+
+.card{
+  display: flex;
+  justify-content: center;
+}
+
+.title{
+  color: var(--content-text-color);
+  font-size: 1.3em;
+}
+
+textarea {
+    resize: none;
+    border-radius: 20px;
+    height: 10em;
+    width: 100%;
+    padding: 5px;
+}
 
 .content{
     margin: 2rem;
@@ -48,19 +64,9 @@ textarea {
 }
 
 
-
-
-
-
-
-
-
-
 @media screen AND (max-width: 800px) {
 .card{
     width: 100%;
 }
 }
-
-
 

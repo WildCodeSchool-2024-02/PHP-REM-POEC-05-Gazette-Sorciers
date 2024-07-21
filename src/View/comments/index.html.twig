@@ -1,0 +1,16 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+<section class="component">
+	{% for comment in comments %}
+	<article class="comment">
+		<img class="avatar" src="https://picsum.photos/100">
+		<h2 class="titre">
+			<a href="/comments/show?id={{ comment.id }}">{{ comment.content }}</a>
+		</h2>
+		<p class="date">{{ comment.created_at }}</p>
+		<p class="author">Par {{ comment.id_user }}</p>
+	</article>
+	{% endfor %}
+</section>
+{% endblock %}
