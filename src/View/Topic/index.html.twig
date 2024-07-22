@@ -8,12 +8,11 @@
 		{% for topic in topics %}
 			<article class="topic">
 				<img class="avatar" src="https://picsum.photos/100">
-				<h2>
-					<a class="title" href="/topics/show?id={{ topic.id }}">{{ topic.id }}.
+				<h2 class="title">
+					<a class="title" href="/topics/show?id={{ topic.id }}">
 						{{ topic.title }}</a>
 				</h2>
 				<p class="date">{{ topic.created_at }}</p>
-				<p class="description">{{ topic.content }}</p>
 			</article>
 		{% endfor %}
 	{% else %}

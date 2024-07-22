@@ -1,0 +1,10 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <section class="component comment-show">
+        <h2 class="comment-add-title">{{ is_edit ? 'Modification du' : 'Ajout d\'un' }} commentaire</h2>
+
+        {% include '/Comments/_form.html.twig' with {'comment': comment, 'is_edit': is_edit} %}
+        <a href="/comments/">Retour</a>
+    </section>
+{% endblock %}
