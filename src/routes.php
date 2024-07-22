@@ -37,4 +37,5 @@ return [
     'profile' => ['ProfileController', 'profile', ['id']],
     'profile/edit' => ['ProfileController', 'editProfile', ['id']],
     'notice' => ['StaticPageController', 'notice'],
+    'about' => ['StaticPageController', 'about'],
 ];
