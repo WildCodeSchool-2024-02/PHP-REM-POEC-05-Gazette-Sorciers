@@ -2,15 +2,27 @@
 {% block stylesheet %} <link rel="stylesheet" href="/assets/css/topic.css" />{% endblock %} 
 
 {% block content %}
-<div class="component">
-<section class="topic">
+<div class="topic-component">
+<section class="topic-card">
 	<h1>{{topic.title}}</h1>
 	<div class="content">
 		{{topic.content}}
 	</div>
 	<div>
-		<img class="picture" src="{{'/' ~ topic.picture}}">
+		 {% if topic.picture is not null %}
+		 <img class="picture" src="{{'/' ~ topic.picture}}">
+		{% endif %}
 	</div>
 </section>
 </div>
+
+
+<div id="myModal" class="modal">
+	<span class="close">&times;</span>
+	<img class="modal-content" id="img01">
+	<div id="caption"></div>
+  </div>
+  
+  
 {% endblock %}
+
