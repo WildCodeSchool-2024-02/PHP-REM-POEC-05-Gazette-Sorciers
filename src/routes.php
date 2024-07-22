@@ -23,8 +23,6 @@ return [
     'categories/add' => ['CategoryController', 'add',],
     'categories/delete' => ['CategoryController', 'delete',],
     'comments' => ['CommentController', 'index',],
-    'comments/edit' => ['CommentController', 'edit', ['id']],
-    'comments/show' => ['CommentController', 'show', ['id']],
     'comments/add' => ['CommentController', 'add',],
     'comments/delete' => ['CommentController', 'delete',],
     'topics' => ['TopicController', 'index', ['id']],
