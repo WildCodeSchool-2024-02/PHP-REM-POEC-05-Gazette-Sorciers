@@ -1,6 +1,39 @@
-:root{
-    --primary-color : #545454;
-    --light : #F6F6F6;
+.topic-component{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.topic
+{
+    margin: 2em 0;
+    color: var(--primary-color);
+    max-width: 100%;
+    border-radius: 10px;
+    background-color: var(--text-color);
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    padding-right: 1em;
+}
+
+.topic-card
+{
+    color: var(--primary-color);
+    max-width: 70%;
+    border-radius: 10px;
+    background-color: var(--text-color);
+    display: grid;
+    grid-template-columns: 4fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    padding-right: 1em;
+    justify-items: center;
+}
+
+.date{
+    color: var(--primary-color);
+    align-self: self-end;
+    justify-self: end;
 }
 
 .card{
@@ -9,28 +42,11 @@
 }
 
 .title{
-  margin-bottom: 2rem;
+  color: var(--content-text-color);
+  font-size: 1.3em;
+  justify-self: center;
 }
 
-
-.form{
-    background-color: #fff;
-    display: block;
-    padding: 2rem;
-    max-width: 350px;
-    border-radius: 0.5rem;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-label{
-    width: 100%;
-    display: inline-block;
-    text-align: center;
-}
-.input{
-    border-radius: 20px;
-    height: 3em;
-    width: 100%;
-}
 textarea {
     resize: none;
     border-radius: 20px;
@@ -38,43 +54,15 @@ textarea {
     width: 100%;
     padding: 5px;
 }
-button{
- justify-content: center;   
-}
-
-.component{
-    display: flex;
-    justify-content: center;
-}
-
-.topic
-{
-  margin-top: 3rem;
-  font-size: large;
-  color:var(--text-color);
-  background-color: #272727;
-  width: 50rem;
-  text-align: center;
-  border-radius: 20px;
-  padding: 1rem;
-}
 
 .content{
     margin: 2rem;
 }
 
 .picture{
-    width: 300px;
+    width: 350px;
     height: 300px;
 }
-
-
-
-
-
-
-
-
 
 
 @media screen AND (max-width: 800px) {
@@ -82,6 +70,4 @@ button{
     width: 100%;
 }
 }
-
-
 
