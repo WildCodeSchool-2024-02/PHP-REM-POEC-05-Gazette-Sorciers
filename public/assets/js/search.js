@@ -38,7 +38,7 @@ function displaySuggestions(suggestions) {
         suggestionElement.appendChild(nameSpan);
 
         const typeSpan = document.createElement('span');
-        typeSpan.textContent = suggestion.type === 'category' ? ' (Category)' : ' (Topic)';
+        typeSpan.textContent = suggestion.type === 'category' ? ' Catégorie ' : ' Sujet ';
         typeSpan.className = 'suggestion-type';
         typeSpan.style.float = 'right';
         suggestionElement.appendChild(typeSpan);
