@@ -10,7 +10,6 @@ class ContactController extends AbstractController
     public function contact()
     {
         $error = '';
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = $_POST['name'] ?? '';
             $email = $_POST['email'] ?? '';
