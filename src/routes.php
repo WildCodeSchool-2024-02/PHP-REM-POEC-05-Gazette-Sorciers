@@ -34,4 +34,5 @@ return [
     'contact' => ['ContactController', 'contact'],
     'profile' => ['ProfileController', 'profile', ['id']],
     'profile/edit' => ['ProfileController', 'editProfile', ['id']],
+    'notice' => ['StaticPageController', 'notice'],
 ];
