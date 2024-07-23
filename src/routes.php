@@ -38,4 +38,5 @@ return [
     'profile/edit' => ['ProfileController', 'editProfile', ['id']],
     'notice' => ['StaticPageController', 'notice'],
     'about' => ['StaticPageController', 'about'],
+    'search' => ['SearchController', 'suggestions'],
 ];

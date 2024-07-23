@@ -4,21 +4,19 @@
             ><img src="\assets\images\logo1.png" alt="La Gazette du Sorcier"
         /></a>
     </div>
-    <div class="search-bar">
-        <form action="#" method="get">
+
+    <div class="search-container">
+        <form id="search-form" action="" method="get">
             <input
                 type="text"
-                name="query"
+                id="search-input"
+                autocomplete="off"
                 placeholder="Rechercher dans les catégories"
             />
-            <button type="submit">
-                <i
-                    class="fa-solid fa-magnifying-glass"
-                    style="color: #52577c"
-                ></i>
-            </button>
+            <div id="suggestions" class="suggestions-container"></div>
         </form>
     </div>
+
     <div class="nav-links">
         <a href="#" class="icon-button">
             <i class="fa-regular fa-bell"></i>
