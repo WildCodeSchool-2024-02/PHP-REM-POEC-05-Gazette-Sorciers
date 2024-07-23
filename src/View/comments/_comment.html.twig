@@ -5,11 +5,13 @@
 		</div>
 		<div class="comment-part-2">
 			<p class="description">{{ comment.content }}</p>
-			<p class="date">{{ comment.created_at }}</p>
-			<p class="author">Par {{ comment.id_user }}</p>
+			<p class="author">Par {{ comment.id_user }} le {{ comment.created_at }}</p>
+		</div>
+		<div class="comment-part-3">
 			{% if comment.picture is not null %}
-			<img class="picture" src="{{'/upload/' ~ comment.picture}}">
+			<img class="picture-comment" src="{{'/upload/' ~ comment.picture}}">
 			{% endif %}
+
 		</div>
 	</article>
 </section>
