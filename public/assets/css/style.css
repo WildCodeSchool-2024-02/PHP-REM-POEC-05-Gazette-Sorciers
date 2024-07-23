@@ -23,11 +23,14 @@ body {
     background-color: var(--primary-color);
 
 }
+main {
+    flex: 1; 
+}
 
 .container {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Assure que la hauteur minimale de la page est 100% de la hauteur de la fenêtre */
+    flex: 1;
 }
 
 

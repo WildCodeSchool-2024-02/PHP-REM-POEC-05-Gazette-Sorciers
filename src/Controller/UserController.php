@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Model\PrivilegeManager;
 use App\Model\UserManager;
 use PDO;
 
@@ -53,13 +54,17 @@ class UserController extends AbstractController
             $user = $userManager->getUserByMail($mail);
             //we should'nt put the password, nor privillege into user profile session
             if ($user && password_verify($password, $user['password'])) {
+                $privilegeManager = new PrivilegeManager();
+                $isUserAdmin = $privilegeManager->isUserAdmin($user['id_privilege']);
                 $_SESSION['user'] = [
                     'id' => $user['id'],
                     'name' => $user['name'],
                     'lastname' => $user['lastname'],
                     'created_at' => $user['created_at'],
                     'mail' => $user['mail'],
-                    'profile_picture' => $user['profile_picture']
+                    'profile_picture' => $user['profile_picture'],
+                    'id_privilege' => $user['id_privilege'],
+                    'isUserAdmin' => $isUserAdmin
                 ];
 
                 header('Location: /');
@@ -83,6 +88,8 @@ class UserController extends AbstractController
 
     public function listUsers()
     {
+
+        $this->checkAdminPrivilege();
         $userManager = new UserManager();
         $users = $userManager->getAllUsers();
 
@@ -90,6 +97,8 @@ class UserController extends AbstractController
     }
     public function delete()
     {
+        $this->checkAdminPrivilege();
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id'];
             $userManager = new UserManager();
