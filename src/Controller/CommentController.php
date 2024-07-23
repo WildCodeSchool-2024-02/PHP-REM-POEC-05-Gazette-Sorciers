@@ -14,7 +14,7 @@ class CommentController extends AbstractController
     /**
      * List comments
      */
-    public function index(string $id): string
+    public function index(int $id): string
     {
         $commentManager = new CommentManager();
         $comments = $commentManager->selectAllByTopic($id);
@@ -35,50 +35,45 @@ class CommentController extends AbstractController
     /**
      * Add a new comment
      */
-    public function add(int $id): ?string
+    public function add(): string
     {
         if (!$this->user) {
             header('Location: /login');
             exit();
         }
 
-        $privilegeManger = new PrivilegeManager();
-        $usermanager = new UserManager();
 
-        $user = $usermanager->selectOneById($this->user['id']);
-        if (!$privilegeManger->isUserAdmin($user['id_privilege'])) {
-            header('Location: /');
-            exit();
-        }
 
-        $topicManager = new TopicManager();
-        $topic = $topicManager->selectOneById($id);
-
+        $commentFile = [];
         $errors = [];
         $uploadDir = 'upload/';
+        $topic = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // clean $_POST data
-            $comment = array_map('trim', $_POST);
-            $commentFile = array_map('trim', $_FILES['picture']);
-            $errors = $this->checkdata($comment, $commentFile);
-            // TODO validations (length, format...)
 
+            $comment = array_map('trim', $_POST);
+            if (!empty($_FILES)) {
+                $commentFile = array_map('trim', $_FILES['picture']);
+            }
+            $errors = $this->checkdata($comment, $commentFile);
             if (empty($errors)) {
-                if (($commentFile['size'] != '0')) {
-                    $fileName = (new DateTime())->format('Y-m-d-H-i-s') . '-' . $commentFile['name'];
-                    $topic['picture'] = $uploadDir . basename($fileName);
-                    $uploadFile = $uploadDir . basename($fileName);
-                    move_uploaded_file($_FILES['picture']['tmp_name'], $uploadFile);
+                if (empty(!$commentFile)) {
+                    if ($commentFile['size'] != '0') {
+                        $fileName = (new DateTime())->format('Y-m-d-H-i-s') . '-' . $commentFile['name'];
+                        $comment['picture'] = $fileName;
+                        $uploadFile = $uploadDir . basename($fileName);
+                        move_uploaded_file($_FILES['picture']['tmp_name'], $uploadFile);
+                    }
                 }
                 $comment['created_at'] = (new DateTime())->format('Y-m-d H:i:s');
-                $comment['id_topic'] = $topic['id'];
                 $comment['id_user'] = $this->user['id'];
-                $commentManager = new CommentManager();
-                $id = $commentManager->insert($comment);
 
-                header('Location: /comments/show?id=' . $id);
-                return null;
+                $commentManager = new CommentManager();
+                $commentManager->insert($comment);
+
+                header('Location: /topics/show?id=' . $comment['id_topic']);
+                return '';
             }
         }
 
@@ -103,7 +98,7 @@ class CommentController extends AbstractController
     public function checkdata(array $comment, array $commentFile): array
     {
 
-        $extension = pathinfo($comment['picture'], PATHINFO_EXTENSION);
+        $extension = pathinfo($commentFile['name'], PATHINFO_EXTENSION);
         $authorizedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
         $maxFileSize = 2000000;
 
@@ -112,13 +107,14 @@ class CommentController extends AbstractController
         if (empty($comment['content'])) {
             $errors[] = 'Le contenu est recquis';
         }
+        if (!empty($commentFile)) {
+            if ((file_exists($commentFile['name']) && !in_array($extension, $authorizedExtensions))) {
+                $errors[] = 'Veuillez sélectionner une image de type Jpg ou Jpeg ou Png ou Gif !';
+            }
 
-        if ((file_exists($commentFile['picture']) && !in_array($extension, $authorizedExtensions))) {
-            $errors[] = 'Veuillez sélectionner une image de type Jpg ou Jpeg ou Png ou Gif !';
-        }
-
-        if (file_exists($commentFile['picture']) && filesize($commentFile['picture']) > $maxFileSize) {
-            $errors[] = 'Votre fichier doit faire moins de 2Mo !';
+            if (file_exists($commentFile['name']) && filesize($commentFile['name']) > $maxFileSize) {
+                $errors[] = 'Votre fichier doit faire moins de 2Mo !';
+            }
         }
 
         return $errors;

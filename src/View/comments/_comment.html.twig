@@ -1,8 +1,4 @@
-{% extends 'layout.html.twig' %}
-
-{% block content %}
 <section class="component comment-show">
-	{% if comment is defined %}
 	<article class="comment w-70 mt-100">
 		<div class="comment-part-1">
 			<img class="avatar" src="https://picsum.photos/100">
@@ -11,10 +7,9 @@
 			<p class="description">{{ comment.content }}</p>
 			<p class="date">{{ comment.created_at }}</p>
 			<p class="author">Par {{ comment.id_user }}</p>
+			{% if comment.picture is not null %}
+			<img class="picture" src="{{'/upload/' ~ comment.picture}}">
+			{% endif %}
 		</div>
 	</article>
-	{% else %}
-	<article class="comment">C'est vide 🤦</article>
-	{% endif %}
 </section>
-{% endblock %}

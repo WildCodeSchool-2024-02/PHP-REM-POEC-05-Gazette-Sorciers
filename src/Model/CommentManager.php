@@ -51,7 +51,7 @@ class CommentManager extends AbstractManager
     /**
      * Get all row from topics
      */
-    public function selectAllByTopic(string $id): array
+    public function selectAllByTopic(int $id): array
     {
         $statement = $this->pdo->prepare("SELECT * FROM " . static::TABLE . " WHERE id_topic=:id");
         $statement->bindValue('id', $id, \PDO::PARAM_INT);
