@@ -1,56 +1,58 @@
 <div class="nav-banner">
-<nav class="navbar">
-    <div class="logo">
-        <a href="\"
-            ><img src="\assets\images\logo1.png" alt="La Gazette du Sorcier"
-        /></a>
-    </div>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="\"
+                ><img
+                    src="\assets\images\logo1.png"
+                    alt="La Gazette du Sorcier"
+            /></a>
+        </div>
 
-    <div class="search-container">
-        <form id="search-form" action="" method="get">
-            <input
-                type="text"
-                id="search-input"
-                autocomplete="off"
-                placeholder="Rechercher dans les catégories"
-            />
-            <div id="suggestions" class="suggestions-container"></div>
-        </form>
-    </div>
+        <div class="search-container">
+            <form id="search-form" action="" method="get">
+                <input
+                    type="text"
+                    id="search-input"
+                    autocomplete="off"
+                    placeholder="Rechercher dans les catégories"
+                />
+                <div id="suggestions" class="suggestions-container"></div>
+            </form>
+        </div>
 
-    <div class="nav-links">
-        <a href="#" class="icon-button">
-            <i class="fa-regular fa-bell"></i>
-        </a>
-        {% if user is defined and user.id is not null %}
-        <a href="/profile?id={{ user.id }}" class="icon-button">
-            <i class="fa-regular fa-user"></i>
-        </a>
-        {% else %}
-        <a href="/login" class="icon-button">
-            <i class="fa-regular fa-user"></i>
-        </a>
-        {% endif %}
-        <div class="dropdown">
-            <button class="dropdown-toggle">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-            <div class="dropdown-menu">
-                {% if user is defined and user.id is not null and user.isUserAdmin %}
-                <a href="/users">Gestion d'utilisateur</a>
-                {% endif %}
-                <a href="/contact">Contact</a>
-                <a href="/about">À propos</a>
-                {% if user is defined and user.id is not null %}
-                <a href="/logout">Déconnexion</a>
-                {% else %}
-                <a href="/login">Se connecter</a>
-                <a href="/register">S'inscrire</a>
-                {% endif %}
-                <a href="/notice">Mentions Légales</a>
+        <div class="nav-links">
+            <a href="#" class="icon-button">
+                <i class="fa-regular fa-bell"></i>
+            </a>
+            {% if user is defined and user.id is not null %}
+            <a href="/profile?id={{ user.id }}" class="icon-button">
+                <i class="fa-regular fa-user"></i>
+            </a>
+            {% else %}
+            <a href="/login" class="icon-button">
+                <i class="fa-regular fa-user"></i>
+            </a>
+            {% endif %}
+            <div class="dropdown">
+                <button class="dropdown-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="dropdown-menu">
+                    {% if user is defined and user.id is not null and
+                    user.isUserAdmin %}
+                    <a href="/users">Gestion d'utilisateur</a>
+                    {% endif %}
+                    <a href="/contact">Contact</a>
+                    <a href="/about">À propos</a>
+                    {% if user is defined and user.id is not null %}
+                    <a href="/logout">Déconnexion</a>
+                    {% else %}
+                    <a href="/login">Se connecter</a>
+                    <a href="/register">S'inscrire</a>
+                    {% endif %}
+                    <a href="/notice">Mentions Légales</a>
+                </div>
             </div>
         </div>
-    </div>
-</nav>
-
+    </nav>
 </div>
