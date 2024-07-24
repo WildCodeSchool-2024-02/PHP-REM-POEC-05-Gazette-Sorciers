@@ -5,7 +5,7 @@
 		</div>
 		<div class="comment-part-2">
 			<p class="description">{{ comment.content }}</p>
-			<p class="author">Par {{ comment.id_user }} le {{ comment.created_at }}</p>
+			<p class="author">Par {{ user.name }} le {{ comment.created_at }}</p>
 		</div>
 		<div class="comment-part-3">
 			{% if comment.picture is not null %}

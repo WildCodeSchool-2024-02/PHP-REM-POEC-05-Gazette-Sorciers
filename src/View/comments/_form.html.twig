@@ -1,14 +1,15 @@
-<form class="form form-center form-100" action="comments/add" method="post" enctype="multipart/form-data">
-    <div class="input-container">
-        <label for="content">Contenu :</label>
-        <textarea type="textarea" name="content" id="content">{{ comment.content }}</textarea>
-    </div>
-    <div class="input-container">
-        <label for="picture">Image</label>
-        <input type="file" name="picture" id="picture" accept=".jpg, .jpeg, .png, .gif">
+<form class="add-form form-center" action="comments/add" method="post" enctype="multipart/form-data">
+    <textarea class="textbox" type="textarea" name="content" id="content">{{ comment.content }}</textarea>
+    <div class="add-form-bottom">
+        <label>
+            <input type="file" name="picture" id="picture" accept=".jpg, .jpeg, .png, .gif">
+            <span>Choisir une image</span>
+        </label>
+        <input class="topic" type="hidden" value="{{ topic.id }}" name="id_topic" id="id_topic">
+    
+        <div class="wrap">
+            <button class="comment-submit"> Envoyer </button>
+        </div>
     </div>
 
-    <input class="topic" type="hidden" value="{{ topic.id }}" name="id_topic" id="id_topic">
-
-    <button class="submit"> Envoyer </button>
 </form>
