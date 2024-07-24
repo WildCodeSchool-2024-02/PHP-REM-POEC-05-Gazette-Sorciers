@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0;
+    padding: 0 20px;
     flex-wrap: wrap;
     z-index: 1;
 }
@@ -152,11 +152,5 @@
 
     .suggestions-container {
         width: 100%;
-    }
-
-    .nav-banner {
-        background: none;
-        padding: 3rem;
-       
     }
 }

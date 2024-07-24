@@ -61,7 +61,7 @@
 
 .banner {
     background: 
-        url("/assets/images/banner4.jpg");
+        repeat-y ;
     position: absolute;
     z-index: -1000;
     height: 550px;
@@ -69,6 +69,9 @@
     margin-bottom: 50px;
     top: 0;
     opacity: 0.5;
+    left: 50%;
+    transform: translateX(-50%);
+
 }
 
 @media screen AND (max-width: 800px) {
@@ -84,4 +87,8 @@
         margin-left: auto;
         margin-right: auto;
     }
+    .banner {
+          background-size: cover;
+          height: 400px;
+  }
 }
