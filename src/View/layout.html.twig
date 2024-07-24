@@ -28,11 +28,13 @@
 
 <body>
     
+
     <div class="container">
         {# included golden snitch div #}
         <div id="vifdor"></div>
         {% include "Home/_navbar.html.twig" %}
-        
+        {% block banner%}
+    {% endblock %}
         {% block content %}
 
         {% endblock %}
@@ -46,7 +48,7 @@
   
     {# js for golden snitch #}
     <script src="/assets/js/snitch_script.js"></script>
-    
+
     <script src="/assets/js/search.js"></script>
 
 </body>
