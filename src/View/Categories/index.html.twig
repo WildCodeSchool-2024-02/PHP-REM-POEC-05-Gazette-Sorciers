@@ -1,15 +1,29 @@
-<section class="component">
+<div class="index">
+  
+<section class="categories">
+    <header class="categories-header">
+        <h1 class="cat-title"> Les catégories </h1></header>
 	{% for category in categories %}
 		<article class="category">
 			<img class="avatar" src="https://picsum.photos/100">
-			<h2 class="titre">
+            <div class="category-content">
+            <h2 class="titre">
 				<a href="/topics?id={{ category.id }}">{{ category.id }}.
 					{{ category.name }}</a>
 			</h2>
-			<p class="date">{{ category.created_at }}</p>
+			{# <p class="date">{{ category.created_at }}</p> #}
 			<p class="description">{{ category.description }}</p>
+            </div>
 		</article>
 	{% else %}
 		<article class="category">C'est vide 🤦</article>
 	{% endfor %}
 </section>
+<aside class="latest-messages">
+    <header class="messages-header">
+        <h1 class="latest-title">Derniers messages</h1>
+    </header>
+        <article class="category">C'est vide 🤦</article>
+
+</aside>
+</div>

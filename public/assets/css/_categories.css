@@ -1,3 +1,5 @@
+/* 
+
 .component
 {
   margin-top: 3rem;
@@ -78,4 +80,105 @@
     margin-left: auto;
     margin-right: auto;
   }
-}
+} */
+
+.index {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 3rem;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: space-between;
+  }
+  
+  /* Header stylisé pour les catégories */
+  .categories-header, .messages-header {
+    width: 100%;
+    background-color: #0a0908; /* Noir profond */
+    color: #FFD700; /* Doré pour rappeler les couleurs Harry Potter */
+    padding: 1rem;
+    text-align: center;
+    font-family: 'Garamond', serif; /* Style typographique ancien */
+    border-bottom: 2px solid #FFD700;
+  }
+  
+  .cat-title, .latest-title {
+    font-size: 2rem;
+    margin: 0;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Section des catégories */
+  .categories {
+    width: 66.6%;
+    margin-right: 1rem;
+  }
+  
+  /* Section des derniers messages */
+  .latest-messages {
+    width: 30%;
+    background-color: #f9f9f9;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Style des catégories */
+  .category {
+    display: flex;
+    align-items: flex-start;
+    background-color: var(--text-color);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .category img.avatar {
+    border-radius: 10px;
+    margin-right: 1rem;
+  }
+  
+  .category-content {
+    text-align: center;
+    flex-grow: 1;
+  }
+  
+  .titre, .description {
+    margin: 0;
+    color: var(--content-text-color);
+  }
+  
+  .titre {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .description {
+    font-size: 1rem;
+    font-weight: 300;
+  }
+  
+  .category a {
+    color: var(--content-text-color);
+    text-decoration: none;
+  }
+  
+  /* Styles responsives */
+  @media screen and (max-width: 800px) {
+    .forum-container {
+      flex-direction: column;
+    }
+  
+    .categories {
+      width: 100%;
+      margin-right: 0;
+    }
+  
+    .latest-messages {
+      width: 100%;
+      margin-top: 1rem;
+    }
+  }
+  
