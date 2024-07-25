@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use App\Model\UserManager;
+use App\Model\TokenManager;
+use DateTime;
 use PDO;
+use mail\mail\mail;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class UserController extends AbstractController
 {
@@ -99,5 +103,126 @@ class UserController extends AbstractController
         }
         header('Location: /users');
         exit();
+    }
+
+    public function forgotPassword()
+    {
+        $result = false;
+        $error = false;
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $mail = $_POST['mail'] ?? '';
+            $userManager = new UserManager();
+            $user = $userManager->getUserByMail($mail);
+            if ($user) {
+                //$token = bin2hex(random_bytes(16));
+                $tokenManager = new TokenManager();
+                $token = $tokenManager->getToken($user['id']);
+                $currTime = new DateTime();
+
+                if (!$token) {
+                    $key = uniqid();
+                    $tokenManager->create($user['id'], $key);
+                    $token = $tokenManager->getToken($user['id']);
+                }
+                $interval = (new DateTime($token['created_at']))->diff($currTime);
+                if ($interval->d > 0 || $interval->h > 0 || $interval->i > 10) {
+                    $tokenManager->delete($user['id']);
+                    $key = uniqid();
+                    $tokenManager->create($user['id'], $key);
+                    $token = $tokenManager->getToken($user['id']);
+                }
+
+                $smtp = $this->setupMailTo($user['id'], $mail, $token['key']);
+                if($smtp)
+                {
+                    if($smtp->send())
+                    {
+                        $result= "Un message vous à été envoyé.";
+                    }
+                    else
+                    {
+                        $error = "an error occured".$smtp->ErrorInfo;
+                    }  
+                }
+            }
+            else {
+                $error = "No user found";
+            }
+        }
+        return $this->twig->render('Auth/forgotPassword.html.twig', ['result' => $result, 'error' => $error]);
+    }
+    public function resetPassword($params)
+    {
+        if (!isset($_GET['token'])) {
+            echo 'bad token ';
+            header('Location: /');
+            exit();
+        }
+        $token = $_GET['token'];
+        $id_user = $_GET['id'];
+        $tokenManager = new TokenManager();
+        $getToken = $tokenManager->getToken($id_user);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $password = $_POST['password'] ?? '';
+            $hashedPassword = password_hash($password, PASSWORD_ARGON2I, [
+                'memory_cost' => 1 << 17,
+                'time_cost' => 4,
+                'threads' => 2
+            ]);
+            $userManager = new UserManager();
+            $userManager->updatePassword($id_user, $hashedPassword);
+            $tokenManager = new TokenManager();
+            $tokenManager->delete($id_user);
+            header('Location: /login');
+            exit();
+        }
+
+
+        $userManager = new UserManager();
+        $user = $userManager->getUserById($id_user);
+        if (!$user) {
+            header('Location: /');
+            exit();
+        }
+        $tokenManager = new TokenManager();
+        $getToken = $tokenManager->getToken($id_user);
+        if (!$getToken) {
+            header('Location: /');
+            exit();
+        }
+        $currTime = new DateTime();
+        $interval = (new DateTime($getToken['created_at']))->diff($currTime);
+        if ($interval->d > 0 || $interval->h > 0 || $interval->i > 10) //token expiré, on le détruit au passage
+        {
+            $tokenManager->delete($id_user);
+            header('Location: /');
+            exit();
+        }
+
+        if ($getToken['key'] != $token) {
+            header('Location: /');
+            exit();
+        }
+        return $this->twig->render('Auth/resetPassword.html.twig', ['id_user' => $id_user, 'token' => $token]);
+    }
+
+    public function setupMailTo($id, $email, $token): PHPMailer
+    {
+        $mail = new PHPMailer();
+
+        $mail->isSMTP();        
+        $mail->Host = SMTP_HOST;
+        $mail->SMTPAuth = true;        
+        $mail->Port = 587; 
+        $mail->Username = SMTP_USER;
+        $mail->Password = SMTP_PASSWORD;
+        $mail->SMTPSecure = 'tls'; 
+
+        $mail->addAddress($email);
+        $mail->isHTML(true);
+        $mail->Subject = 'Demande de réinitialisation du mot de passe';
+        $mail->msgHTML($this->twig->render('UserProfile/Reset.html.twig', ['id_user' => $id, 'token' => $token]));
+        $mail->Body = $this->twig->render('UserProfile/Reset.html.twig', ['id_user' => $id, 'token' => $token]);
+        return $mail;
     }
 }

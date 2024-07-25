@@ -111,4 +111,13 @@ class UserManager extends AbstractManager
         }
         $statement->execute();
     }
+
+    public function updatePassword($id, $password)
+    {
+        $sql = "UPDATE " . self::TABLE . " SET password=:password WHERE id = :id";
+        $statement = $this->pdo->prepare($sql);
+        $statement->bindValue(':id', $id, PDO::PARAM_INT);
+        $statement->bindValue(':password', $password, PDO::PARAM_STR);
+        $statement->execute();
+    }
 }

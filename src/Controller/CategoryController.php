@@ -24,7 +24,7 @@ class CategoryController extends AbstractController
     /**
      * Show informations for a specific category
      */
-    public function show(int $id): string
+    public function show(int $id): ?string
     {
         $categoryManager = new CategoryManager();
         $category = $categoryManager->selectOneById($id);

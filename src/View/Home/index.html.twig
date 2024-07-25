@@ -1,5 +1,7 @@
 {% extends 'layout.html.twig' %}
-
+{% block stylesheet %}
+    <link rel="stylesheet" href="/assets/css/_categories.css" />
+{% endblock %}
 {% block content %}
-
+    {% include '/Categories/list.html.twig' %}
 {% endblock %}

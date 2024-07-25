@@ -1,5 +1,10 @@
 {% extends 'layout.html.twig' %}
-
+{% block stylesheet %}
+    <link rel="stylesheet" href="/assets/css/style.css"> 
+    <link rel="stylesheet" href="/assets/css/_navbar.css" />
+    <link rel="stylesheet" href="/assets/css/_categories.css" />
+{% endblock %}
+ 
 {% block content %}
 <section class="component">
 	{% if category is defined %}
