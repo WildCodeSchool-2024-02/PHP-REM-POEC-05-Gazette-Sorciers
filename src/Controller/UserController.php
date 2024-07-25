@@ -144,14 +144,13 @@ class UserController extends AbstractController
         }
         return $this->twig->render('Auth/forgotPassword.html.twig', ['result' => $result, 'error' => $error]);
     }
-    public function resetPassword()
+    public function resetPassword($tokenUrl)
     {
         if (!isset($_GET['token'])) {
-            echo 'bad token ';
             header('Location: /');
             exit();
         }
-        $token = $_GET['token'];
+        $token = $tokenUrl;
         $idUser = $_GET['id'];
         $tokenManager = new TokenManager();
         $getToken = $tokenManager->getToken($idUser);
@@ -201,20 +200,24 @@ class UserController extends AbstractController
 
     public function setupMailTo($id, $email, $token): PHPMailer
     {
+        $userManager = new UserManager();
+        $user = $userManager->getUserById($id);
         $mail = new PHPMailer();
-
         $mail->isSMTP();
         $mail->Host = SMTP_HOST;
         $mail->SMTPAuth = true;
         $mail->Port = 587;
         $mail->Username = SMTP_USER;
         $mail->Password = SMTP_PASSWORD;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->SMTPSecure = 'tls';
         $mail->addAddress($email);
         $mail->isHTML(true);
+        $mail->setFrom(SEND_FROM,SEND_FROM_NAME);
+        $mail->addReplyTo(SMTP_USER);
         $mail->Subject = 'Demande de réinitialisation du mot de passe';
-        $mail->msgHTML($this->twig->render('UserProfile/Reset.html.twig', ['idUser' => $id, 'token' => $token]));
-        $mail->Body = $this->twig->render('UserProfile/Reset.html.twig', ['idUser' => $id, 'token' => $token]);
+        $mail->msgHTML($this->twig->render('UserProfile/Reset.html.twig', ['name' => $user['name'],'idUser' => $id, 'token' => $token]));
+        $mail->Body = $this->twig->render('UserProfile/Reset.html.twig', ['name' => $user['name'],'idUser' => $id, 'token' => $token]);
         return $mail;
     }
 }

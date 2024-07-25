@@ -2,7 +2,7 @@
 {% block stylesheet %}
 <section class="component">
     <h2> Bonjour, {{ name }}</h2>
-    <p>Nous avons bien reçus votre demande de réinitialisation de mot de passe que voici : <a href="https://localhost:8000/reset?id={{ id }}?token={{ keyToken }}"></a></p>
+    <p>Nous avons bien reçus votre demande de réinitialisation de mot de passe que voici : <a href="http://localhost:8000/resetPassword?id={{ idUser }}&token={{ token }}">Réinitialiser mon mot de passe</a></p>
     <p>Si ce n'est pas vous qui avez demandé cette réinitialisation, ne prenez pas en compte ce mail. </p>
 </section>
 {% endblock %}
