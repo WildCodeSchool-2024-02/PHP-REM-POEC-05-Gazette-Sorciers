@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Model\TopicManager;
 use App\Controller\AbstractController;
 use App\Model\CategoryManager;
+use App\Model\CommentManager;
 use App\Model\PrivilegeManager;
 use App\Model\UserManager;
 use DateTime;
@@ -28,8 +29,10 @@ class TopicController extends AbstractController
     {
         $topicManager = new TopicManager();
         $topic = $topicManager->selectOneById($id);
+        $commentManager = new CommentManager();
+        $comments = $commentManager->selectAllByTopic($id);
 
-        return $this->twig->render('Topic/show.html.twig', ['topic' => $topic]);
+        return $this->twig->render('Topic/show.html.twig', ['topic' => $topic, 'comments' => $comments]);
     }
 
     /**
@@ -59,7 +62,7 @@ class TopicController extends AbstractController
             // clean $_POST data
             $topic = array_map('trim', $_POST);
             $topicFile = array_map('trim', $_FILES['picture']);
-            $errors = $this->validate(false, $topic, $topicFile);
+            $errors = $this->validate($topic, $topicFile);
 
             if (empty($errors)) {
                 if (($topicFile['size'] != '0')) {
@@ -95,7 +98,7 @@ class TopicController extends AbstractController
         }
     }
 
-    private function validate(bool $edit, array $topic, array $topicFile): array
+    private function validate(array $topic, array $topicFile): array
     {
         $extension = pathinfo($topicFile['name'], PATHINFO_EXTENSION);
         $authorizedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
