@@ -147,7 +147,6 @@ class UserController extends AbstractController
             $userManager = new UserManager();
             $user = $userManager->getUserByMail($mail);
             if ($user) {
-                //$token = bin2hex(random_bytes(16));
                 $tokenManager = new TokenManager();
                 $token = $tokenManager->getToken($user['id']);
                 $currTime = new DateTime();
