@@ -8,6 +8,25 @@ use PDO;
 
 class UserController extends AbstractController
 {
+    // Fonction pour définir un cookie
+    public function setCookie($name, $value, $expire)
+    {
+        setcookie($name, $value, $expire, "/");
+        // "/" signifie que le cookie est disponible dans tout le domaine
+    }
+
+    // Fonction pour récupérer un cookie
+    public function getCookie($name)
+    {
+        return isset($_COOKIE[$name]) ? $_COOKIE[$name] : null;
+    }
+
+    // Fonction pour supprimer un cookie
+    public function deleteCookie($name)
+    {
+        setcookie($name, "", time() - 3600, "/");
+    }
+
     public function register()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -93,7 +112,12 @@ class UserController extends AbstractController
         $userManager = new UserManager();
         $users = $userManager->getAllUsers();
 
-        return $this->twig->render('Users/index.html.twig', ['users' => $users]);
+        $cookiesAccepted = $this->getCookie('cookies_accepted');
+
+        return $this->twig->render('Users/index.html.twig', [
+            'users' => $users,
+            'cookiesAccepted' => $cookiesAccepted
+        ]);
     }
     public function delete()
     {
