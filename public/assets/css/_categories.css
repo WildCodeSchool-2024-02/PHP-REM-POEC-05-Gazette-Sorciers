@@ -208,6 +208,7 @@ header img {
 @media screen and (max-width: 800px) {
     .index {
         flex-direction: column;
+        margin-top: 5rem ;
     }
 
     .categories,
@@ -222,5 +223,9 @@ header img {
     .banner {
         background-size: cover;
         height: 400px;
+    }
+
+    .header-image2 {
+        padding-top: 4vh;
     }
 }
