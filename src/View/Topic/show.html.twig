@@ -3,7 +3,6 @@
 <link rel="stylesheet" href="/assets/css/topic.css" />
 <link rel="stylesheet" href="/assets/css/_comment.css">
 {% endblock %}
-
 {% block content %}
 <div class="topic-component">
 	<section class="topic-card">
@@ -18,14 +17,11 @@
 		</div>
 	</section>
 </div>
-
-
 {% if comments is defined %}
 {% for comment in comments %}
 {% include 'comments/_comment.html.twig' %}
 {% endfor %}
 {% endif %}
-
 {% if user is defined and user.id is not null %}
 {% include 'comments/_form.html.twig' %}
 {% endif %}
