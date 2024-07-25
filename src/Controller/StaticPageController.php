@@ -11,4 +11,9 @@ class StaticPageController extends AbstractController
     {
         return $this->twig->render('Notice/index.html.twig');
     }
+
+    public function about()
+    {
+        return $this->twig->render('About/index.html.twig');
+    }
 }

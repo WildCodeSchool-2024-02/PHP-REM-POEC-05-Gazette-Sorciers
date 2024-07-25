@@ -36,6 +36,7 @@
 }
 
 .subsection__title {
+    margin-top: 20px;
     font-size: 1.2em;
     margin-bottom: 5px;
     color:var(--content-text-color);
@@ -46,4 +47,8 @@
     line-height: 1.5;
     color: #c4c4c4;
     text-align: justify;
+}
+
+strong{
+    color:var(--content-text-color);
 }

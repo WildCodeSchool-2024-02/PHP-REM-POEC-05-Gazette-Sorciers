@@ -13,10 +13,7 @@ class ProfileController extends AbstractController
 
     public function profile(int $id)
     {
-        if (!isset($_SESSION['user']) || $_SESSION['user']['id'] !== $id) {
-            header('Location: /login');
-            exit();
-        }
+        $this->checkUserPrivilege();
 
         $this->userModel = new UserManager();
         $user = $this->userModel->getUserById($id);
@@ -45,10 +42,7 @@ class ProfileController extends AbstractController
     }
     public function editProfile(int $id)
     {
-        if (!isset($_SESSION['user']) || $_SESSION['user']['id'] !== $id) {
-            header('Location: /login');
-            exit();
-        }
+        $this->checkUserPrivilege();
 
         $this->userModel = new UserManager();
 
