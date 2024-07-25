@@ -13,19 +13,34 @@
     </picture>
 </div>
 
-<section class="component">
-    {% for category in categories %}
-    <article class="category">
-        <img class="avatar" src="https://picsum.photos/100" />
-        <h2 class="titre">
-            <a href="/topics?id={{ category.id }}"
-                >{{ category.id }}. {{ category.name }}</a
-            >
-        </h2>
-        <p class="date">{{ category.created_at }}</p>
-        <p class="description">{{ category.description }}</p>
-    </article>
-    {% else %}
-    <article class="category">C'est vide 🤦</article>
-    {% endfor %}
+<div class="index">
+  
+<section class="categories">
+    <header class="categories-header">
+        <img src="/assets/images/catégories.png" alt="Catégories" class="header-image1"></header>
+	{% for category in categories %}
+		<article class="category">
+			<img class="avatar" src="https://picsum.photos/100">
+            <div class="category-content">
+            <h2 class="titre">
+				<a href="/topics?id={{ category.id }}">
+					{{ category.name }}</a>
+			</h2>
+			<p class="description">{{ category.description }}</p>
+            </div>
+		</article>
+	{% else %}
+		<article class="category">C'est vide 🤦</article>
+	{% endfor %}
 </section>
+<section class= "last-section">
+    <header class="messages-header">
+        <img src="/assets/images/derniers-messages.png" alt="Derniers messages" class="header-image2">
+    </header>
+<aside class="latest-messages">
+    
+        <article class="category-content">C'est vide 🤦</article>
+
+</aside>
+</section>
+</div>
