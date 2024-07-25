@@ -4,3 +4,9 @@ define('APP_DB_USER', 'user');
 define('APP_DB_PASSWORD', 'password');
 define('APP_DB_HOST', 'localhost');
 define('APP_DB_NAME', 'database_name');
+
+define('SMTP_USER', 'yourmail@example.com');
+define('SMTP_PASSWORD', 'application_Password_ONLY');
+define('SMTP_HOST', 'smtp.gmail.com');
+define('SEND_FROM', 'maskSendFrom');
+define('SEND_FROM_NAME', "nameSendFrom");
