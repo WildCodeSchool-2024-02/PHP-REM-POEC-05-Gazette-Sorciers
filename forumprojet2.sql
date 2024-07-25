@@ -41,6 +41,14 @@ CREATE TABLE `user`(
 )
 ENGINE=innodb CHARACTER SET 'utf8';
 
+CREATE TABLE `token`(
+	`id` INT AUTO_INCREMENT,
+    `key` VARCHAR(255) NOT NULL,
+    `id_user` INT NOT NULL,
+    `created_at` DATETIME NOT NULL,
+    PRIMARY KEY(`id`),
+    FOREIGN KEY(`id_user`) REFERENCES user(`id`)
+); 
 CREATE TABLE `topic`(
    `id` INT AUTO_INCREMENT,
    `title` VARCHAR(50) NOT NULL,
