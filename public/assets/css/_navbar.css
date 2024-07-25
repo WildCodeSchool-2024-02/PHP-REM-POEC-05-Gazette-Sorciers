@@ -2,8 +2,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0;
+    padding: 0 20px;
     flex-wrap: wrap;
+    z-index: 1;
 }
 
 .logo img {
@@ -22,7 +23,7 @@
     border-radius: 15px;
     outline: none;
     width: 40vw;
-    height: 32px;
+    height: 40px;
     text-align: left;
     font-weight: lighter;
     font-size: large;
@@ -119,6 +120,8 @@
 .dropdown:hover .dropdown-menu {
     display: block;
 }
+
+
 
 @media screen and (max-width: 800px) {
     .navbar {
