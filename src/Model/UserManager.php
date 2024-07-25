@@ -8,6 +8,9 @@ use App\Model\AbstractManager;
 class UserManager extends AbstractManager
 {
     public const TABLE = 'user';
+    /**
+     * Récupère un utilisateur par email
+     */
     public function getUserByMail(string $mail): ?array
     {
         $statement = $this->pdo->prepare('SELECT * FROM user WHERE mail = :mail');
@@ -18,6 +21,9 @@ class UserManager extends AbstractManager
         return $user ?: null;
     }
 
+    /**
+     * Crée un utilisateur
+     */
     public function createUser(
         string $name,
         string $lastname,
@@ -39,6 +45,9 @@ class UserManager extends AbstractManager
         $statement->execute();
     }
 
+    /**
+     * Récupère l'ID du privilège par son nom
+     */
     public function getPrivilegeIdByName(string $privilegeName): int
     {
         $statement = $this->pdo->prepare('SELECT id FROM privilege WHERE name = :name');
@@ -49,15 +58,21 @@ class UserManager extends AbstractManager
         return $privilege['id'] ?? 0;
     }
 
-    public function getUserById($id)
+    /**
+     * Récupère un utilisateur par ID
+     */
+    public function getUserById(int $id): ?array
     {
         $statement = $this->pdo->prepare("SELECT name, lastname, password, description,
-        profile_picture, mail, created_at, id FROM user WHERE id = :id");
+        profile_picture, mail, created_at,  id_privilege, id FROM user WHERE id = :id");
         $statement->bindValue('id', $id, PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetch();
+        return $statement->fetch(PDO::FETCH_ASSOC) ?: null;
     }
 
+    /**
+     * Récupère les derniers commentaires d'un utilisateur
+     */
     public function getUserLastComment($id, $limit = 3)
     {
         $sql = "SELECT content FROM comment WHERE id = ? ORDER BY created_at DESC LIMIT " . intval($limit);
@@ -66,6 +81,9 @@ class UserManager extends AbstractManager
         return $statement->fetchAll();
     }
 
+    /**
+     * Récupère tous les utilisateurs
+     */
     public function getAllUsers(): array
     {
         $statement = $this->pdo->query('SELECT id, name, lastname, mail, profile_picture, created_at, ' .
@@ -73,6 +91,9 @@ class UserManager extends AbstractManager
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Supprime un utilisateur par ID
+     */
     public function deleteUserById(int $id): void
     {
         $statement = $this->pdo->prepare('DELETE FROM user WHERE id = :id');
@@ -80,6 +101,9 @@ class UserManager extends AbstractManager
         $statement->execute();
     }
 
+    /**
+     * Met à jour un utilisateur
+     */
     public function updateUser(
         int $id,
         string $name,

@@ -14,7 +14,8 @@ CREATE TABLE `privilege`(
    `name` VARCHAR(50) NOT NULL,
    PRIMARY KEY(`id`),
    UNIQUE(`name`)
-);
+)
+ENGINE=innodb CHARACTER SET 'utf8';
 
 CREATE TABLE `category`(
    `id` INT AUTO_INCREMENT,
@@ -22,7 +23,8 @@ CREATE TABLE `category`(
    `description` TEXT NOT NULL,
    `created_at` DATETIME,
    PRIMARY KEY(`id`)
-);
+)
+ENGINE=innodb CHARACTER SET 'utf8';
 
 CREATE TABLE `user`(
    `id` INT AUTO_INCREMENT,
@@ -36,7 +38,8 @@ CREATE TABLE `user`(
    `id_privilege` INT NOT NULL,
    PRIMARY KEY(`id`),
    FOREIGN KEY(`id_privilege`) REFERENCES privilege(`id`)
-);
+)
+ENGINE=innodb CHARACTER SET 'utf8';
 
 CREATE TABLE `topic`(
    `id` INT AUTO_INCREMENT,
@@ -50,7 +53,8 @@ CREATE TABLE `topic`(
    PRIMARY KEY(`id`),
    FOREIGN KEY(id_category) REFERENCES category(`id`),
    FOREIGN KEY(id_user) REFERENCES user(`id`)
-);
+)
+ENGINE=innodb CHARACTER SET 'utf8';
 
 CREATE TABLE `comment`(
    `id` INT AUTO_INCREMENT,
@@ -63,7 +67,8 @@ CREATE TABLE `comment`(
    PRIMARY KEY(`id`),
    FOREIGN KEY(id_user) REFERENCES `user`(`id`),
    FOREIGN KEY(id_topic) REFERENCES topic(`id`)
-);
+)
+ENGINE=innodb CHARACTER SET 'utf8';
 
 
 INSERT INTO `privilege` VALUES

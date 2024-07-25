@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Model\PrivilegeManager;
 use App\Model\UserManager;
 use App\Model\TokenManager;
 use DateTime;
@@ -57,13 +58,17 @@ class UserController extends AbstractController
             $user = $userManager->getUserByMail($mail);
             //we should'nt put the password, nor privillege into user profile session
             if ($user && password_verify($password, $user['password'])) {
+                $privilegeManager = new PrivilegeManager();
+                $isUserAdmin = $privilegeManager->isUserAdmin($user['id_privilege']);
                 $_SESSION['user'] = [
                     'id' => $user['id'],
                     'name' => $user['name'],
                     'lastname' => $user['lastname'],
                     'created_at' => $user['created_at'],
                     'mail' => $user['mail'],
-                    'profile_picture' => $user['profile_picture']
+                    'profile_picture' => $user['profile_picture'],
+                    'id_privilege' => $user['id_privilege'],
+                    'isUserAdmin' => $isUserAdmin
                 ];
 
                 header('Location: /');
@@ -87,6 +92,8 @@ class UserController extends AbstractController
 
     public function listUsers()
     {
+
+        $this->checkAdminPrivilege();
         $userManager = new UserManager();
         $users = $userManager->getAllUsers();
 
@@ -94,6 +101,8 @@ class UserController extends AbstractController
     }
     public function delete()
     {
+        $this->checkAdminPrivilege();
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id'];
             $userManager = new UserManager();
@@ -213,11 +222,19 @@ class UserController extends AbstractController
         $mail->SMTPSecure = 'tls';
         $mail->addAddress($email);
         $mail->isHTML(true);
-        $mail->setFrom(SEND_FROM,SEND_FROM_NAME);
+        $mail->setFrom(SEND_FROM, SEND_FROM_NAME);
         $mail->addReplyTo(SMTP_USER);
         $mail->Subject = 'Demande de réinitialisation du mot de passe';
-        $mail->msgHTML($this->twig->render('UserProfile/Reset.html.twig', ['name' => $user['name'],'idUser' => $id, 'token' => $token]));
-        $mail->Body = $this->twig->render('UserProfile/Reset.html.twig', ['name' => $user['name'],'idUser' => $id, 'token' => $token]);
+        $mail->msgHTML($this->twig->render('UserProfile/Reset.html.twig', [
+            'name' => $user['name'],
+            'idUser' => $id,
+            'token' => $token
+        ]));
+        $mail->Body = $this->twig->render('UserProfile/Reset.html.twig', [
+            'name' => $user['name'],
+            'idUser' => $id,
+            'token' => $token
+        ]);
         return $mail;
     }
 }

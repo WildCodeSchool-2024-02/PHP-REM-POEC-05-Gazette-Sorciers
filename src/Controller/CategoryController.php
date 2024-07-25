@@ -37,18 +37,7 @@ class CategoryController extends AbstractController
      */
     public function edit(int $id): ?string
     {
-        if (!$this->user) {
-            header('Location: /login');
-            exit();
-        }
-
-        $privilegeManager = new PrivilegeManager();
-        $userManager = new UserManager();
-        $user = $userManager->selectOneById($this->user['id']);
-        if (!$privilegeManager->isUserAdmin($user['id_privilege'])) {
-            header('Location: /');
-            exit();
-        }
+        $this->checkAdminPrivilege();
 
 
         $categoryManager = new CategoryManager();
@@ -80,18 +69,7 @@ class CategoryController extends AbstractController
      */
     public function add(): ?string
     {
-        if (!$this->user) {
-            header('Location: /login');
-            exit();
-        }
-
-        $privilegeManager = new PrivilegeManager();
-        $userManager = new UserManager();
-        $user = $userManager->selectOneById($this->user['id']);
-        if (!$privilegeManager->isUserAdmin($user['id_privilege'])) {
-            header('Location: /');
-            exit();
-        }
+        $this->checkAdminPrivilege();
 
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -114,18 +92,7 @@ class CategoryController extends AbstractController
      */
     public function delete(): void
     {
-        if (!$this->user) {
-            header('Location: /login');
-            exit();
-        }
-
-        $privilegeManager = new PrivilegeManager();
-        $userManager = new UserManager();
-        $user = $userManager->selectOneById($this->user['id']);
-        if (!$privilegeManager->isUserAdmin($user['id_privilege'])) {
-            header('Location: /');
-            exit();
-        }
+        $this->checkAdminPrivilege();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = trim($_POST['id']);

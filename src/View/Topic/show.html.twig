@@ -1,16 +1,33 @@
 {% extends 'layout.html.twig' %}
-{% block stylesheet %} <link rel="stylesheet" href="/assets/css/topic.css" />{% endblock %} 
-
+{% block stylesheet %}
+<link rel="stylesheet" href="/assets/css/topic.css" />
+<link rel="stylesheet" href="/assets/css/_comment.css">
+{% endblock %}
 {% block content %}
-<div class="component">
-<section class="topic">
-	<h1>{{topic.title}}</h1>
-	<div class="content">
-		{{topic.content}}
-	</div>
-	<div>
-		<img class="picture" src="{{'/' ~ topic.picture}}">
-	</div>
-</section>
+<div class="topic-component">
+	<section class="topic-card">
+		<h1>{{topic.title}}</h1>
+		<div class="content">
+			{{topic.content}}
+		</div>
+		<div>
+			{% if topic.picture is not null %}
+			<img class="picture" src="{{'/' ~ topic.picture}}">
+			{% endif %}
+		</div>
+	</section>
+</div>
+{% if comments is defined %}
+{% for comment in comments %}
+{% include 'comments/_comment.html.twig' %}
+{% endfor %}
+{% endif %}
+{% if user is defined and user.id is not null %}
+{% include 'comments/_form.html.twig' %}
+{% endif %}
+<div id="myModal" class="modal">
+	<span class="close">&times;</span>
+	<img class="modal-content" id="img01">
+	<div id="caption"></div>
 </div>
 {% endblock %}

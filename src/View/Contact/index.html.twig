@@ -1,11 +1,13 @@
 {% extends 'layout.html.twig' %} 
 {% block title %}Contact{% endblock %} 
 {% block stylesheet %}
-<link rel="stylesheet" href="/assets/css/style.css" />
 <link rel="stylesheet" href="/assets/css/_form.css" />
 <link rel="stylesheet" href="/assets/css/_mod.css" />
-{% endblock %} {% block content %} {% include 'Contact/_form.html.twig' %} {%
-include 'Contact/_modal.html.twig' %} {% endblock %} 
+{% endblock %} 
+{% block content %} 
+{% include 'Contact/_form.html.twig' %} 
+{% include 'Contact/_modal.html.twig' %} 
+{% endblock %} 
 
 {% block javascript %}
 <script src="/assets/js/mod.js"></script>
