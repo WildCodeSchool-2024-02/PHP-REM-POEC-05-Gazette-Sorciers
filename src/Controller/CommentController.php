@@ -2,20 +2,22 @@
 
 namespace App\Controller;
 
-use App\Model\CommentManager;
-use App\Controller\AbstractController;
 use DateTime;
+use App\Model\UserManager;
+use App\Model\TopicManager;
+use App\Model\CommentManager;
+use App\Model\PrivilegeManager;
+use App\Controller\AbstractController;
 
 class CommentController extends AbstractController
 {
     /**
      * List comments
      */
-    public function index(): string
+    public function index(int $id): string
     {
         $commentManager = new CommentManager();
-        $comments = $commentManager->selectAll('created_at');
-
+        $comments = $commentManager->selectAllByTopic($id);
         return $this->twig->render('comments/index.html.twig', ['comments' => $comments]);
     }
 
@@ -31,56 +33,51 @@ class CommentController extends AbstractController
     }
 
     /**
-     * Edit a specific comment
-     */
-    public function edit(int $id): ?string
-    {
-        $commentManager = new CommentManager();
-        $comment = $commentManager->selectOneById($id);
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // clean $_POST data
-            $comment = array_map('trim', $_POST);
-
-            // TODO validations (length, format...)
-            // if validation is ok, update and redirection
-            if ($this->validate(true, $comment)) {
-                $comment['is_modified'] = 1;
-                $commentManager->update($comment);
-
-                header('Location: /comments/show?id=' . $id);
-                // we are redirecting so we don't want any content rendered
-                return null;
-            }
-        }
-
-        return $this->twig->render('comments/edit.html.twig', [
-            'comment' => $comment,
-        ]);
-    }
-
-    /**
      * Add a new comment
      */
-    public function add(): ?string
+    public function add(): string
     {
+        if (!$this->user) {
+            header('Location: /login');
+            exit();
+        }
+
+
+
+        $commentFile = [];
+        $errors = [];
+        $uploadDir = 'upload/';
+        $topic = [];
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // clean $_POST data
+
             $comment = array_map('trim', $_POST);
-            // TODO validations (length, format...)
-
-            // if validation is ok, insert and redirection
-            if ($this->validate(false, $comment)) {
+            if (!empty($_FILES)) {
+                $commentFile = array_map('trim', $_FILES['picture']);
+            }
+            $errors = $this->checkdata($comment, $commentFile);
+            if (empty($errors)) {
+                if (empty(!$commentFile)) {
+                    if ($commentFile['size'] != '0') {
+                        $fileName = (new DateTime())->format('Y-m-d-H-i-s') . '-' . $commentFile['name'];
+                        $comment['picture'] = $fileName;
+                        $uploadFile = $uploadDir . basename($fileName);
+                        move_uploaded_file($_FILES['picture']['tmp_name'], $uploadFile);
+                    }
+                }
                 $comment['created_at'] = (new DateTime())->format('Y-m-d H:i:s');
-                $commentManager = new CommentManager();
-                $id = $commentManager->insert($comment);
+                $comment['id_user'] = $this->user['id'];
 
-                header('Location: /comments/show?id=' . $id);
-                return null;
+                $commentManager = new CommentManager();
+                $commentManager->insert($comment);
+
+                header('Location: /topics/show?id=' . $comment['id_topic']);
+                return '';
             }
         }
 
-        return $this->twig->render('comments/add.html.twig');
+        return $this->twig->render('comments/add.html.twig', ['errors' => $errors, 'topic' => $topic]);
     }
 
     /**
@@ -98,27 +95,28 @@ class CommentController extends AbstractController
     }
 
     //DRY way to validate data in controller
-    private function validate(bool $edit, array $comment): bool
+    public function checkdata(array $comment, array $commentFile): array
     {
-        // Content validation
+
+        $extension = pathinfo($commentFile['name'], PATHINFO_EXTENSION);
+        $authorizedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        $maxFileSize = 2000000;
+
+        $errors = [];
+
         if (empty($comment['content'])) {
-            return false;
+            $errors[] = 'Le contenu est recquis';
+        }
+        if (!empty($commentFile)) {
+            if ((file_exists($commentFile['name']) && !in_array($extension, $authorizedExtensions))) {
+                $errors[] = 'Veuillez sélectionner une image de type Jpg ou Jpeg ou Png ou Gif !';
+            }
+
+            if (file_exists($commentFile['name']) && filesize($commentFile['name']) > $maxFileSize) {
+                $errors[] = 'Votre fichier doit faire moins de 2Mo !';
+            }
         }
 
-        // User ID and Topic ID validation
-        if (!isset($comment['id_user']) || !filter_var($comment['id_user'], FILTER_VALIDATE_INT)) {
-            return false;
-        }
-
-        if (!isset($comment['id_topic']) || !filter_var($comment['id_topic'], FILTER_VALIDATE_INT)) {
-            return false;
-        }
-
-        // ID validation only in edit mode
-        if ($edit && (!isset($comment['id']) || !filter_var($comment['id'], FILTER_VALIDATE_INT))) {
-            return false;
-        }
-
-        return true;
+        return $errors;
     }
 }
