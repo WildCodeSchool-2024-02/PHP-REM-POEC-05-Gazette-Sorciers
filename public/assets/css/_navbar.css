@@ -153,4 +153,10 @@
     .suggestions-container {
         width: 100%;
     }
+    
+    #admin-dropdown {
+        position: absolute;
+        left: 0;
+        width: max-content;
+    }
 }
