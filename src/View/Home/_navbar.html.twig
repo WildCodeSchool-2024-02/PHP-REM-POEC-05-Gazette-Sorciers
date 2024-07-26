@@ -21,27 +21,35 @@
         </div>
 
         <div class="nav-links">
+            {% if user is defined and user.id is not null and user.isUserAdmin %}
+            <div class="dropdown">
+                <button class="dropdown-toggle">
+                    <i class=" fa-solid fa-screwdriver-wrench" class="icon-button"></i>
+                                </button>
+                <div class="dropdown-menu" >
+                    <a href="/users">Gestion d'utilisateur</a>
+                    <a href="/categories/add">Ajouter une catégorie</a>
+                </div>
+                </div>
+            {% endif %}
+
             <a href="#" class="icon-button">
-                <i class="fa-regular fa-bell"></i>
+                <i class="fa-solid fa-bell"></i>
             </a>
             {% if user is defined and user.id is not null %}
             <a href="/profile?id={{ user.id }}" class="icon-button">
-                <i class="fa-regular fa-user"></i>
+                <i class="fa-solid fa-user"></i>
             </a>
             {% else %}
             <a href="/login" class="icon-button">
-                <i class="fa-regular fa-user"></i>
+                <i class="fa-solid fa-user"></i>
             </a>
             {% endif %}
             <div class="dropdown">
                 <button class="dropdown-toggle">
-                    <i class="fa-solid fa-bars"></i>
+                    <i class="fa-solid fa-bars" class="icon-button"></i>
                 </button>
                 <div class="dropdown-menu">
-                    {% if user is defined and user.id is not null and
-                    user.isUserAdmin %}
-                    <a href="/users">Gestion d'utilisateur</a>
-                    {% endif %}
                     <a href="/contact">Contact</a>
                     <a href="/about">À propos</a>
                     {% if user is defined and user.id is not null %}

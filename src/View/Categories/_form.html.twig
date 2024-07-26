@@ -1,14 +1,20 @@
-<section class="component">
-	<form class="form" method="post">
-		<input type="hidden" value="{{ category.id }}" name="id">
-		<div class="input-container">
-			<label for="name">nom :</label>
-			<input class="titre" type="text" value="{{ category.name }}" name="name" id="name">
-		</div>
-		<div class="input-container">
-			<label for="description">description :</label>
-			<textarea class="description" type="textarea" name="description" id="description">{{ category.description }}</textarea>
-		</div>
-		<button class="submit"> Envoyer </button>
-	</form>
+
+<section id="category-add-form-cat" class="component">
+	<h2 id="add-cat-title"> Ajout de catégorie </h2>
+    <form id="category-form-cat" method="post" enctype="multipart/form-data">
+        <input type="hidden" value="{{ category.id }}" name="id">
+        <div class="input-container-cat" id="input-name-container-cat">
+            <label for="name-cat">Titre :</label>
+            <input type="text" value="{{ category.name }}" name="name" id="name-cat">
+        </div>
+        <div class="input-container-cat" id="input-description-container-cat">
+            <label for="description-cat">Description :</label>
+            <textarea name="description" id="description-cat">{{ category.description }}</textarea>
+        </div>
+        <div class="input-container-cat" id="input-picture-container-cat">
+            <label for="picture-cat">Choisir une image :</label>
+            <input type="file" name="picture" id="picture-cat" accept=".jpg, .jpeg, .png, .gif" required>
+        </div>
+        <button id="category-submit-cat" class="submit">Ajouter</button>
+    </form>
 </section>

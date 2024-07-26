@@ -107,7 +107,8 @@ header img {
 }
 
 
-@media screen and (max-width: 800px) {
+
+@media screen and (max-width: 960px) {
     .index {
         flex-direction: column;
         margin-top: 5rem ;
@@ -129,5 +130,10 @@ header img {
 
     .header-image2 {
         padding-top: 4vh;
+    }
+}
+@media screen and (max-width: 730px) {
+    .index {
+        padding: 0 2rem;
     }
 }
