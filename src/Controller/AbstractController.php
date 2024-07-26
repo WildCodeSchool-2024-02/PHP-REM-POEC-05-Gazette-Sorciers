@@ -65,19 +65,17 @@ abstract class AbstractController
             exit();
         }
 
-        
+
         $user = $_SESSION['user'];
 
         // j'initialise PrivilegeManager et vérifie si l'utilisateur est admin
         $privilegeManager = new PrivilegeManager();
         if (!$privilegeManager->isUserAdmin($user['id_privilege'])) {
             header('Location: /');
-            ;
             exit();
         }
-    
     }
-       
+
 
 
 
@@ -120,5 +118,4 @@ abstract class AbstractController
         }
         return false;
     }
-    
 }

@@ -74,8 +74,8 @@ class UserManager extends AbstractManager
      * Récupère les derniers commentaires d'un utilisateur
      */
     public function getUserLastComment($userId, $limit = 3)
-{
-    $sql = "
+    {
+        $sql = "
     SELECT t.title AS topic_title, c.content AS comment_content, c.created_at AS comment_date
     FROM comment c
     JOIN topic t ON c.id_topic = t.id
@@ -83,10 +83,10 @@ class UserManager extends AbstractManager
     ORDER BY c.created_at DESC
     LIMIT " . intval($limit);
 
-    $statement = $this->pdo->prepare($sql);
-    $statement->execute([$userId]);
-    return $statement->fetchAll();
-}
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute([$userId]);
+        return $statement->fetchAll();
+    }
 
     /**
      * Récupère tous les utilisateurs
