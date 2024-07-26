@@ -46,7 +46,7 @@ class CommentController extends AbstractController
 
         $commentFile = [];
         $errors = [];
-        $uploadDir = 'upload/';
+        $uploadDir = "upload/";
         $topic = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -60,7 +60,7 @@ class CommentController extends AbstractController
             if (empty($errors)) {
                 if (empty(!$commentFile)) {
                     if ($commentFile['size'] != '0') {
-                        $fileName = (new DateTime())->format('Y-m-d-H-i-s') . '-' . $commentFile['name'];
+                        $fileName = (new DateTime())->format('Y-m-d-H-i-s') . '-' . uniqid();
                         $comment['picture'] = $fileName;
                         $uploadFile = $uploadDir . basename($fileName);
                         move_uploaded_file($_FILES['picture']['tmp_name'], $uploadFile);
@@ -77,7 +77,7 @@ class CommentController extends AbstractController
             }
         }
 
-        return $this->twig->render('comments/add.html.twig', ['errors' => $errors, 'topic' => $topic]);
+        return $this->twig->render('topic/show.html.twig', ['errors' => $errors, 'topic' => $topic]);
     }
 
     /**

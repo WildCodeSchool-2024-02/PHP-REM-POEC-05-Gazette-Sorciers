@@ -3,7 +3,7 @@
 		<div class="comment-part-2">
 			<img class="avatar" src="https://picsum.photos/100">
 			<p class="description">{{ comment.content }}</p>
-			<p class="author">Par {{ user.name }} le {{ comment.created_at }}</p>
+			<p class="author">Par {{ comment.name }} le {{ comment.created_at }}</p>
 		</div>
 		<div class="comment-part-3">
 			{% if comment.picture is not null %}

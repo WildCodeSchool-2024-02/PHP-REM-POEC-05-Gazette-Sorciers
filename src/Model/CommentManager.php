@@ -53,7 +53,9 @@ class CommentManager extends AbstractManager
      */
     public function selectAllByTopic(int $id): array
     {
-        $statement = $this->pdo->prepare("SELECT * FROM " . static::TABLE . " WHERE id_topic=:id");
+        $statement = $this->pdo->prepare("SELECT comment.id,comment.created_at,comment.content,comment.picture,
+        user.name,user.id,user.lastname,user.profile_picture
+        FROM " . static::TABLE . " INNER JOIN user ON comment.id_user=user.id WHERE id_topic=:id");
         $statement->bindValue('id', $id, \PDO::PARAM_INT);
         $statement->execute();
 
