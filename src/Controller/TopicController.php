@@ -25,7 +25,7 @@ class TopicController extends AbstractController
         foreach ($topics as $topic) {
             $topicUsers[$topic['id']] = $userManager->selectOneById($topic['id_user']);
         }
-    
+
         return $this->twig->render('Topic/index.html.twig', [
             'topics' => $topics,
             'topicUsers' => $topicUsers,
