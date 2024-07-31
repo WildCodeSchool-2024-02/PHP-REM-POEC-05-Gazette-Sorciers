@@ -55,7 +55,7 @@ class UserManager extends AbstractManager
         $statement->execute();
 
         $privilege = $statement->fetch(PDO::FETCH_ASSOC);
-        return $privilege['id'] ?? 0;
+        return $privilege['id'] ?? 1;
     }
 
     /**
@@ -63,7 +63,7 @@ class UserManager extends AbstractManager
      */
     public function getUserById(int $id): ?array
     {
-        $statement = $this->pdo->prepare("SELECT name, lastname, password, description,
+        $statement = $this->pdo->prepare("SELECT name, lastname, description,
         profile_picture, mail, created_at,  id_privilege, id FROM user WHERE id = :id");
         $statement->bindValue('id', $id, PDO::PARAM_INT);
         $statement->execute();

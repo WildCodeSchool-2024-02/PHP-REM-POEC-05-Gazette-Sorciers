@@ -18,14 +18,13 @@
                 <div id="suggestions" class="suggestions-container"></div>
             </form>
         </div>
-
         <div class="nav-links">
-            {% if user is defined and user.id is not null and user.id_privilege == 3 %}
+            {% if user is defined and user.id is not null and user.isUserAdmin %}
             <div class="dropdown" >
                 <button class="dropdown-toggle">
                     <i class=" fa-solid fa-screwdriver-wrench" class="icon-button"></i>
                                 </button>
-                <div class="dropdown-menu" id="admin-dropdown" >
+                <div class="dropdown-menu" id="admin-dropdown">
                     <a href="/users">Gestion d'utilisateur</a>
                     <a href="/categories/add">Ajouter une catégorie</a>
                 </div>
@@ -36,7 +35,7 @@
                 <i class="fa-solid fa-bell"></i>
             </a>
             {% if user is defined and user.id is not null %}
-            <a href="/profile?id={{ user.id }}" class="icon-button">
+            <a href="/profile" class="icon-button">
                 <i class="fa-solid fa-user"></i>
             </a>
             {% else %}
