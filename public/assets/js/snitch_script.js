@@ -30,4 +30,10 @@
         vifdorHeight = vifdor.offsetHeight;
     });
 
+    document.getElementById('vifdor').addEventListener('click', function() {
+        window.location.href = '/easter-egg';
+    });
+
+    
+
 
