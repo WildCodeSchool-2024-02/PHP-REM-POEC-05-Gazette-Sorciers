@@ -65,6 +65,7 @@ abstract class AbstractController
             exit();
         }
 
+
         $user = $_SESSION['user'];
 
         // j'initialise PrivilegeManager et vérifie si l'utilisateur est admin
@@ -74,6 +75,9 @@ abstract class AbstractController
             exit();
         }
     }
+
+
+
 
     /**
      * Vérifie si l'utilisateur a les privilèges nécessaires pour accéder à la page.
@@ -100,7 +104,7 @@ abstract class AbstractController
      * @param UserManager $userManager Instance de UserManager pour récupérer les informations utilisateur.
      * @return array|false Tableau contenant les détails de l'utilisateur ou `false` si l'utilisateur n'est pas trouvé.
      */
-    private function initializeUser(UserManager $userManager): array|false
+    protected function initializeUser(UserManager $userManager): array|false
     {
         if (isset($_SESSION['user']['id'])) {
             $user = $userManager->getUserById($_SESSION['user']['id']);

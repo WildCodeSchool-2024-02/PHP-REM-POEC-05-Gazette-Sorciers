@@ -55,7 +55,7 @@ class UserManager extends AbstractManager
         $statement->execute();
 
         $privilege = $statement->fetch(PDO::FETCH_ASSOC);
-        return $privilege['id'] ?? 0;
+        return $privilege['id'] ?? 1;
     }
 
     /**
@@ -63,7 +63,7 @@ class UserManager extends AbstractManager
      */
     public function getUserById(int $id): ?array
     {
-        $statement = $this->pdo->prepare("SELECT name, lastname, password, description,
+        $statement = $this->pdo->prepare("SELECT name, lastname, description,
         profile_picture, mail, created_at,  id_privilege, id FROM user WHERE id = :id");
         $statement->bindValue('id', $id, PDO::PARAM_INT);
         $statement->execute();
@@ -73,11 +73,18 @@ class UserManager extends AbstractManager
     /**
      * Récupère les derniers commentaires d'un utilisateur
      */
-    public function getUserLastComment($id, $limit = 3)
+    public function getUserLastComment($userId, $limit = 3)
     {
-        $sql = "SELECT content FROM comment WHERE id = ? ORDER BY created_at DESC LIMIT " . intval($limit);
+        $sql = "
+    SELECT t.title AS topic_title, c.content AS comment_content, c.created_at AS comment_date
+    FROM comment c
+    JOIN topic t ON c.id_topic = t.id
+    WHERE c.id_user = ?
+    ORDER BY c.created_at DESC
+    LIMIT " . intval($limit);
+
         $statement = $this->pdo->prepare($sql);
-        $statement->execute([$id]);
+        $statement->execute([$userId]);
         return $statement->fetchAll();
     }
 
