@@ -33,12 +33,16 @@ class UserController extends AbstractController
 
     public function register()
     {
+        $defaultImages = [
+            '/assets/images/default-1.png',
+            '/assets/images/default-2.jpg',
+        ];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = $_POST['name'] ?? '';
             $lastname = $_POST['lastname'] ?? '';
             $mail = $_POST['mail'] ?? '';
             $password = $_POST['password'] ?? '';
-            $profilePicture = $_POST['profile_picture'] ?? null;
+            $profilePicture = $_POST['profile_picture'] ?? $defaultImages[array_rand($defaultImages)];
 
             // Vérification et validation des données
             if ($name && $lastname && $mail && $password) {
@@ -89,7 +93,6 @@ class UserController extends AbstractController
                     'id_privilege' => $user['id_privilege'],
                     'isUserAdmin' => $isUserAdmin
                 ];
-
                 header('Location: /');
                 exit();
             } else {
