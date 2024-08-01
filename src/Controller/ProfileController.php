@@ -13,7 +13,6 @@ class ProfileController extends AbstractController
 
     public function profile()
     {
-        $this->checkAdminPrivilege();
         if (!isset($_SESSION['user'])) {
             header('Location: /login');
             exit();
@@ -35,7 +34,6 @@ class ProfileController extends AbstractController
     }
     public function editProfile()
     {
-        $this->checkUserPrivilege();
         $this->userModel = new UserManager();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = $_POST['name'] ?? '';
