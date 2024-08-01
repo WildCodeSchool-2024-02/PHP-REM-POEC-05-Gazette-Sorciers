@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Félicitations!</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #de9c45;
+            color: white;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-image: url("/assets/images/winner.webp");         background-size: cover;
+   
+        }
+        #congratulations-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 1000;
+            color: white;
+        }
+        #congratulations-popup h1 {
+            margin: 0;
+        }
+        #video-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: 999;
+            
+        }
+        #video-container video {
+            width: 100%;
+            height: 100%;
+        }
+
+        video {
+            border-radius: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="congratulations-popup">
+        <h1>Félicitations !</h1>
+        <p>Vous avez attrapé le Vif d'Or !</p>
+    </div>
+    <div style="text-align: center;" >
+        <video id="easterEggVideo" width="80%" controls autoplay >
+            <source src="/assets/videos/EasterEgg.mp4" type="video/mp4">
+        </video>
+        <br>
+        <button onclick="window.location.href='/'">Revenir à la page d'accueil</button>
+    </div>     
+        <script>
+                const popup = document.getElementById('congratulations-popup');
+                const videoContainer = document.getElementById('video-container');
+                const video = document.getElementById('easter-egg-video');
+    
+                popup.style.display = 'block';
+    
+                setTimeout(() => {
+                    popup.style.display = 'none';
+                    videoContainer.style.display = 'block';
+                    video.play();
+                }, 5000);
+    
+                video.addEventListener('ended', function() {
+                    window.location.href = '/';
+                });
+        </script>
+    </body>
+    </html>
+</html>

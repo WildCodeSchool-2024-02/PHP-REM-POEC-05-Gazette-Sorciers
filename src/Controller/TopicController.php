@@ -18,23 +18,51 @@ class TopicController extends AbstractController
     public function index(string $id): string
     {
         $topicManager = new TopicManager();
+        $userManager = new UserManager();
+
         $topics = $topicManager->selectAllByCategory($id);
-        return $this->twig->render('Topic/index.html.twig', ['topics' => $topics]);
+        $topicUsers = [];
+        foreach ($topics as $topic) {
+            $topicUsers[$topic['id']] = $userManager->selectOneById($topic['id_user']);
+        }
+
+        return $this->twig->render('Topic/index.html.twig', [
+            'topics' => $topics,
+            'topicUsers' => $topicUsers,
+        ]);
     }
 
     /**
      * Show informations for a specific item
      */
+
     public function show(int $id): string
     {
         $topicManager = new TopicManager();
-        $topic = $topicManager->selectOneById($id);
         $commentManager = new CommentManager();
+        $userManager = new UserManager();
+
+        // Récupérer le topic
+        $topic = $topicManager->selectOneById($id);
+        // Récupérer l'utilisateur qui a créé le topic
+        $topicUser = $userManager->selectOneById($topic['id_user']);
+
+        // Récupérer les commentaires
         $comments = $commentManager->selectAllByTopic($id);
+        $commentUsers = [];
 
-        return $this->twig->render('Topic/show.html.twig', ['topic' => $topic, 'comments' => $comments]);
+        // Récupérer les utilisateurs pour chaque commentaire
+        foreach ($comments as $comment) {
+            $commentUsers[$comment['id']] = $userManager->selectOneById($comment['id_user']);
+        }
+
+        return $this->twig->render('Topic/show.html.twig', [
+            'topic' => $topic,
+            'topicUser' => $topicUser,
+            'comments' => $comments,
+            'commentUsers' => $commentUsers,
+        ]);
     }
-
     /**
      * Add a new topic
      */
