@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\PrivilegeManager;
+use App\Model\RecaptchaManager;
 use App\Model\UserManager;
 use App\Model\TokenManager;
 use DateTime;
@@ -12,6 +13,14 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 class UserController extends AbstractController
 {
+    private RecaptchaManager $recaptchaManager;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $secretKey = '6LcfQx0qAAAAAMP8A1QMUrxBZqA64HC33kdXW_n5';
+        $this->recaptchaManager = new RecaptchaManager($secretKey);
+    }
     // Fonction pour définir un cookie
     public function setCookie($name, $value, $expire)
     {
@@ -39,17 +48,12 @@ class UserController extends AbstractController
         ];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Vérification de la réponse reCAPTCHA
-            require __DIR__ . '/../../config/recaptcha_verify.php';
-
-
             // Récupération de la réponse reCAPTCHA
             $recaptchaResponse = $_POST['g-recaptcha-response'] ?? '';
-            $secretKey = '6LcfQx0qAAAAAMP8A1QMUrxBZqA64HC33kdXW_n5';
             $remoteIp = $_SERVER['REMOTE_ADDR'];
 
             // Vérifie la réponse reCAPTCHA
-            $recaptchaResult = verifyRecaptcha($recaptchaResponse, $secretKey, $remoteIp);
+            $recaptchaResult = $this->recaptchaManager->verifyRecaptcha($recaptchaResponse, $remoteIp);
 
             if (!$recaptchaResult['success']) {
                 $error = $recaptchaResult['error'];
