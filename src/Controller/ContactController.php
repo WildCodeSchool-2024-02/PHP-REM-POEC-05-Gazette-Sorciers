@@ -13,8 +13,7 @@ class ContactController extends AbstractController
     public function __construct()
     {
         parent::__construct();
-        $secretKey = '6LcfQx0qAAAAAMP8A1QMUrxBZqA64HC33kdXW_n5';
-        $this->recaptchaManager = new RecaptchaManager($secretKey);
+        $this->recaptchaManager = new RecaptchaManager(RECAPTCHA_SECRET_KEY);
     }
     public function contact()
     {
