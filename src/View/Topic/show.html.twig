@@ -21,9 +21,7 @@
             <div class="date">Posté le {{ topic.created_at|date("d M Y - H:i") }}</div>
             <div class="content">{{ topic.content }}</div>
             {% if topic.picture %}
-            <img class="picture" src="{{'/' ~ topic.picture}}" alt="Image du topic">
-			{% else %}
-			<img class="picture" src="/assets/images/default-1.png">
+            <img class="picture" src="{{'/upload/' ~ topic.picture}}" alt="Image du topic">
             {% endif %}
         </div>
     </div>
