@@ -34,7 +34,6 @@ class ProfileController extends AbstractController
     }
     public function editProfile()
     {
-        $this->checkUserPrivilege();
         $this->userModel = new UserManager();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = $_POST['name'] ?? '';

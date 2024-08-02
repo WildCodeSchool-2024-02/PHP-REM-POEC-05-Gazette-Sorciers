@@ -8,7 +8,10 @@ use App\Model\CategoryManager;
 use App\Model\CommentManager;
 use App\Model\PrivilegeManager;
 use App\Model\UserManager;
+use App\Service\Upload;
 use DateTime;
+
+use function PHPUnit\Framework\fileExists;
 
 class TopicController extends AbstractController
 {
@@ -56,6 +59,11 @@ class TopicController extends AbstractController
             $commentUsers[$comment['id']] = $userManager->selectOneById($comment['id_user']);
         }
 
+        //verifie si le fichier existe
+        if (file_exists(dirname(__DIR__, 2) . '/public/upload/' . $topic['picture'])) {
+            $topic["fileExist"] = true;
+        }
+
         return $this->twig->render('Topic/show.html.twig', [
             'topic' => $topic,
             'topicUser' => $topicUser,
@@ -73,43 +81,38 @@ class TopicController extends AbstractController
             exit();
         }
 
-        $privilegeManager = new PrivilegeManager();
-        $userManager = new UserManager();
-        $user = $userManager->selectOneById($this->user['id']);
-        if (!$privilegeManager->isUserAdmin($user['id_privilege'])) {
-            header('Location: /');
-            exit();
-        }
-
         $categoryManager = new CategoryManager();
         $category = $categoryManager->selectOneById($id);
 
         $errors = [];
-        $uploadDir = 'upload/';
+        $fileResponse = "";
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // clean $_POST data
             $topic = array_map('trim', $_POST);
             $topicFile = array_map('trim', $_FILES['picture']);
-            $errors = $this->validate($topic, $topicFile);
+            $errors = $this->validate($topic);
 
-            if (empty($errors)) {
-                if (($topicFile['size'] != '0')) {
-                    $fileName = (new DateTime())->format('Y-m-d-H-i-s') . '-' . $topicFile['name'];
-                    $topic['picture'] = $uploadDir . basename($fileName);
-                    $uploadFile = $uploadDir . basename($fileName);
-                    move_uploaded_file($_FILES['picture']['tmp_name'], $uploadFile);
-                }
+            if (($topicFile['size'] != '0')) {
+                $uploadService = new Upload();
+                $fileResponse = $uploadService->uploadFile($topicFile);
+            }
+            if (empty($errors) && gettype($fileResponse) === "string") {
                 $topic['created_at'] = (new DateTime())->format('Y-m-d H:i:s');
+                $topic['picture'] = $fileResponse;
                 $topic['id_category'] = $category['id'];
-                $topic['id_user'] = $this->user['1'];
+                $topic['id_user'] = $this->user['id'];
                 $topicManager = new TopicManager();
                 $id = $topicManager->insert($topic);
 
-                header('Location: /topic/show?id=' . $id);
+                header('Location: /topics/show?id=' . $id);
                 return null;
             }
         }
-        return $this->twig->render('topic/add.html.twig', ['errors' => $errors, 'category' => $category]);
+        return $this->twig->render('topic/add.html.twig', [
+            'errors' => $errors,
+            'category' => $category,
+            'fileResponse' => $fileResponse
+        ]);
     }
 
     /**
@@ -126,11 +129,8 @@ class TopicController extends AbstractController
         }
     }
 
-    private function validate(array $topic, array $topicFile): array
+    private function validate(array $topic): array
     {
-        $extension = pathinfo($topicFile['name'], PATHINFO_EXTENSION);
-        $authorizedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-        $maxFileSize = 2000000;
         $errors = [];
 
         if ($topic['title'] === '' || empty($topic['title'])) {
@@ -141,17 +141,6 @@ class TopicController extends AbstractController
             $errors[] = 'Votre description est vide !';
         }
 
-        if ((file_exists($topicFile['tmp_name']) && !in_array($extension, $authorizedExtensions))) {
-            $errors[] = 'Veuillez sélectionner une image de type Jpg ou Jpeg ou Png ou Gif !';
-        }
-
-        if (file_exists($topicFile['tmp_name']) && filesize($topicFile['tmp_name']) > $maxFileSize) {
-            $errors[] = "Votre fichier doit faire moins de 2Mo !";
-        }
-
-        if (file_exists($topicFile['tmp_name']) && strlen($topicFile['name']) + 20 > 100) {
-            $errors[] = "Le nom de votre fichier doit faire moins de 50 caractères ";
-        }
         return $errors;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\PrivilegeManager;
+use App\Model\RecaptchaManager;
 use App\Model\UserManager;
 use App\Model\TokenManager;
 use DateTime;
@@ -12,6 +13,13 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 class UserController extends AbstractController
 {
+    private RecaptchaManager $recaptchaManager;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->recaptchaManager = new RecaptchaManager(RECAPTCHA_SECRET_KEY);
+    }
     // Fonction pour définir un cookie
     public function setCookie($name, $value, $expire)
     {
@@ -37,7 +45,20 @@ class UserController extends AbstractController
             '/assets/images/default-1.png',
             '/assets/images/default-2.jpg',
         ];
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Récupération de la réponse reCAPTCHA
+            $recaptchaResponse = $_POST['g-recaptcha-response'] ?? '';
+            $remoteIp = $_SERVER['REMOTE_ADDR'];
+
+            // Vérifie la réponse reCAPTCHA
+            $recaptchaResult = $this->recaptchaManager->verifyRecaptcha($recaptchaResponse, $remoteIp);
+
+            if (!$recaptchaResult['success']) {
+                $error = $recaptchaResult['error'];
+                return $this->twig->render('Auth/register.html.twig', ['error' => $error]);
+            }
+
             $name = $_POST['name'] ?? '';
             $lastname = $_POST['lastname'] ?? '';
             $mail = $_POST['mail'] ?? '';
