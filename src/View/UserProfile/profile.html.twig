@@ -12,7 +12,7 @@
         <div class="profile-picture-container">
             <img
                 class="profile-picture"
-                src=" {{user.profile_picture}}"
+                src="{{user.profile_picture}}"
                 alt="Profile Picture"
             />
             <button class="pic-btn">
@@ -42,11 +42,11 @@
             <ul>
                 {% for comment in comments %}
                 <li>
-                    <h3 class="sub-title">TITRE DU TOPIC</h3>
-                    <p>{{ comment.content }}</p>
+                    <h3 class="sub-title"> {{ comment.topic_title }}</h3>
+                    <p>{{ comment.comment_content }}</p>
                     <p class="comment-date">
-                        Publié le {{ comment.date | date("d/m/Y") }} à
-                        {{ comment.date | date("H:i") }}
+                        Publié le {{ comment.comment_date | date("d/m/Y") }} à
+                        {{ comment.comment_date | date("H:i") }}
                     </p>
                 </li>
                 {% endfor %}

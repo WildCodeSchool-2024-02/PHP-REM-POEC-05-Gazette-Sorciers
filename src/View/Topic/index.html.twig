@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="/assets/css/topic.css">
 {% endblock %}
 {% block content %}
-<section class="topic-component">
+{# <section class="topic-component">
 	{% if topics is defined %}
 		{% for topic in topics %}
 			<article class="topic">
@@ -17,6 +17,43 @@
 		{% endfor %}
 	{% else %}
 		<article class="category">C'est vide 🤦</article>
+    {% endif %}
+</section> #}
+<section class="topics-overview">
+    {% if topics is defined %}
+        {% for topic in topics %}
+            <article class="topic-overview">
+				<div class="user-image">
+					{% if topicUser.picture is not null %}
+					<img class="author-picture" src="{{topicUser[topic.id].picture}}">
+					{% else %}
+					<img class="author-picture" src="/assets/images/default-2.jpg">
+					{% endif %}
+					<p class="topic-author">De {{ topicUsers[topic.id].name }} {{ topicUsers[topic.id].lastname }}</p>
+
+					</div>	
+
+				
+                <div class="topic-info">
+                    <h2 class="topic-title">
+                        <a class="topic-title" href="/topics/show?id={{ topic.id }}">
+                            {{ topic.title }}
+                        </a>
+                    </h2>
+                    <p class="topic-content">{{ topic.content }}</p>
+                    <p class="topic-date">{{ topic.created_at }}</p>
+					<div class="topic-picture">
+						{% if topic.picture is defined and topic.picture %}
+							<img class="topic-picture" src="{{ topic.picture }}" alt="Image for {{ topic.title }}">
+						{% else %}
+							<img class="topic-picture" src="/assets/images/default-1.png" alt="Default image">
+						{% endif %}
+					</div>
+                </div>
+            </article>
+        {% endfor %}
+    {% else %}
+        <article class="category-empty">C'est vide 🤦</article>
     {% endif %}
 </section>
 

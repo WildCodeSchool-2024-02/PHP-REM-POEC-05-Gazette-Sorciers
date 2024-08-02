@@ -34,9 +34,10 @@ return [
     'users/confirm-delete/{id}' => ['UserController', 'confirmDelete', ['id']],
     'users/delete' => ['UserController', 'delete'],
     'contact' => ['ContactController', 'contact'],
-    'profile' => ['ProfileController', 'profile', ['id']],
-    'profile/edit' => ['ProfileController', 'editProfile', ['id']],
+    'profile' => ['ProfileController', 'profile'],
+    'profile/edit' => ['ProfileController', 'editProfile'],
     'notice' => ['StaticPageController', 'notice'],
     'about' => ['StaticPageController', 'about'],
     'search' => ['SearchController', 'suggestions'],
+    'easter-egg' => ['EasterEggController', 'show',],
 ];

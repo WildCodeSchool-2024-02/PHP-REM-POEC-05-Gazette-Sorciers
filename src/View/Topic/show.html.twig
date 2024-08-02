@@ -4,23 +4,33 @@
 <link rel="stylesheet" href="/assets/css/_comment.css">
 {% endblock %}
 {% block content %}
+
 <div class="topic-component">
-	<section class="topic-card">
-		<h1>{{topic.title}}</h1>
-		<div class="content">
-			{{topic.content}}
-		</div>
-		<div>
-			{% if topic.picture is not null %}
-			<img class="picture" src="{{'/' ~ topic.picture}}">
+    <div class="topic-card">
+        <div class="author-info">
+            {% if topicUser.picture is not null %}
+			<img class="picture" src="{{'/' ~ topicUser.picture}}">
+			{% else %}
+			<img class="picture" src="/assets/images/default-2.jpg">
 			{% endif %}
-		</div>
-	</section>
+			<p>Auteur: </p>
+            <p>{{ topicUser.name }} {{ topicUser.lastname }}</p>
+        </div>
+        <div class="message-content">
+            <div class="title">{{ topic.title }}</div>
+            <div class="date">Posté le {{ topic.created_at|date("d M Y - H:i") }}</div>
+            <div class="content">{{ topic.content }}</div>
+            {% if topic.picture %}
+            <img class="picture" src="{{'/' ~ topic.picture}}" alt="Image du topic">
+			{% else %}
+			<img class="picture" src="/assets/images/default-1.png">
+            {% endif %}
+        </div>
+    </div>
 </div>
 {% if comments is defined %}
-{% for comment in comments %}
 {% include 'comments/_comment.html.twig' %}
-{% endfor %}
+
 {% endif %}
 {% if user is defined and user.id is not null %}
 {% include 'comments/_form.html.twig' %}
