@@ -13,7 +13,6 @@ class ProfileController extends AbstractController
 
     public function profile()
     {
-        $this->checkAdminPrivilege();
         if (!isset($_SESSION['user'])) {
             header('Location: /login');
             exit();
