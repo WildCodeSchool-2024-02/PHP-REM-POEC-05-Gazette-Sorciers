@@ -11,6 +11,8 @@ use App\Model\UserManager;
 use App\Service\Upload;
 use DateTime;
 
+use function PHPUnit\Framework\fileExists;
+
 class TopicController extends AbstractController
 {
     /**
@@ -57,6 +59,11 @@ class TopicController extends AbstractController
             $commentUsers[$comment['id']] = $userManager->selectOneById($comment['id_user']);
         }
 
+        //verifie si le fichier existe
+        if (file_exists(dirname(__DIR__, 2) . '/public/upload/' . $topic['picture'])) {
+            $topic["fileExist"] = true;
+        }
+
         return $this->twig->render('Topic/show.html.twig', [
             'topic' => $topic,
             'topicUser' => $topicUser,
@@ -101,9 +108,11 @@ class TopicController extends AbstractController
                 return null;
             }
         }
-        return $this->twig->render('topic/add.html.twig', ['errors' => $errors,
-                                                         'category' => $category,
-                                                        'fileResponse' => $fileResponse]);
+        return $this->twig->render('topic/add.html.twig', [
+            'errors' => $errors,
+            'category' => $category,
+            'fileResponse' => $fileResponse
+        ]);
     }
 
     /**

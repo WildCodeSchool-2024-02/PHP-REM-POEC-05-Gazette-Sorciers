@@ -20,7 +20,7 @@
             <div class="title">{{ topic.title }}</div>
             <div class="date">Posté le {{ topic.created_at|date("d M Y - H:i") }}</div>
             <div class="content">{{ topic.content }}</div>
-            {% if topic.picture %}
+            {% if topic.picture and topic.fileExist == true %}
             <img class="picture" src="{{'/upload/' ~ topic.picture}}" alt="Image du topic">
             {% endif %}
         </div>

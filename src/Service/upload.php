@@ -6,14 +6,13 @@ use DateTime;
 
 class Upload
 {
-    private const UPLOAD_DIR = 'upload/';
-
     public function uploadFile($file): array|string
     {
         $errors = $this->validate($file);
         if (empty($errors)) {
-            $fileName = (new DateTime())->format('Y-m-d-H-i-s') . '-' . uniqid();
-            $uploadFile = self::UPLOAD_DIR . basename($fileName);
+            $fileName = (new DateTime())->format('Y-m-d-H-i-s') . '-' . uniqid() .
+            "." . pathinfo($file['name'], PATHINFO_EXTENSION);
+            $uploadFile = dirname(__DIR__, 2) . '/public/upload/' . basename($fileName);
             move_uploaded_file($file['tmp_name'], $uploadFile);
             return $fileName;
         }
