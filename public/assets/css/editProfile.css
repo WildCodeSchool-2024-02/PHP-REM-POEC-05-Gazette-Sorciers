@@ -79,6 +79,11 @@
     transform: translateY(2px);
 }
 
+.current-pp img {
+    max-height: 15rem;
+    width: auto;
+}
+
 @media screen and (max-width: 800px) {
     .edit-profile-main {
         width: 95%;

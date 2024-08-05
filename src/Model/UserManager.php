@@ -125,7 +125,8 @@ class UserManager extends AbstractManager
 
         if ($password) {
             $sql = "UPDATE " . self::TABLE . " SET name = :name, lastname = :lastname, 
-            mail = :mail, password = :password, description = :description, profile_picture = :profilePicture WHERE id = :id";
+            mail = :mail, password = :password, description = :description, 
+            profile_picture = :profilePicture WHERE id = :id";
         }
 
         $statement = $this->pdo->prepare($sql);

@@ -6,7 +6,6 @@ use App\Model\UserManager;
 use Twig\Environment;
 use App\Service\Upload;
 
-
 class ProfileController extends AbstractController
 {
     protected Environment $twig;
@@ -47,7 +46,7 @@ class ProfileController extends AbstractController
             $password = $_POST['password'] ?? '';
             $description = $_POST['description'] ?? '';
 
-            $currentProfilePicture = $_POST['current_profile_picture'] ?? '';
+            $currentPp = $_POST['current_pp'] ?? '';
 
             if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
                 $fileResponse = $uploadService->uploadFile($_FILES['profile_picture']);
@@ -55,10 +54,13 @@ class ProfileController extends AbstractController
                     $profilePicture = $fileResponse;
                 } else {
                     $error = 'Erreur lors du téléchargement de la photo de profil';
-                    return $this->twig->render('UserProfile/editProfile.html.twig', ['error' => $error, 'user' => $userModel->selectOneById($userId)]);
+                    return $this->twig->render(
+                        'UserProfile/editProfile.html.twig',
+                        ['error' => $error, 'user' => $userModel->selectOneById($userId)]
+                    );
                 }
             } else {
-                $profilePicture = $currentProfilePicture;
+                $profilePicture = $currentPp;
             }
 
             // Mise à jour des informations utilisateur

@@ -15,7 +15,7 @@
                 src="{{ user.profile_picture ? '/upload/' ~ user.profile_picture}}"
                 alt="Profile Picture"
             />
-            <button class="pic-btn">
+            <button class="pic-btn" onclick="window.location.href='/profile/edit?id={{ user.id }}'">
                 <i class="fa-solid fa-pen-to-square"></i>
             </button>
         </div>
