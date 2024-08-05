@@ -8,6 +8,7 @@ use App\Model\TopicManager;
 use App\Model\CommentManager;
 use App\Model\PrivilegeManager;
 use App\Controller\AbstractController;
+use App\Service\Upload;
 
 class CommentController extends AbstractController
 {
@@ -35,49 +36,48 @@ class CommentController extends AbstractController
     /**
      * Add a new comment
      */
-    public function add(): string
+    public function add(): ?string
     {
         if (!$this->user) {
             header('Location: /login');
             exit();
         }
 
-
-
-        $commentFile = [];
         $errors = [];
-        $uploadDir = 'upload/';
-        $topic = [];
+        $fileResponse = "";
+        $uploadService = new Upload(); // On suppose que vous avez un service d'upload similaire à celui des sujets
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // clean $_POST data
-
+            // Nettoyer les données $_POST
             $comment = array_map('trim', $_POST);
-            if (!empty($_FILES)) {
-                $commentFile = array_map('trim', $_FILES['picture']);
-            }
+            $commentFile = $_FILES['picture'] ?? null;
+
+            // Valider les données du commentaire
             $errors = $this->checkdata($comment, $commentFile);
-            if (empty($errors)) {
-                if (empty(!$commentFile)) {
-                    if ($commentFile['size'] != '0') {
-                        $fileName = (new DateTime())->format('Y-m-d-H-i-s') . '-' . $commentFile['name'];
-                        $comment['picture'] = $fileName;
-                        $uploadFile = $uploadDir . basename($fileName);
-                        move_uploaded_file($_FILES['picture']['tmp_name'], $uploadFile);
-                    }
-                }
+
+            // Gérer le téléchargement du fichier si présent
+            if ($commentFile && $commentFile['size'] != '0') {
+                $fileResponse = $uploadService->uploadFile($commentFile);
+            }
+
+            // Si les erreurs sont vides et que le téléchargement a réussi
+            if (empty($errors) && gettype($fileResponse) === "string") {
                 $comment['created_at'] = (new DateTime())->format('Y-m-d H:i:s');
+                $comment['picture'] = $fileResponse;
                 $comment['id_user'] = $this->user['id'];
 
                 $commentManager = new CommentManager();
                 $commentManager->insert($comment);
 
                 header('Location: /topics/show?id=' . $comment['id_topic']);
-                return '';
+                return null;
             }
         }
 
-        return $this->twig->render('comments/add.html.twig', ['errors' => $errors, 'topic' => $topic]);
+        return $this->twig->render('comments/add.html.twig', [
+            'errors' => $errors,
+            'fileResponse' => $fileResponse
+        ]);
     }
 
     /**
@@ -97,8 +97,10 @@ class CommentController extends AbstractController
     //DRY way to validate data in controller
     public function checkdata(array $comment, array $commentFile): array
     {
-
-        $extension = pathinfo($commentFile['name'], PATHINFO_EXTENSION);
+        $extension = pathinfo(
+            $commentFile['name'],
+            PATHINFO_EXTENSION
+        );
         $authorizedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
         $maxFileSize = 2000000;
 
