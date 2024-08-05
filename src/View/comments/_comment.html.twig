@@ -12,7 +12,9 @@
 				
 				
 				<div class="comment-part-3">
-					<img class="picture-comment" src="/assets/images/default-2.jpg" alt="Image du commentaire">
+					{% if comment.picture is not empty %}
+					<img class="picture-comment" src="{{'/upload/' ~ comment.picture}}" alt="Image du commentaire">
+					{% endif %}
 				</div>
 			
 			</div>
