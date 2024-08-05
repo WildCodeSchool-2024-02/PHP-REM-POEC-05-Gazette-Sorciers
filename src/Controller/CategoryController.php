@@ -78,9 +78,9 @@ class CategoryController extends AbstractController
             if ($this->validate(false, $category)) {
                 $category['created_at'] = (new DateTime())->format('Y-m-d H:i:s');
                 $categoryManager = new CategoryManager();
-                $id = $categoryManager->insert($category);
+                $categoryManager->insert($category);
 
-                header('Location: /categories/show?id=' . $id);
+                header('Location: /');
                 return null;
             }
         }

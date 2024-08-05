@@ -1,22 +1,52 @@
 {# TODO : manage errors display #}
 
-	<form method="post" class="form" enctype="multipart/form-data">
-		<h2 class="title">Créer un nouveau Topic</h2>
-			{% for error in errors %}
-			<div>{{error}}</div>
-			{% endfor %}
-		<input type="hidden" value="{{ topic.id }}" name="id">
-		<label for="title">Titre</label>
-		<input type="text" class="input" value="{{ topic.title }}" name="title" id="title">
-
-		<label for="content">Description</label>
-		<textarea name="content" id="content" value="{{topic.content}}"></textarea>
-
-		<label for="picture">Image</label>
-		<input type="file" name="picture" id="picture" accept=".jpg, .jpeg, .png, .gif">
-
-		<label for="category">Categorie</label>
-		<input type="text" class="input" value="{{ category.name }}" name="category" id="category" disabled>
-
-		<button>Submit</button>
-	</form>
+<form method="post" class="topic-form" enctype="multipart/form-data">
+    <h2 class="topic-form-title">Créer un nouveau Topic</h2>
+    {% for error in errors %}
+    <div class="topic-form-error">{{ error }}</div>
+    {% endfor %}
+    <input type="hidden" value="{{ topic.id }}" name="id" />
+    <div class="topic-form-group">
+        <label for="title" class="topic-form-label">Titre</label>
+        <input
+            type="text"
+            class="topic-form-input"
+            value="{{ topic.title }}"
+            name="title"
+            id="title"
+            required
+        />
+    </div>
+    <div class="topic-form-group">
+        <label for="content" class="topic-form-label">Description</label>
+        <textarea
+            name="content"
+            id="content"
+            class="topic-form-textarea"
+            required
+            >{{ topic.content }}</textarea
+        >
+    </div>
+    <div class="topic-form-group">
+        <label for="picture" class="topic-form-label">Image</label>
+        <input
+            type="file"
+            name="picture"
+            id="picture"
+            class="topic-form-input"
+            accept=".jpg, .jpeg, .png, .gif"
+        />
+    </div>
+    <div class="topic-form-group">
+        <label for="category" class="topic-form-label">Categorie</label>
+        <input
+            type="text"
+            class="topic-form-input"
+            value="{{ category.name }}"
+            name="category"
+            id="category"
+            disabled
+        />
+    </div>
+    <button class="topic-form-submit">Submit</button>
+</form>

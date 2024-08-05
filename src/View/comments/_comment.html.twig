@@ -1,23 +1,23 @@
 <section class="component comment-show">
     {% for comment in comments %}
 
-		<article class="comment">
-			<div class="comment-part-1">
-				<img class="avatar" src="/assets/images/logo.png" alt="Avatar de l'utilisateur">
-				<p class="author">{{ commentUsers[comment.id].name }} {{ commentUsers[comment.id].lastname }} </p>
-				 <p class="date"> le {{ comment.created_at|date("d M Y - H:i") }}</p>
-			</div>
-			<div class="comment-part-2">
-				<p class="description">{{ comment.content }}</p>
-				
-				
-				<div class="comment-part-3">
-					<img class="picture-comment" src="/assets/images/default-2.jpg" alt="Image du commentaire">
-				</div>
-			
-			</div>
-		</article>
+    <article class="comment">
+        <div class="comment-part-1">
+            <img
+                class="avatar"
+                src="/assets/images/logo.png"
+                alt="Avatar de l'utilisateur"
+            />
+            <p class="author">
+                {{ commentUsers[comment.id].name }}
+                {{ commentUsers[comment.id].lastname }}
+            </p>
+            <p class="date">le {{ comment.created_at|date("d M Y - H:i") }}</p>
+        </div>
+        <div class="comment-part-2">
+            <p class="description">{{ comment.content }}</p>
+        </div>
+    </article>
 
-	
     {% endfor %}
 </section>
