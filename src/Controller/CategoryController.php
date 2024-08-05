@@ -9,7 +9,6 @@ use App\Controller\AbstractController;
 use App\Model\TopicManager;
 use App\Model\CommentManager;
 use DateTime;
-use Exception;
 
 class CategoryController extends AbstractController
 {
@@ -40,7 +39,7 @@ class CategoryController extends AbstractController
      */
     private $categoryModel;
 
-    public function editCategory()
+    public function edit()
     {
         $this->categoryModel = new CategoryManager();
 
@@ -50,7 +49,7 @@ class CategoryController extends AbstractController
             $description = $_POST['description'] ?? '';
 
             if ($id && $name && $description) {
-                $this->categoryModel->updateCategory($id, $name, $description);
+                $this->categoryModel->update($id, $name, $description);
 
                 header('Location: /categories/manage');
                 exit();

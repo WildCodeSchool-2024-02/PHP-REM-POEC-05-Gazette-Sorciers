@@ -20,7 +20,7 @@ return [
     'forgotPassword' => ['UserController', 'forgotPassword',],
     'resetPassword' => ['UserController', 'resetPassword', ['id_user', 'token']],
     'register' => ['UserController', 'register',],
-    'categories/edit' => ['CategoryController', 'editCategory', ['id']],
+    'categories/edit' => ['CategoryController', 'edit', ['id']],
     'categories/show' => ['CategoryController', 'show', ['id']], // listings des topics par categorie
     'categories/add' => ['CategoryController', 'add',],
     'categories/delete' => ['CategoryController', 'delete',],

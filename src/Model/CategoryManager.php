@@ -25,7 +25,7 @@ class CategoryManager extends AbstractManager
     /**
      * Update item in database
      */
-    public function updateCategory(
+    public function update(
         int $id,
         string $name,
         string $description
