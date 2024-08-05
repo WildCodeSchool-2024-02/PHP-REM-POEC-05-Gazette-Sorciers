@@ -122,6 +122,7 @@ label span:active {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 1.6rem;
 }
 
 .comment-submit {
