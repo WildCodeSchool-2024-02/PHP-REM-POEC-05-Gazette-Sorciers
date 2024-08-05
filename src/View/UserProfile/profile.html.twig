@@ -12,7 +12,7 @@
         <div class="profile-picture-container">
             <img
                 class="profile-picture"
-                src="{{user.profile_picture}}"
+                src="{{ user.profile_picture ? '/upload/' ~ user.profile_picture}}"
                 alt="Profile Picture"
             />
             <button class="pic-btn">
@@ -24,9 +24,7 @@
     <div class="profile-main">
         <div class="profile-info-section">
             <h2 class="sub-title">Mes infos</h2>
-            <p>
-                <strong>Nom:</strong> {{ user.name ~ ' ' ~ user.lastname }}
-            </p>
+            <p><strong>Nom:</strong> {{ user.name ~ ' ' ~ user.lastname }}</p>
             <p><strong>Adresse email:</strong> {{ user.mail }}</p>
             <p><strong>Mot de passe:</strong> ********</p>
             <p>
@@ -34,7 +32,12 @@
                 {{ user.created_at | date("d/m/Y") }}
             </p>
             <p><strong>Description:</strong> {{ user.description }}</p>
-            <button class = "edit-button" onclick="window.location.href='/profile/edit?id={{ user.id }}'">Modifier mes infos</button>
+            <button
+                class="edit-button"
+                onclick="window.location.href='/profile/edit?id={{ user.id }}'"
+            >
+                Modifier mes infos
+            </button>
         </div>
 
         <div class="profile-history-section">
@@ -42,7 +45,7 @@
             <ul>
                 {% for comment in comments %}
                 <li>
-                    <h3 class="sub-title"> {{ comment.topic_title }}</h3>
+                    <h3 class="sub-title">{{ comment.topic_title }}</h3>
                     <p>{{ comment.comment_content }}</p>
                     <p class="comment-date">
                         Publié le {{ comment.comment_date | date("d/m/Y") }} à

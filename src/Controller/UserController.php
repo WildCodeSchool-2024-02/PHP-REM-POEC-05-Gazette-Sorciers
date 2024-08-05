@@ -10,6 +10,7 @@ use DateTime;
 use PDO;
 use mail\mail\mail;
 use PHPMailer\PHPMailer\PHPMailer;
+use App\Service\Upload;
 
 class UserController extends AbstractController
 {
@@ -65,6 +66,17 @@ class UserController extends AbstractController
             $password = $_POST['password'] ?? '';
             $profilePicture = $_POST['profile_picture'] ?? $defaultImages[array_rand($defaultImages)];
 
+            if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
+                $uploadService = new Upload();
+                $fileResponse = $uploadService->uploadFile($_FILES['profile_picture']);
+
+                if (is_string($fileResponse)) {
+                    $profilePicture = $fileResponse;
+                } else {
+                    $error = 'Erreur lors du téléchargement de la photo de profil';
+                    return $this->twig->render('Auth/register.html.twig', ['error' => $error]);
+                }
+            }
             // Vérification et validation des données
             if ($name && $lastname && $mail && $password) {
                 $userManager = new UserManager();
