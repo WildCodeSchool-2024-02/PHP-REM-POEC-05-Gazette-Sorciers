@@ -25,13 +25,28 @@ class CategoryManager extends AbstractManager
     /**
      * Update item in database
      */
-    public function update(array $item): bool
+    public function updateCategory(
+        int $id,
+        string $name,
+        string $description
+    ) {
+        $sql = "UPDATE " . self::TABLE . " SET name = :name, description = :description WHERE id = :id";
+
+        $statement = $this->pdo->prepare($sql);
+        $statement->bindValue(':name', $name, PDO::PARAM_STR);
+        $statement->bindValue(':description', $description, PDO::PARAM_STR);
+        $statement->bindValue(':id', $id, PDO::PARAM_INT);
+
+        $statement->execute();
+    }
+    public function selectOneById(int $id): array
     {
-        $statement = $this->pdo->prepare("UPDATE " . self::TABLE .
-            " SET `name` = :name, `description`  = :description WHERE id=:id");
-        $statement->bindValue('id', $item['id'], PDO::PARAM_INT);
-        $statement->bindValue('name', $item['name'], PDO::PARAM_STR);
-        $statement->bindValue('description', $item['description'], PDO::PARAM_STR);
-        return $statement->execute();
+        $sql = "SELECT * FROM " . self::TABLE . " WHERE id = :id";
+        $statement = $this->pdo->prepare($sql);
+        $statement->bindValue(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return $result;
     }
 }

@@ -27,10 +27,9 @@
     <body>
         <div class="container">
             <div id="vifdor"></div>
-            {% include "Home/_navbar.html.twig" %}  
-            {% block content %} {% endblock %}  
-            {% include "Cookies/index.html.twig" %}  
-            {% include "Home/_footer.html.twig" %}
+            {% include "Home/_navbar.html.twig" %} {% block content %} {%
+            endblock %} {% include "Cookies/index.html.twig" %} {% include
+            "Home/_footer.html.twig" %}
         </div>
         {% block javascript %}
         <script
@@ -43,8 +42,7 @@
         ></script>
         <script src="/assets/js/snitch_script.js"></script>
         <script src="/assets/js/search.js"></script>
-        {% endblock %} 
-        
-
+        <script src="/assets/js/deleteCat.js"></script>
+        {% endblock %}
     </body>
 </html>
