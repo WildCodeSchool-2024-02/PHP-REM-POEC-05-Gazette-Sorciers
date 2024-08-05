@@ -34,7 +34,7 @@ class TopicManager extends AbstractManager
         $statement = $this->pdo->prepare("SELECT * FROM " . self::TABLE . " WHERE id_category = :categoryId");
         $statement->bindValue(':categoryId', $categoryId, PDO::PARAM_INT);
         $statement->execute();
-    
+
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
