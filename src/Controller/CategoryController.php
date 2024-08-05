@@ -8,6 +8,7 @@ use App\Model\UserManager;
 use App\Controller\AbstractController;
 use App\Model\TopicManager;
 use App\Model\CommentManager;
+use App\Service\Upload;
 use DateTime;
 
 class CategoryController extends AbstractController
@@ -38,7 +39,6 @@ class CategoryController extends AbstractController
      * Edit a specific category
      */
     private $categoryModel;
-
     public function edit()
     {
         $this->categoryModel = new CategoryManager();
@@ -47,9 +47,27 @@ class CategoryController extends AbstractController
             $id = $_POST['id'] ?? 0;
             $name = $_POST['name'] ?? '';
             $description = $_POST['description'] ?? '';
+            $currentPicture = $_POST['current_picture'] ?? '';
 
             if ($id && $name && $description) {
-                $this->categoryModel->update($id, $name, $description);
+                if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) {
+                    $uploadService = new Upload();
+                    $fileResponse = $uploadService->uploadFile($_FILES['picture']);
+
+                    if (is_string($fileResponse)) {
+                        $picture = $fileResponse;
+                    } else {
+                        $error = 'Erreur lors du téléchargement de l\'image';
+                        return $this->twig->render(
+                            'categories/edit.html.twig',
+                            ['error' => $error, 'category' => $this->categoryModel->selectOneById($id)]
+                        );
+                    }
+                } else {
+                    $picture = $currentPicture;
+                }
+
+                $this->categoryModel->update($id, $name, $description, $picture);
 
                 header('Location: /categories/manage');
                 exit();
@@ -67,6 +85,7 @@ class CategoryController extends AbstractController
         return $this->twig->render('categories/edit.html.twig', ['category' => $category]);
     }
 
+
     /**
      * Add a new category
      */
@@ -74,14 +93,29 @@ class CategoryController extends AbstractController
     {
         $this->checkAdminPrivilege();
 
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $category = array_map('trim', $_POST);
+            $categoryManager = new CategoryManager();
 
             if ($this->validate(false, $category)) {
                 $category['created_at'] = (new DateTime())->format('Y-m-d H:i:s');
-                $categoryManager = new CategoryManager();
-                $categoryManager->insert($category);
+                $category['picture'] = '';
+                $categoryId = $categoryManager->insert($category);
+
+                if ($categoryId && isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) {
+                    $uploadService = new Upload();
+                    $fileResponse = $uploadService->uploadFile($_FILES['picture']);
+
+                    if (is_string($fileResponse)) {
+                        $category['picture'] = $fileResponse;
+                        $categoryManager->update(
+                            $categoryId,
+                            $category['name'],
+                            $category['description'],
+                            $category['picture']
+                        );
+                    }
+                }
 
                 header('Location: /');
                 return null;
@@ -90,6 +124,7 @@ class CategoryController extends AbstractController
 
         return $this->twig->render('categories/add.html.twig');
     }
+
 
 
     public function manage(): string

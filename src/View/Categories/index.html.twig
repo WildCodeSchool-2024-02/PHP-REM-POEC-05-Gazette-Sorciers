@@ -24,7 +24,10 @@
         </header>
         {% for category in categories %}
         <article class="category">
-            <img class="avatar" src="https://picsum.photos/100" />
+            <img
+                class="avatar-index"
+                src="{{ category.picture ? '/upload/' ~ category.picture}}"
+            />
             <div class="category-content">
                 <h2 class="titre">
                     <a href="/topics?id={{ category.id }}">
