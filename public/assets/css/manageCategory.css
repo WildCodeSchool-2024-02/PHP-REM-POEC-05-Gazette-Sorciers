@@ -1,8 +1,7 @@
-/* Styles spécifiques à la page de gestion des catégories */
 .manage-categories {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centrage horizontal */
+    align-items: center;
     margin-top: 2rem;
 }
 
@@ -83,7 +82,6 @@
     border-color: #de9c45;
 }
 
-/* Pour les écrans plus petits */
 @media screen and (max-width: 960px) {
     .manage-categories h1 {
         font-size: 1.5rem;
