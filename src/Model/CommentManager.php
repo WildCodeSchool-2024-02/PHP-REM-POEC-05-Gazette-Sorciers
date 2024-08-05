@@ -78,4 +78,11 @@ class CommentManager extends AbstractManager
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function deleteByTopic(int $topicId): void
+    {
+        $statement = $this->pdo->prepare("DELETE FROM " . self::TABLE . " WHERE id_topic = :topicId");
+        $statement->bindValue('topicId', $topicId, PDO::PARAM_INT);
+        $statement->execute();
+    }
 }

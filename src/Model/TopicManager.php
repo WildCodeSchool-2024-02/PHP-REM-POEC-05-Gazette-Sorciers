@@ -14,7 +14,7 @@ class TopicManager extends AbstractManager
     public function insert(array $topic): int
     {
         $statement = $this->pdo->prepare("INSERT INTO " . self::TABLE .
-        "(`title` ,`created_at`, `content`, `picture`, `id_category`, `id_user`)
+            "(`title` ,`created_at`, `content`, `picture`, `id_category`, `id_user`)
         VALUES (:title, :created_at, :content, :picture, :id_category, :id_user)");
         $statement->bindValue('title', $topic['title'], PDO::PARAM_STR);
         $statement->bindValue('created_at', $topic['created_at'], PDO::PARAM_STR);
@@ -29,13 +29,19 @@ class TopicManager extends AbstractManager
     /**
      * Get all row from one category.
      */
-    public function selectAllByCategory(string $id): array
+    public function selectAllByCategory(int $categoryId): array
     {
-
-        $statement = $this->pdo->prepare("SELECT * FROM " . static::TABLE . " WHERE id_category=:id");
-        $statement->bindValue('id', $id, \PDO::PARAM_INT);
+        $statement = $this->pdo->prepare("SELECT * FROM " . self::TABLE . " WHERE id_category = :categoryId");
+        $statement->bindValue(':categoryId', $categoryId, PDO::PARAM_INT);
         $statement->execute();
 
-        return $statement->fetchAll();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteByCategory(int $categoryId): void
+    {
+        $statement = $this->pdo->prepare("DELETE FROM " . self::TABLE . " WHERE id_category = :categoryId");
+        $statement->bindValue('categoryId', $categoryId, PDO::PARAM_INT);
+        $statement->execute();
     }
 }

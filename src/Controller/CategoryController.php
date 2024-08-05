@@ -6,6 +6,8 @@ use App\Model\CategoryManager;
 use App\Model\PrivilegeManager;
 use App\Model\UserManager;
 use App\Controller\AbstractController;
+use App\Model\TopicManager;
+use App\Model\CommentManager;
 use DateTime;
 
 class CategoryController extends AbstractController
@@ -35,33 +37,34 @@ class CategoryController extends AbstractController
     /**
      * Edit a specific category
      */
-    public function edit(int $id): ?string
+    private $categoryModel;
+
+    public function edit()
     {
-        $this->checkAdminPrivilege();
-
-
-        $categoryManager = new CategoryManager();
-        $category = $categoryManager->selectOneById($id);
+        $this->categoryModel = new CategoryManager();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // clean $_POST data
-            $category = array_map('trim', $_POST);
+            $id = $_POST['id'] ?? 0;
+            $name = $_POST['name'] ?? '';
+            $description = $_POST['description'] ?? '';
 
-            // TODO validations (length, format...)
-            // if validation is ok, update and redirection
-            if ($this->validate(true, $category)) {
-                $category['created_at'] = (new DateTime())->format('Y-m-d H:i:s');
-                $categoryManager->update($category);
+            if ($id && $name && $description) {
+                $this->categoryModel->update($id, $name, $description);
 
-                header('Location: /categories/show?id=' . $id);
-                // we are redirecting so we don't want any content rendered
-                return null;
+                header('Location: /categories/manage');
+                exit();
             }
         }
 
-        return $this->twig->render('categories/edit.html.twig', [
-            'category' => $category
-        ]);
+        $categoryId = $_GET['id'] ?? 0;
+        $category = $this->categoryModel->selectOneById($categoryId);
+
+        if (!$category) {
+            header('Location: /categories/manage');
+            exit();
+        }
+
+        return $this->twig->render('categories/edit.html.twig', ['category' => $category]);
     }
 
     /**
@@ -87,21 +90,48 @@ class CategoryController extends AbstractController
 
         return $this->twig->render('categories/add.html.twig');
     }
-    /**
-     * Delete a specific category
-     */
+
+
+    public function manage(): string
+    {
+        $this->checkAdminPrivilege();
+
+        $categoryManager = new CategoryManager();
+        $categories = $categoryManager->selectAll('name');
+
+        return $this->twig->render('Categories/manage.html.twig', ['categories' => $categories]);
+    }
     public function delete(): void
     {
         $this->checkAdminPrivilege();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id = trim($_POST['id']);
-            $categoryManager = new CategoryManager();
-            $categoryManager->delete((int)$id);
+            $id = isset($_POST['id']) ? (int)trim($_POST['id']) : 0;
 
-            header('Location: /categories');
+            if ($id > 0) {
+                $topicManager = new TopicManager();
+                $commentManager = new CommentManager();
+
+                $topics = $topicManager->selectAllByCategory($id);
+                foreach ($topics as $topic) {
+                    $commentManager->deleteByTopic($topic['id']);
+                }
+
+                $topicManager->deleteByCategory($id);
+
+                $categoryManager = new CategoryManager();
+                $categoryManager->delete($id);
+
+                header('Location: /categories/manage?deleted=true');
+                exit();
+            }
         }
     }
+
+
+
+
+
 
     //DRY way to validate data in controller
     private function validate(bool $edit, array $category): bool
