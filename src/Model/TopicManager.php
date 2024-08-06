@@ -44,4 +44,14 @@ class TopicManager extends AbstractManager
         $statement->bindValue('categoryId', $categoryId, PDO::PARAM_INT);
         $statement->execute();
     }
+
+    public function giveToAnonymous($id): int
+    {
+        $statement = $this->pdo->prepare("UPDATE " . static::TABLE .
+        " SET id_user=" . ANONYMOUS .
+        " WHERE id_user=:id");
+        $statement->bindValue('id', $id, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->rowCount();
+    }
 }

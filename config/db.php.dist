@@ -10,6 +10,6 @@ define('SMTP_PASSWORD', 'application_Password_ONLY');
 define('SMTP_HOST', 'smtp.gmail.com');
 define('SEND_FROM', 'maskSendFrom');
 define('SEND_FROM_NAME', "nameSendFrom");
-
+define('ANONYMOUS', 'id_user_anonymous')
 
 define('RECAPTCHA_SECRET_KEY', 'YOUR_SECRET');

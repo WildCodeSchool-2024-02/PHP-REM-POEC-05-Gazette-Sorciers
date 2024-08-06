@@ -60,6 +60,16 @@ class CommentManager extends AbstractManager
         return $statement->fetchAll();
     }
 
+    public function giveToAnonymous($id): int
+    {
+        $statement = $this->pdo->prepare("UPDATE " . static::TABLE .
+         " SET `id_user` =" . ANONYMOUS .
+         " WHERE `id_user` = :id");
+        $statement->bindValue('id', $id, PDO::PARAM_INT);
+        $statement->execute();
+        return (int)$statement->rowCount();
+    }
+
     public function getLastComments($limit = 5)
     {
         $sql = "
