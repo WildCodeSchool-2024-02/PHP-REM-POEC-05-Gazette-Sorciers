@@ -59,9 +59,10 @@
                         {{ comment.user_lastname }}</strong
                     >
                     sur
-                    <a href="topics/show?id={{ comment.topic_id }}">{{
-                        comment.topic_title
-                    }}</a
+                    <a
+                        class="topic-name"
+                        href="topics/show?id={{ comment.topic_id }}"
+                        >{{ comment.topic_title }}</a
                     ><br />
                     <a
                         class="cat-name"

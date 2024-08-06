@@ -5,10 +5,10 @@
     {% if topics is defined %} {% for topic in topics %}
     <article class="topic-overview">
         <div class="user-image">
-            {% if topicUser.picture is not null %}
+            {% if topicUsers[topic.id].profile_picture is not null %}
             <img
                 class="author-picture"
-                src="{{ topicUser[topic.id].picture }}"
+                src="/upload/{{ topicUsers[topic.id].profile_picture }}"
             />
             {% else %}
             <img class="author-picture" src="/assets/images/default-2.jpg" />
@@ -28,20 +28,20 @@
             <p class="topic-content">{{ topic.content }}</p>
             <p class="topic-date">{{ topic.created_at }}</p>
             <div class="topic-picture">
-                {% if topic.picture is defined and topic.picture %}
+                {% if topic.picture is not null %}
                 <img
                     class="topic-picture"
-                    src="{{ topic.picture }}"
+                    src="/upload/{{ topic.picture }}"
                     alt="Image for {{ topic.title }}"
                 />
-                {% else %} {% endif %}
+                {% endif %}
             </div>
         </div>
     </article>
     {% endfor %} {% else %}
     <article class="category-empty">C'est vide 🤦</article>
     {% endif %}
-    <a href="/topics/add?id={{ category.id }}" class="add-topic-button"
+    <a href="/topics/add?id={{ categoryId }}" class="add-topic-button"
         >Ajouter un topic</a
     >
 </section>

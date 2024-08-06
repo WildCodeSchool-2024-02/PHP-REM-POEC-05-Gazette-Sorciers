@@ -171,12 +171,14 @@ a {
     color: #333;
 }
 
-.latest-messages a {
-    color: var(--content-text-color);
+.latest-messages > a {
     text-decoration: none;
     font-weight: bold;
 }
 
+.topic-name {
+    color: var(--content-text-color);
+}
 .latest-messages a:hover {
     text-decoration: underline;
 }
@@ -192,6 +194,8 @@ a {
 .cat-name {
     font-size: 1.2rem;
     color: #333;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 /* edit catégories */
