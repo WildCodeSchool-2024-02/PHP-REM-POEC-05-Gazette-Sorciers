@@ -165,22 +165,18 @@ header img {
     border: 1px solid #ddd;
     border-radius: 10px;
 }
-.latest-messages li strong,
-a {
-    font-size: 1.4rem;
+.latest-messages li strong {
+    font-size: 1.1rem;
     color: #333;
-}
-
-.latest-messages > a {
-    text-decoration: none;
-    font-weight: bold;
 }
 
 .topic-name {
     color: var(--content-text-color);
+    font-size: 1.2rem;
 }
 .latest-messages a:hover {
     text-decoration: underline;
+    font-size: 1.3rem;
 }
 .latest-messages p {
     font-size: 1rem;
