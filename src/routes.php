@@ -41,4 +41,6 @@ return [
     'about' => ['StaticPageController', 'about'],
     'search' => ['SearchController', 'suggestions'],
     'easter-egg' => ['EasterEggController', 'show',],
+    'notification/getNotifications' => ['NotificationController', 'getNotifications',],
+    'notification/delete' => ['NotificationController', 'delete',],
 ];

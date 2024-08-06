@@ -28,7 +28,7 @@
             <p class="topic-content">{{ topic.content }}</p>
             <p class="topic-date">{{ topic.created_at }}</p>
             <div class="topic-picture">
-                {% if topic.picture is defined and topic.picture %}
+                {% if topic.picture is defined and topic.fileExist == true %}
                 <img
                     class="topic-picture"
                     src="{{ topic.picture }}"
