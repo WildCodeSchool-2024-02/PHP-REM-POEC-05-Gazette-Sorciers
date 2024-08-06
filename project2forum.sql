@@ -7,29 +7,28 @@ drop table if exists `user`;
 drop table if exists `topic`;
 drop table if exists  `comment`;
 
+-- pour qui ne souhaite pas supprimer ces tables mais juste les vidées --
 TRUNCATE TABLE category;
 TRUNCATE TABLE privilege;
 TRUNCATE TABLE `user`;
 TRUNCATE TABLE `topic`;
 TRUNCATE TABLE `comment`;
 
-
 CREATE TABLE `privilege`(
    `id` INT AUTO_INCREMENT,
    `name` VARCHAR(50) NOT NULL,
    PRIMARY KEY(`id`),
    UNIQUE(`name`)
-)
-ENGINE=innodb CHARACTER SET 'utf8';;
+);
 
 CREATE TABLE `category`(
    `id` INT AUTO_INCREMENT,
    `name` VARCHAR(50) NOT NULL,
    `description` TEXT NOT NULL,
+   `picture` VARCHAR(50),
    `created_at` DATETIME,
    PRIMARY KEY(`id`)
-)
-ENGINE=innodb CHARACTER SET 'utf8';;
+);
 
 CREATE TABLE `user`(
    `id` INT AUTO_INCREMENT,
@@ -43,12 +42,20 @@ CREATE TABLE `user`(
    `id_privilege` INT NOT NULL,
    PRIMARY KEY(`id`),
    FOREIGN KEY(`id_privilege`) REFERENCES privilege(`id`)
-)
-ENGINE=innodb CHARACTER SET 'utf8';;
+);
+
+CREATE TABLE `token`(
+	`id` INT AUTO_INCREMENT,
+    `key` VARCHAR(255) NOT NULL,
+    `id_user` INT NOT NULL,
+    `created_at` DATETIME NOT NULL,
+    PRIMARY KEY(`id`),
+    FOREIGN KEY(`id_user`) REFERENCES user(`id`)
+); 
 
 CREATE TABLE `topic`(
    `id` INT AUTO_INCREMENT,
-   `title` VARCHAR(50) NOT NULL,
+   `title` VARCHAR(200) NOT NULL,
    `created_at` DATETIME,
    `content` TEXT,
    `picture` VARCHAR(50),
@@ -57,9 +64,18 @@ CREATE TABLE `topic`(
    `id_user` INT NOT NULL,
    PRIMARY KEY(`id`),
    FOREIGN KEY(id_category) REFERENCES category(`id`),
-   FOREIGN KEY(id_user) REFERENCES user(`id`)
-)
-ENGINE=innodb CHARACTER SET 'utf8';;
+   FOREIGN KEY(id_user) REFERENCES user(`id`) ON UPDATE CASCADE
+);
+
+CREATE TABLE notification (
+    id INT(10) NOT NULL AUTO_INCREMENT,
+    id_user INT(10) NOT NULL,
+    id_topic INT(10) NOT NULL,
+    created_at DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_notification_topic FOREIGN KEY (id_topic) REFERENCES topic (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT notification_ibfk_1 FOREIGN KEY (id_user) REFERENCES user (id) ON UPDATE CASCADE ON DELETE CASCADE
+);
 
 CREATE TABLE `comment`(
    `id` INT AUTO_INCREMENT,
@@ -70,10 +86,9 @@ CREATE TABLE `comment`(
    `id_user` INT NOT NULL,
    `id_topic` INT NOT NULL,
    PRIMARY KEY(`id`),
-   FOREIGN KEY(id_user) REFERENCES `user`(`id`),
-   FOREIGN KEY(id_topic) REFERENCES topic(`id`)
-)
-ENGINE=innodb CHARACTER SET 'utf8';;
+   FOREIGN KEY(id_user) REFERENCES `user`(`id`) ON UPDATE CASCADE,
+   FOREIGN KEY(id_topic) REFERENCES topic(`id`) ON UPDATE CASCADE
+);
 
 CREATE TABLE contact (
     id INT AUTO_INCREMENT,
@@ -82,66 +97,63 @@ CREATE TABLE contact (
     message TEXT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
-)
-ENGINE=innodb CHARACTER SET 'utf8';;
-
-
-
+);
 -- Insertion des données dans la table `privilege`
-INSERT INTO `privilege` (`id`, `name`) VALUES
-(1, 'USER'),
-(2, 'MODERATOR'),
-(3, 'ADMIN');
+INSERT INTO `privilege` (`name`) VALUES
+('USER'),
+('MODERATOR'),
+('ADMIN');
 
--- Insertion des données dans la table `category`
-INSERT INTO `category` (`id`, `name`, `description`, `created_at`) VALUES
-(1, 'La Grande Salle', 'Lieu de rassemblement principal de Poudlard.', NOW()),
-(2, 'La Salle Commune', 'Salle réservée aux élèves de chaque maison.', NOW()),
-(3, 'La Salle sur Demande', 'Salle magique qui apparaît lorsque quelqu\'un en a besoin.', NOW()),
-(4, 'Le Lac Noir', 'Lac situé à côté de Poudlard.', NOW()),
-(5, 'La Forêt Interdite', 'Forêt dense et dangereuse située près de Poudlard.', NOW()),
-(6, 'Le Chemin de Traverse', 'Rue commerçante cachée dans Londres, réservée aux sorciers.', NOW()),
-(7, 'La Chambre des Secrets', 'Chambre mythique construite par Salazar Serpentard.', NOW()),
-(8, 'La Cabane de Hagrid', 'Résidence de Rubeus Hagrid, située à la lisière de la Forêt Interdite.', NOW()),
-(9, 'La Salle des Trophées', 'Salle où sont exposés les trophées de Poudlard.', NOW()),
-(10, 'Le Terrain de Quidditch', 'Terrain où se déroulent les matchs de Quidditch.', NOW());
+-- Insertion des données dans la table `category` --
+INSERT INTO `category` (`name`, `description`, `picture`, `created_at`) VALUES
+('La Grande Salle', 'Discussions générales et annonces du forum.', 'category1.jpg', NOW()),
+('La Salle Commune', 'Discussions sur les différentes adaptations de Harry Potter.', 'category2.jpg', NOW()),
+('La Bibliothèque', 'Espace pour parler de littérature, livres et fanfictions.', 'category3.jpg', NOW()),
+('Le Bureau de Dumbledore', 'Discussions sur les théories et analyses des personnages et de l\'intrigue.', 'category4.jpg', NOW()),
+('Le Terrain de Quidditch', 'Pour parler de sport, et compétitions de quidditch irl, mais aussi des jeux vidéos.', 'category5.jpg', NOW()),
+('La Forêt Interdite', 'Envie de parler de tout et de rien? Les discussions non liées à HP, c\'est ici!', 'category6.jpg', NOW()),
+('Les Cuisines de Poudlard', 'Pour parler de recettes et de la nourriture inspirées par l\'univers de Harry Potter.', 'category7.jpg', NOW()),
+('Le Chaudron Baveur', 'Espace pour les rencontres entre membres, discussions sociales, les événements communautaires et les conventions.', 'category8.jpg', NOW()),
+('La Salle sur Demande', 'Projets créatifs et fanarts.', 'category9.jpg', NOW()),
+('Le Chemin de Traverse', 'Votre dernière trouvaille, une nouvelle boutique? Pour parler des nouveautés et des achats relatifs à l\'univers de Harry Potter.', 'category10.jpg', NOW()),
+('La Volière', 'Fan de relations épistolaires? Envie d\'échanger sur papier avec des fans? C\'est ici!', 'category11.jpg', NOW());
 
--- Insertion des données dans la table `user`
-INSERT INTO `user` (`id`, `name`, `lastname`, `mail`, `created_at`, `password`, `description`, `profile_picture`, `id_privilege`) VALUES
-(1, 'Harry', 'Potter', 'harry.potter@poudlard.com', NOW(), 'motdepasse123', 'L\'Élu.', 'harry.jpg', 1),
-(2, 'Hermione', 'Granger', 'hermione.granger@poudlard.com', NOW(), 'motdepasse123', 'Sorcier très talentueuse.', 'hermione.jpg', 1),
-(3, 'Ron', 'Weasley', 'ron.weasley@poudlard.com', NOW(), 'motdepasse123', 'Meilleur ami de Harry.', 'ron.jpg', 1),
-(4, 'Albus', 'Dumbledore', 'albus.dumbledore@poudlard.com', NOW(), 'motdepasse123', 'Directeur de Poudlard.', 'dumbledore.jpg', 3),
-(5, 'Minerva', 'McGonagall', 'minerva.mcgonagall@poudlard.com', NOW(), 'motdepasse123', 'Professeur et directrice de Gryffondor.', 'mcgonagall.jpg', 2);
+-- Insertion des utilisateurs
+INSERT INTO `user` (`name`, `lastname`, `mail`, `created_at`, `password`, `description`, `profile_picture`, `id_privilege`) VALUES
+('Jean', 'Dupont', 'jean.dupont@gmail.com', NOW(), '$2a$12$gHS6NsmqYqBj6YHyY4T6yOOBXJoEC9L2AD1UWp5T0hxLJNXIivPLW', 'Grand fan de Harry Potter depuis l\'enfance.', 'profile1.jpg', 1),
+('Marie', 'Durand', 'marie.durand@gmail.com', NOW(), '$2a$12$gHS6NsmqYqBj6YHyY4T6yOOBXJoEC9L2AD1UWp5T0hxLJNXIivPLW', 'Passionnée par les fanfictions et les théories sur Harry Potter.', 'profile2.jpg', 2),
+('Paul', 'Martin', 'paul.martin@gmail.com', NOW(), '$2a$12$gHS6NsmqYqBj6YHyY4T6yOOBXJoEC9L2AD1UWp5T0hxLJNXIivPLW', 'J\'adore discuter des adaptations cinématographiques de Harry Potter.', 'profile3.jpg', 3);
 
--- Insertion des données dans la table `topic`
-INSERT INTO `topic` (`id`, `title`, `created_at`, `content`, `picture`, `is_modified`, `id_category`, `id_user`) VALUES
-(1, 'Réunion dans la Grande Salle', NOW(), 'Rejoignez-nous pour une grande fête ce soir!', NULL, FALSE, 1, 1),
-(2, 'Discussion dans la Salle Commune', NOW(), 'Partagez vos aventures du week-end.', NULL, FALSE, 2, 2),
-(3, 'Exploration de la Forêt Interdite', NOW(), 'Cherchons des créatures magiques.', NULL, FALSE, 5, 3),
-(4, 'Match de Quidditch', NOW(), 'Venez assister au grand match de Quidditch.', NULL, FALSE, 10, 4),
-(5, 'Visite du Chemin de Traverse', NOW(), 'Rendez-vous pour acheter des fournitures.', NULL, FALSE, 6, 5);
+-- Insertion des sujets (topics)
+INSERT INTO `topic` (`title`, `created_at`, `content`, `picture`, `is_modified`, `id_category`, `id_user`) VALUES
+('Présentation des membres', NOW(), 'Présentez-vous ici!', 'topic1.jpg', FALSE, 1, 1),
+('Règles du forum', NOW(), 'Veuillez lire les règles avant de poster.', 'topic2.jpg', FALSE, 1, 2),
+('Suggestions pour le forum', NOW(), 'Donnez-nous vos suggestions pour améliorer le forum.', 'topic3.jpg', FALSE, 1, 3),
+('La nouvelle série HP sur HBO Max', NOW(), 'Quelles sont vos attentes pour la nouvelle série?', 'topic4.jpg', FALSE, 2, 1),
+('HP et l\'Enfant Maudit: top ou flop?', NOW(), 'Discutez de la pièce de théâtre et de son impact.', 'topic5.jpg', FALSE, 2, 2),
+('Vos TOP 10 de fanfictions sur AO3!', NOW(), 'Partagez vos fanfictions préférées.', 'topic6.jpg', FALSE, 3, 3),
+('Pourquoi Dumbledore a-t-il laissé Harry chez les Dursley?', NOW(), 'Analyse et théorie sur cette décision de Dumbledore.', 'topic7.jpg', FALSE, 4, 1),
+('Programme de compèt Quidditch, saison 2024', NOW(), 'Calendrier et résultats des compétitions de quidditch.', 'topic8.jpg', FALSE, 5, 2),
+('Filmographie Emma Watson', NOW(), 'Discussions sur les films d\'Emma Watson en dehors de HP.', 'topic9.jpg', FALSE, 6, 3),
+('Recherche: "La Cuisine pour les Sorciers" de Gastronogeek', NOW(), 'Quelqu\'un a-t-il ce livre? Que vaut-il?', 'topic10.jpg', FALSE, 7, 1),
+('Rencontre IRL de fans sur Paris', NOW(), 'Organisons une rencontre entre fans à Paris.', 'topic11.jpg', FALSE, 8, 2),
+('Que pensez-vous de cette fanvid sur Les Maraudeurs?', NOW(), 'Partagez et discutez de vos créations vidéo.', 'topic12.jpg', FALSE, 9, 3),
+('Le Défi des Sorciers ferme à Lille 😦', NOW(), 'Triste nouvelle pour les fans à Lille.', 'topic13.jpg', FALSE, 10, 1),
+('Recherche d\'un correspondant Anglophone', NOW(), 'Envie d\'échanger des lettres avec un fan anglophone?', 'topic14.jpg', FALSE, 11, 2);
 
--- Insertion des données dans la table `comment`
-INSERT INTO `comment` (`id`, `created_at`, `content`, `picture`, `is_modified`, `id_user`, `id_topic`) VALUES
-(1, NOW(), 'Je serai là!', NULL, FALSE, 2, 1),
-(2, NOW(), 'Ça va être génial!', NULL, FALSE, 3, 1),
-(3, NOW(), 'J\'ai hâte de discuter avec vous.', NULL, FALSE, 1, 2),
-(4, NOW(), 'Attention aux centaures!', NULL, FALSE, 4, 3),
-(5, NOW(), 'Quelqu\'un a besoin de balais?', NULL, FALSE, 5, 4),
-(6, NOW(), 'Je dois acheter un nouveau chaudron.', NULL, FALSE, 2, 5);
-
-
--- Ajout de lignes supplémentaires pour les catégories
-INSERT INTO `category` (`id`, `name`, `description`, `created_at`) VALUES
-(11, 'Les Serres de Botanique', 'Lieu d\'étude des plantes magiques.', NOW()),
-(12, 'La Tour d\'Astronomie', 'Tour utilisée pour les cours d\'astronomie.', NOW()),
-(13, 'Le Bureau de Dumbledore', 'Bureau du directeur de Poudlard.', NOW()),
-(14, 'La Bibliothèque', 'Endroit où sont conservés tous les livres de Poudlard.', NOW()),
-(15, 'Le Pré-au-Lard', 'Seul village entièrement sorcier de Grande-Bretagne.', NOW()),
-(16, 'La Salle de Potions', 'Salle où se déroulent les cours de potions.', NOW()),
-(17, 'La Volière', 'Lieu où sont gardés les hiboux et autres oiseaux.', NOW()),
-(18, 'Le Cours de Métamorphose', 'Salle de classe dédiée à l\'étude de la métamorphose.', NOW()),
-(19, 'Le Bureau de McGonagall', 'Bureau de la directrice de Gryffondor.', NOW()),
-(20, 'Le Terrain de Duel', 'Endroit réservé aux duels magiques.', NOW());
-
+-- Insertion des commentaires --
+INSERT INTO `comment` (`created_at`, `content`, `picture`, `is_modified`, `id_user`, `id_topic`) VALUES
+(NOW(), 'Bienvenue à tous les nouveaux membres!', 'comment1.jpg', FALSE, 1, 1),
+(NOW(), 'Merci de respecter les règles pour une bonne ambiance sur le forum.', 'comment2.jpg', FALSE, 2, 2),
+(NOW(), 'J\'ai une suggestion pour améliorer la section fanfictions.', 'comment3.jpg', FALSE, 3, 3),
+(NOW(), 'Je suis super excité pour la nouvelle série HBO!', 'comment4.jpg', FALSE, 1, 4),
+(NOW(), 'Personnellement, j\'ai trouvé "L\'Enfant Maudit" plutôt décevant.', 'comment5.jpg', FALSE, 2, 5),
+(NOW(), 'Voici ma liste de fanfictions préférées sur AO3.', 'comment6.jpg', FALSE, 3, 6),
+(NOW(), 'Je pense que Dumbledore avait ses raisons, mais c\'est discutable.', 'comment7.jpg', FALSE, 1, 7),
+(NOW(), 'Hâte de voir les matchs de quidditch cette saison!', 'comment8.jpg', FALSE, 2, 8),
+(NOW(), 'Emma Watson est fantastique dans tous ses rôles.', 'comment9.jpg', FALSE, 3, 9),
+(NOW(), 'J\'ai ce livre et il est génial! Je le recommande.', 'comment10.jpg', FALSE, 1, 10),
+(NOW(), 'Qui est partant pour une rencontre à Paris le mois prochain?', 'comment11.jpg', FALSE, 2, 11),
+(NOW(), 'Cette fanvid sur Les Maraudeurs est incroyablement bien faite!', 'comment12.jpg', FALSE, 3, 12),
+(NOW(), 'Vraiment triste que le Défi des Sorciers ferme.', 'comment13.jpg', FALSE, 1, 13),
+(NOW(), 'Je serais intéressé par un correspondant anglophone. Qui est partant?', 'comment14.jpg', FALSE, 2, 14);
