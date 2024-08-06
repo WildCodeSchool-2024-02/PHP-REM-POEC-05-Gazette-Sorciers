@@ -3,8 +3,8 @@ const notificationButton = document.getElementById("notification-button");
 const sessionId = document.getElementById("session_id");
 
 async function fetchAndDisplayNotifications() {
-        const notifications = await fetchNotifications(sessionId.value);
-        displaynotifications(notifications);
+    const notifications = await fetchNotifications(sessionId.value);
+    displaynotifications(notifications);
 }
 
 notificationButton.addEventListener('mouseenter', fetchAndDisplayNotifications);
@@ -33,21 +33,24 @@ function displaynotifications(notifications) {
         notificationElement.appendChild(nameSpan);
 
         const deleteSpan = document.createElement('span');
-        deleteSpan.textContent = "supprimer";
+        deleteSpan.textContent = "Supprimer";
+        deleteSpan.style.fontFamily = 'Arial, sans-serif';
+        deleteSpan.style.fontWeight = 'bold';
+        deleteSpan.style.cursor = 'pointer';
         deleteSpan.className = 'notification-delete';
         deleteSpan.style.float = 'right';
-        deleteSpan.setAttribute("onclick",`deleteNotification(${notification.idNotif});`);
+        deleteSpan.setAttribute("onclick", `deleteNotification(${notification.idNotif});`);
         notificationElement.appendChild(deleteSpan);
-        
+
         notificationMenu.appendChild(notificationElement);
     });
 }
 
-async function deleteNotification(idNotif){
+async function deleteNotification(idNotif) {
     try {
         const response = await fetch(`/notification/delete?id=${encodeURIComponent(idNotif)}`);
         const deleted = await response.json();
-        if(deleted === 'OK'){
+        if (deleted === 'OK') {
             var notifElement = document.getElementById(idNotif);
             notifElement.classList.add("hidden");
         }
