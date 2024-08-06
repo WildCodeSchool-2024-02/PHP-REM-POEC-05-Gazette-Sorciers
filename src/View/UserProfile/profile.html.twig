@@ -14,7 +14,7 @@
                 class="profile-picture"
                 {% if user.profile_picture == null  or user.profile_picture=='' %}                 
                     src="/assets/images/default-2.jpg"
-                {% else if user.profile_picture == '/assets/images/default-2.jpg' or user.profile_picture == '/assets/images/default-1.jpg' %}
+                {% elseif user.profile_picture == '/assets/images/default-2.jpg' or user.profile_picture == '/assets/images/default-1.jpg' %}
                     src="{{ user.profile_picture}}"
                 {% else %}
                     src="{{ "/upload/" ~ user.profile_picture}}"
