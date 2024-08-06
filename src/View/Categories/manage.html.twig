@@ -1,0 +1,49 @@
+{% extends 'layout.html.twig' %} {% block stylesheet %}<link
+    rel="stylesheet"
+    href="/assets/css/manageCategory.css"
+/>{% endblock %} {% block title %}Gérer les catégories{% endblock %} {% block
+content %}
+<div class="manage-categories">
+    <h1>Gérer les catégories</h1>
+    <section class="categories">
+        {% for category in categories %}
+        <article class="category">
+            <img
+                class="avatar"
+                src="{{ category.picture ? '/upload/' ~ category.picture}}"
+            />
+            <div class="category-content">
+                <h2 class="titre">
+                    <a href="/topics?id={{ category.id }}">
+                        {{ category.name }}</a
+                    >
+                </h2>
+                <p class="description">{{ category.description }}</p>
+            </div>
+            <div class="actions">
+                <form
+                    action="/categories/edit?id={{ category.id }}"
+                    method="post"
+                    class="edit-form"
+                >
+                    <input type="hidden" name="id" value="{{ category.id }}" />
+                    <button type="submit" class="edit-button">Modifier</button>
+                </form>
+                <form
+                    action="/categories/delete"
+                    method="post"
+                    class="delete-form"
+                >
+                    <input type="hidden" name="id" value="{{ category.id }}" />
+                    <button type="submit" class="delete-button">
+                        Supprimer
+                    </button>
+                </form>
+            </div>
+        </article>
+        {% else %}
+        <p>Aucune catégorie trouvée.</p>
+        {% endfor %}
+    </section>
+</div>
+{% endblock %}

@@ -1,56 +1,55 @@
-
 .component {
-  width: 80%;
-  margin: 20px auto;
+    width: 80%;
+    margin: 20px auto;
 }
 
 .comment {
-  display: flex;
-  align-items: flex-start;
-  margin: 0;
-  padding: 15px;
-  background-color: #f6eeda;
-  max-height: 300px;
-  border-bottom: black solid;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    padding: 15px;
+    background-color: #f6eeda;
+    max-height: 300px;
+    border-bottom: black solid;
 }
 
 .comment-show {
-  width: 70%;
+    width: 70%;
 }
 .comment .comment-part-1 {
-  width: 15%;
-  text-align: center;
-  padding-right: 10px;
-  border-right: 1px solid #ccc;
+    width: 15%;
+    text-align: center;
+    padding-right: 10px;
+    border-right: 1px solid #ccc;
 }
 .comment .comment-part-1 .date {
-  font-size: 0.8rem;
-  color: #666;
+    font-size: 0.8rem;
+    color: #666;
 }
 .comment .comment-part-1 .author {
-  font-size: 1rem;
-  color: #666;
+    font-size: 1rem;
+    color: #666;
 }
 .comment .comment-part-1 img.avatar {
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
 }
 
 .comment .comment-part-2 {
-  width: 50%;
-  padding-left: 20px;
+    width: 50%;
+    padding-left: 20px;
 }
 
 .comment .comment-part-2 .description {
-  font-size: 1rem;
-  margin-bottom: 10px;
-  color: #333;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #333;
 }
 
 .picture-comment {
-  max-height: 200px;
-  width: auto;
+    max-height: 200px;
+    width: auto;
 }
 
 .form-center {
@@ -93,16 +92,20 @@
     cursor: pointer;
 }
 
-label input[type='file'] {
+label input[type="file"] {
     display: none;
 }
 
 label span {
     cursor: pointer;
-    background: linear-gradient(to bottom, rgb(255, 196, 0) 0%, rgb(68, 44, 0) 100%);
+    background: linear-gradient(
+        to bottom,
+        rgb(255, 196, 0) 0%,
+        rgb(68, 44, 0) 100%
+    );
     font: 13pt Tahoma;
     text-shadow: -1px -1px 0 rgb(68, 50, 0);
-    color: #FFF;
+    color: #fff;
     border: 2px solid rgb(238, 174, 0);
     border-radius: 4px;
     padding: 10px 20px;
@@ -122,6 +125,7 @@ label span:active {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 1.6rem;
 }
 
 .comment-submit {
@@ -137,7 +141,11 @@ label span:active {
     font-weight: 700;
     color: #313133;
     background: #c99a34;
-    background: linear-gradient(90deg, rgb(230, 223, 129) 0%, rgb(209, 168, 79) 100%);
+    background: linear-gradient(
+        90deg,
+        rgb(230, 223, 129) 0%,
+        rgb(209, 168, 79) 100%
+    );
     border: none;
     border-radius: 1000px;
     box-shadow: 12px 12px 24px rgba(209, 179, 79, 0.64);
@@ -155,7 +163,7 @@ label span:active {
 }
 
 .comment-submit::before {
-    content: '';
+    content: "";
     border-radius: 1000px;
     min-width: calc(300px + 12px);
     min-height: calc(60px + 12px);
@@ -175,7 +183,7 @@ label span:active {
 }
 
 .comment-submit::after {
-    content: '';
+    content: "";
     width: 30px;
     height: 30px;
     border-radius: 100%;
@@ -192,19 +200,6 @@ label span:active {
 .comment-submit:focus::after {
     animation: none;
     display: none;
-}
-
-@keyframes ring {
-    0% {
-        width: 30px;
-        height: 30px;
-        opacity: 1;
-    }
-    100% {
-        width: 100px;
-        height: 100px;
-        opacity: 0;
-    }
 }
 
 .comment-add {
@@ -231,7 +226,7 @@ label span:active {
     }
 
     .picture-comment {
-      max-height: 150px;
-      width: auto;
+        max-height: 150px;
+        width: auto;
     }
 }

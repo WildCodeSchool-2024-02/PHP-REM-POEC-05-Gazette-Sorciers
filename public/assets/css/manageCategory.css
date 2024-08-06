@@ -1,0 +1,127 @@
+.manage-categories {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.manage-categories h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    background-color: #f9f9f9;
+    padding: 10px;
+    color: #de9c45;
+    border-radius: 8px;
+}
+
+.categories {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.category {
+    background-color: #f9f9f9;
+    color: #333;
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+.category img.avatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: 100%;
+    max-width: 180px;
+    object-fit: cover;
+}
+.category-content {
+    flex-grow: 1;
+    text-align: left;
+    margin-left: 200px;
+}
+
+.category-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.category-content p {
+    font-size: 1rem;
+    color: #666;
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.edit-button,
+.delete-button {
+    background-color: #000;
+    color: #de9c45;
+    border: 1px solid #de9c45;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+    background-color: #de9c45;
+    color: #000;
+}
+
+.delete-button {
+    border-color: #de9c45;
+}
+
+.delete-button:hover {
+    border-color: #de9c45;
+}
+
+@media screen and (max-width: 960px) {
+    .manage-categories h1 {
+        font-size: 1.5rem;
+    }
+
+    .categories {
+        padding: 0 1rem;
+    }
+
+    .category {
+        padding: 0.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+        position: static;
+    }
+
+    .actions {
+        position: static;
+        margin-top: 1rem;
+        gap: 1rem;
+    }
+
+    .edit-button,
+    .delete-button {
+        font-size: 0.9rem;
+    }
+    .category img.avatar {
+        max-width: 120px;
+    }
+
+    .category-content {
+        margin-left: 0;
+    }
+}

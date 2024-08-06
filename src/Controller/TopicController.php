@@ -22,8 +22,8 @@ class TopicController extends AbstractController
     {
         $topicManager = new TopicManager();
         $userManager = new UserManager();
-
-        $topics = $topicManager->selectAllByCategory($id);
+        $categoryId = (int) $id;
+        $topics = $topicManager->selectAllByCategory($categoryId);
         $topicUsers = [];
         foreach ($topics as $topic) {
             $topicUsers[$topic['id']] = $userManager->selectOneById($topic['id_user']);

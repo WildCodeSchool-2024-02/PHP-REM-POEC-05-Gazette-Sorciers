@@ -59,6 +59,7 @@ class CommentManager extends AbstractManager
 
         return $statement->fetchAll();
     }
+
     public function giveToAnonymous($id): int
     {
         $statement = $this->pdo->prepare("UPDATE " . static::TABLE .
@@ -69,11 +70,29 @@ class CommentManager extends AbstractManager
         return (int)$statement->rowCount();
     }
 
-    public function selectByUserId($id)
+    public function getLastComments($limit = 5)
     {
-        $statement = $this->pdo->prepare("SELECT * FROM " . static::TABLE . " WHERE id_user=:id");
-        $statement->bindValue('id', $id, \PDO::PARAM_INT);
+        $sql = "
+        SELECT c.content AS comment_content, c.created_at AS comment_date, 
+               u.name AS user_name, u.lastname AS user_lastname, 
+               t.title AS topic_title, t.id AS topic_id,
+               cat.name AS category_name, cat.id AS category_id
+        FROM comment c
+        JOIN user u ON c.id_user = u.id
+        JOIN topic t ON c.id_topic = t.id
+            JOIN category cat ON t.id_category = cat.id
+        ORDER BY c.created_at DESC
+        LIMIT " . intval($limit);
+
+        $statement = $this->pdo->prepare($sql);
         $statement->execute();
-        return $statement->fetchAll();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteByTopic(int $topicId): void
+    {
+        $statement = $this->pdo->prepare("DELETE FROM " . self::TABLE . " WHERE id_topic = :topicId");
+        $statement->bindValue('topicId', $topicId, PDO::PARAM_INT);
+        $statement->execute();
     }
 }

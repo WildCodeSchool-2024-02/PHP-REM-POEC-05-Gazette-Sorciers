@@ -1,4 +1,3 @@
-
 .index {
     display: flex;
     flex-wrap: wrap;
@@ -16,7 +15,7 @@
     text-align: center;
 }
 .header-image1 {
-    height: 200px;
+    height: 150px;
 }
 .header-image2 {
     padding-top: 25vh;
@@ -40,33 +39,40 @@ header img {
     padding: 1rem;
     box-sizing: border-box;
     border-radius: 10px;
-    height: 40vh;
+    height: max-content;
 }
 
 .category {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     background-color: var(--text-color);
     border-radius: 10px;
     padding: 1rem;
     margin-bottom: 1rem;
+    position: relative;
+    overflow: hidden;
 }
 
-.category img.avatar {
-    border-radius: 10px;
-    margin-right: 1rem;
+.category .avatar-index {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: 100%;
+    max-width: 180px;
+    border-radius: 10px 0 0 10px;
+    object-fit: cover;
 }
 
 .category-content {
-    text-align: center;
     flex-grow: 1;
     color: var(--content-text-color);
+    margin-left: 200px;
 }
 
 .titre,
 .description {
     margin: 0;
-    color: var(--content-text-color);
 }
 
 .titre {
@@ -77,11 +83,13 @@ header img {
 .description {
     font-size: 1rem;
     font-weight: 300;
+    color: black;
 }
 
 .category a {
     color: var(--content-text-color);
     text-decoration: none;
+    font-size: 2rem;
 }
 .banner {
     background: repeat-y;
@@ -106,12 +114,10 @@ header img {
         0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-
-
 @media screen and (max-width: 960px) {
     .index {
         flex-direction: column;
-        margin-top: 5rem ;
+        margin-top: 5rem;
     }
 
     .categories,
@@ -131,9 +137,154 @@ header img {
     .header-image2 {
         padding-top: 4vh;
     }
+    .category-content {
+        margin-left: 0;
+    }
+
+    .category .avatar-index {
+        max-width: 120px;
+    }
 }
 @media screen and (max-width: 730px) {
     .index {
         padding: 0 2rem;
+    }
+}
+
+/* commentaires index  */
+
+.latest-messages ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.latest-messages li {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+.latest-messages li strong,
+a {
+    font-size: 1.4rem;
+    color: #333;
+}
+
+.latest-messages a {
+    color: var(--content-text-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.latest-messages a:hover {
+    text-decoration: underline;
+}
+.latest-messages p {
+    font-size: 1rem;
+    color: #333;
+}
+.latest-messages small {
+    font-size: 0.875rem;
+    color: #999;
+}
+
+.cat-name {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+/* edit catégories */
+.edit-category {
+    display: block;
+    margin: 2rem auto;
+    padding: 2rem;
+    max-width: 600px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.edit-category h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    color: #de9c45;
+}
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.edit-form .form-group {
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.edit-form label {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.edit-form input[type="text"],
+.edit-form textarea {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+}
+
+.edit-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.edit-form input[type="file"] {
+    border: none;
+}
+
+.current-image {
+    display: block;
+    margin-top: 1rem;
+    max-width: 100%;
+    border-radius: 0.5rem;
+}
+
+.submit-button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.2rem;
+    color: #000;
+    background-color: #de9c45;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    max-width: 15rem;
+}
+
+.submit-button:hover {
+    background-color: #000;
+    color: #de9c45;
+}
+
+@media screen and (max-width: 960px) {
+    .edit-category {
+        padding: 1rem;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 730px) {
+    .edit-category {
+        padding: 1rem;
+        margin: 1rem;
+    }
+    .submit-button {
+        font-size: 1rem;
     }
 }

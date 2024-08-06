@@ -29,14 +29,20 @@ class TopicManager extends AbstractManager
     /**
      * Get all row from one category.
      */
-    public function selectAllByCategory(string $id): array
+    public function selectAllByCategory(int $categoryId): array
     {
-
-        $statement = $this->pdo->prepare("SELECT * FROM " . static::TABLE . " WHERE id_category=:id");
-        $statement->bindValue('id', $id, \PDO::PARAM_INT);
+        $statement = $this->pdo->prepare("SELECT * FROM " . self::TABLE . " WHERE id_category = :categoryId");
+        $statement->bindValue(':categoryId', $categoryId, PDO::PARAM_INT);
         $statement->execute();
 
-        return $statement->fetchAll();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteByCategory(int $categoryId): void
+    {
+        $statement = $this->pdo->prepare("DELETE FROM " . self::TABLE . " WHERE id_category = :categoryId");
+        $statement->bindValue('categoryId', $categoryId, PDO::PARAM_INT);
+        $statement->execute();
     }
 
     public function giveToAnonymous($id): int
@@ -47,13 +53,5 @@ class TopicManager extends AbstractManager
         $statement->bindValue('id', $id, PDO::PARAM_INT);
         $statement->execute();
         return $statement->rowCount();
-    }
-
-    public function selectByUserId($id)
-    {
-        $statement = $this->pdo->prepare("SELECT * FROM " . static::TABLE . " WHERE id_user=:id");
-        $statement->bindValue('id', $id, \PDO::PARAM_INT);
-        $statement->execute();
-        return $statement->fetchAll();
     }
 }

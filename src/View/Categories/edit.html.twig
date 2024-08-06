@@ -1,14 +1,54 @@
-{% extends 'layout.html.twig' %}
+{% extends 'layout.html.twig' %} {% block stylesheet %}
+<link rel="stylesheet" href="/assets/css/_categories.css" />
+<link rel="stylesheet" href="/assets/css/_auth.css" />
 
-{% block stylesheet %}
-    <link rel="stylesheet" href="/assets/css/_categories.css" />
-    <link rel="stylesheet" href="/assets/css/_form.css" />
-    <link rel="stylesheet" href="/assets/css/_auth.css">
+{% endblock %} {% block title %}Modifier une catégorie{% endblock %} {% block
+content %}
+<div class="edit-category">
+    <h1>Modifier une catégorie</h1>
+    <form
+        action="/categories/edit"
+        method="post"
+        enctype="multipart/form-data"
+        class="edit-form"
+    >
+        <input type="hidden" name="id" value="{{ category.id }}" />
+        <input
+            type="hidden"
+            name="current_picture"
+            value="{{ category.picture }}"
+        />
+        <div class="form-group">
+            <label for="name">Nom :</label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                value="{{ category.name }}"
+                required
+            />
+        </div>
 
-{% endblock %}
+        <div class="form-group">
+            <label for="description">Description :</label>
+            <textarea id="description" name="description" required>{{
+                category.description
+            }}</textarea>
+        </div>
 
-{% block content %}
-    <h1>Modification de la catégorie : {{ category.name }}</h1>
-    {% include '/Categories/_form.html.twig' %}
-    <a href="/categories/show?id={{ category.id }}">Retour</a>
+        <div class="form-group">
+            <label for="picture">Image :</label>
+            <input type="file" id="picture" name="picture" />
+            {% if category.picture %}
+            <img
+                src="{{ category.picture ? '/upload/' ~ category.picture}}"
+                alt="Image actuelle"
+                class="current-image"
+            />
+            {% endif %}
+        </div>
+
+        <button type="submit" class="submit-button">Mettre à jour</button>
+    </form>
+</div>
 {% endblock %}

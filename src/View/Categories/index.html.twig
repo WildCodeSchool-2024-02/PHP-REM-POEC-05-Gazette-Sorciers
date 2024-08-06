@@ -14,33 +14,70 @@
 </div>
 
 <div class="index">
-  
-<section class="categories">
-    <header class="categories-header">
-        <img src="/assets/images/catégories.png" alt="Catégories" class="header-image1"></header>
-	{% for category in categories %}
-		<article class="category">
-			<img class="avatar" src="https://picsum.photos/100">
+    <section class="categories">
+        <header class="categories-header">
+            <img
+                src="/assets/images/categories.png"
+                alt="Catégories"
+                class="header-image1"
+            />
+        </header>
+        {% for category in categories %}
+        <article class="category">
+            <img
+                class="avatar-index"
+                src="{{ category.picture ? '/upload/' ~ category.picture}}"
+            />
             <div class="category-content">
-            <h2 class="titre">
-				<a href="/topics?id={{ category.id }}">
-					{{ category.name }}</a>
-			</h2>
-			<p class="description">{{ category.description }}</p>
+                <h2 class="titre">
+                    <a href="/topics?id={{ category.id }}">
+                        {{ category.name }}</a
+                    >
+                </h2>
+                <p class="description">{{ category.description }}</p>
             </div>
-		</article>
-	{% else %}
-		<article class="category">C'est vide 🤦</article>
-	{% endfor %}
-</section>
-<section class= "last-section">
-    <header class="messages-header">
-        <img src="/assets/images/derniers-messages.png" alt="Derniers messages" class="header-image2">
-    </header>
-<aside class="latest-messages">
-    
-        <article class="category-content">C'est vide 🤦</article>
+        </article>
+        {% else %}
+        <article class="category">C'est vide 🤦</article>
+        {% endfor %}
+    </section>
+    <section class="last-section">
+        <header class="messages-header">
+            <img
+                src="/assets/images/lastcomments.png"
+                alt="Derniers commentaires"
+                class="header-image2"
+            />
+        </header>
+        <aside class="latest-messages">
+            {% if comments is not empty %}
+            <ul>
+                {% for comment in comments %}
+                <li>
+                    <strong
+                        >{{ comment.user_name }}
+                        {{ comment.user_lastname }}</strong
+                    >
+                    sur
+                    <a href="topics/show?id={{ comment.topic_id }}">{{
+                        comment.topic_title
+                    }}</a
+                    ><br />
+                    <a
+                        class="cat-name"
+                        href="topics?id={{ comment.category_id }}"
+                        >{{ comment.category_name }}</a
+                    ><br />
 
-</aside>
-</section>
+                    <p>{{ comment.comment_content }}</p>
+                    <br />
+                    <small>Posté le {{ comment.comment_date }}</small>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>Aucun commentaire n'a été publié récemment.</p>
+            {% endif %}
+        </aside>
+    </section>
 </div>

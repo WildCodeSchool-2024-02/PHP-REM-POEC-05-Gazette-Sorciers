@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\CategoryManager;
+use App\Model\CommentManager;
 
 class HomeController extends AbstractController
 {
@@ -13,6 +14,13 @@ class HomeController extends AbstractController
     {
         $categoriesManager = new CategoryManager();
         $categories = $categoriesManager->selectAll('name');
-        return $this->twig->render('Home/index.html.twig', ['categories' => $categories]);
+
+        $commentManager = new CommentManager();
+        $comments = $commentManager->getLastComments(5);
+
+        return $this->twig->render('Home/index.html.twig', [
+            'categories' => $categories,
+            'comments' => $comments
+        ]);
     }
 }

@@ -5,3 +5,5 @@
 db.php
 .idea
 .vscode
+/public/upload/*
+!/public/upload/.gitkeep
