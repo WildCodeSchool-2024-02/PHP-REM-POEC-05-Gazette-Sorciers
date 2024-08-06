@@ -14,7 +14,7 @@ class TopicManager extends AbstractManager
     public function insert(array $topic): int
     {
         $statement = $this->pdo->prepare("INSERT INTO " . self::TABLE .
-        "(`title` ,`created_at`, `content`, `picture`, `id_category`, `id_user`)
+            "(`title` ,`created_at`, `content`, `picture`, `id_category`, `id_user`)
         VALUES (:title, :created_at, :content, :picture, :id_category, :id_user)");
         $statement->bindValue('title', $topic['title'], PDO::PARAM_STR);
         $statement->bindValue('created_at', $topic['created_at'], PDO::PARAM_STR);
@@ -36,6 +36,24 @@ class TopicManager extends AbstractManager
         $statement->bindValue('id', $id, \PDO::PARAM_INT);
         $statement->execute();
 
+        return $statement->fetchAll();
+    }
+
+    public function giveToAnonymous($id): int
+    {
+        $statement = $this->pdo->prepare("UPDATE " . static::TABLE .
+        " SET id_user=" . ANONYMOUS .
+        " WHERE id_user=:id");
+        $statement->bindValue('id', $id, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->rowCount();
+    }
+
+    public function selectByUserId($id)
+    {
+        $statement = $this->pdo->prepare("SELECT * FROM " . static::TABLE . " WHERE id_user=:id");
+        $statement->bindValue('id', $id, \PDO::PARAM_INT);
+        $statement->execute();
         return $statement->fetchAll();
     }
 }
