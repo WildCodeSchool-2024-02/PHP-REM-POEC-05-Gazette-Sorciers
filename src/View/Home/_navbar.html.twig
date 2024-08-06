@@ -4,7 +4,7 @@
             ><img src="\assets\images\logo1.png" alt="La Gazette du Sorcier"
         /></a>
     </div>
-
+<input type="hidden" id="session_id" value="{{user.id}}">
     <div class="search-container">
         <form id="search-form" action="" method="get">
             <input
@@ -32,10 +32,21 @@
             </div>
         </div>
         {% endif %}
+        <div class="dropdown" id="notification-button">
+            <button class="dropdown-toggle">
+                <i
+                    class="fa-solid fa-bell"
+                    class="icon-button"
+                ></i>
+            </button>
+            <div class="dropdown-menu" id="notification-dropdown">
+            </div>
+        </div>
 
-        <a href="#" class="icon-button">
-            <i class="fa-solid fa-bell"></i>
-        </a>
+
+
+
+
         {% if user is defined and user.id is not null %}
         <a href="/profile" class="icon-button">
             <i class="fa-solid fa-user"></i>

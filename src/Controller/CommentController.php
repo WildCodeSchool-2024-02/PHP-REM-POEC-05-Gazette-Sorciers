@@ -8,6 +8,7 @@ use App\Model\TopicManager;
 use App\Model\CommentManager;
 use App\Model\PrivilegeManager;
 use App\Controller\AbstractController;
+use App\Model\NotificationManager;
 use App\Service\Upload;
 
 class CommentController extends AbstractController
@@ -69,7 +70,11 @@ class CommentController extends AbstractController
                 $commentManager = new CommentManager();
                 $commentManager->insert($comment);
 
-                header('Location: /topics/show?id=' . $comment['id_topic']);
+                $topicManager = new TopicManager();
+                $topic = $topicManager->selectOneById($comment['id_topic']);
+                $notificationManager = new NotificationManager();
+                $notificationManager->insert($topic['id_user'], $comment['id_topic'], $comment['created_at']);
+                header('Location: /topics/show?id=' . $comment['id_topic'],);
                 return null;
             }
         }
