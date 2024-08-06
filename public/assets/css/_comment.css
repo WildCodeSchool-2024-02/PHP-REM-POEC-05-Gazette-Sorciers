@@ -32,7 +32,7 @@
 }
 .comment .comment-part-1 img.avatar {
     border-radius: 50%;
-    width: 60px;
+    width: 50px;
     height: 60px;
 }
 
@@ -162,40 +162,6 @@ label span:active {
     transform: translateY(-6px);
 }
 
-.comment-submit::before {
-    content: "";
-    border-radius: 1000px;
-    min-width: calc(300px + 12px);
-    min-height: calc(60px + 12px);
-    border: 6px solid #d1b146;
-    box-shadow: 0 0 60px rgba(255, 230, 0, 0.64);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    transition: all 0.3s ease-in-out 0s;
-}
-
-.comment-submit:hover::before,
-.comment-submit:focus::before {
-    opacity: 1;
-}
-
-.comment-submit::after {
-    content: "";
-    width: 30px;
-    height: 30px;
-    border-radius: 100%;
-    border: 6px solid #caa94c;
-    position: absolute;
-    z-index: -1;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: ring 1.5s infinite;
-}
-
 .comment-submit:hover::after,
 .comment-submit:focus::after {
     animation: none;
@@ -226,7 +192,45 @@ label span:active {
     }
 
     .picture-comment {
-        max-height: 150px;
+        max-height: 100px;
         width: auto;
     }
+
+    .comment {
+        flex-direction: column;
+        align-items: flex-start;
+      
+    }
+    
+    .comment .comment-part-1 {
+        width: 100%;
+        padding-right: 0;
+        border-right: none;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        align-items: flex-start;
+    }
+
+    .comment .comment-part-1 img.avatar {
+        width: 40px;
+        height: 40px;
+    }
+
+    .comment .comment-part-2 {
+        width: 100%;
+        padding-left: 0;
+    }
+    
+    .comment .comment-part-2 .description {
+        font-size: 0.9rem;
+    }
+    .picture-comment {
+        max-height: 15vh; /* Maintenir la hauteur maximale */
+        width: auto; /* S'adapter à la largeur du conteneur */
+        object-fit: cover; /* Empêche l'image de dépasser tout en couvrant le conteneur */
+        border-radius: 5px; /* Garde les coins arrondis */
+
+    }
 }
+

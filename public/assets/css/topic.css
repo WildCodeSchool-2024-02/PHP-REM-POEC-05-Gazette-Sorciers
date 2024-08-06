@@ -1,3 +1,7 @@
+#conteneur-topic {
+    min-height: 50vh;
+}
+
 .topic-component {
     display: flex;
     justify-content: center;
@@ -27,8 +31,8 @@
 }
 .topic-card .author-info img {
     border-radius: 50%;
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     margin-bottom: 10px;
     object-fit: cover;
 }
@@ -39,7 +43,7 @@
 }
 
 .topic-card .message-content .title {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
     color: #333;
     margin-bottom: 10px;
@@ -58,7 +62,7 @@
 }
 
 .topic-card .message-content .picture {
-    max-width: 100%;
+    max-height: 50vh;
     margin-top: 10px;
     border-radius: 5px;
 }
@@ -68,7 +72,8 @@
     flex-direction: column;
     align-items: center;
     margin: 20px 0;
-    height: 50vh;
+    min-height: 50vh;
+    padding-bottom: 20px;
 }
 
 .topic-overview {
@@ -130,14 +135,11 @@
 
 .topic-picture {
     margin-top: 10px;
-    max-width: 100%;
+    max-width: 80%;
+    max-height: 50vh;
+    border-radius: 8px;
 }
 
-.topic-picture img {
-    max-width: 100%;
-    max-height: 200px;
-    border-radius: 10px;
-}
 .add-topic-button {
     display: inline-block;
     padding: 10px 20px;
@@ -167,6 +169,27 @@
     .user-image {
         margin-bottom: 20px;
         align-self: center;
+    }
+    .topic-card {
+        flex-direction: column;
+    }
+
+    .topic-card .author-info {
+        width: 100%;
+        padding-right: 0;
+        border-right: none;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+
+    .topic-card .message-content {
+        width: 100%;
+        padding-left: 0;
+    }
+
+    .topic-card .message-content .title {
+        font-size: 1.2rem;
     }
 }
 /* add form */

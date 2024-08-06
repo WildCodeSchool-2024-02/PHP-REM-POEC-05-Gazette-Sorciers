@@ -19,26 +19,37 @@ content %}
                     >
                 </h2>
                 <p class="description">{{ category.description }}</p>
-            </div>
-            <div class="actions">
-                <form
-                    action="/categories/edit?id={{ category.id }}"
-                    method="post"
-                    class="edit-form"
-                >
-                    <input type="hidden" name="id" value="{{ category.id }}" />
-                    <button type="submit" class="edit-button">Modifier</button>
-                </form>
-                <form
-                    action="/categories/delete"
-                    method="post"
-                    class="delete-form"
-                >
-                    <input type="hidden" name="id" value="{{ category.id }}" />
-                    <button type="submit" class="delete-button">
-                        Supprimer
-                    </button>
-                </form>
+
+                <div class="actions">
+                    <form
+                        action="/categories/edit?id={{ category.id }}"
+                        method="post"
+                        class="edit-form"
+                    >
+                        <input
+                            type="hidden"
+                            name="id"
+                            value="{{ category.id }}"
+                        />
+                        <button type="submit" class="edit-button">
+                            Modifier
+                        </button>
+                    </form>
+                    <form
+                        action="/categories/delete"
+                        method="post"
+                        class="delete-form"
+                    >
+                        <input
+                            type="hidden"
+                            name="id"
+                            value="{{ category.id }}"
+                        />
+                        <button type="submit" class="delete-button">
+                            Supprimer
+                        </button>
+                    </form>
+                </div>
             </div>
         </article>
         {% else %}

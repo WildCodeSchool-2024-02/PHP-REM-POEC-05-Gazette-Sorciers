@@ -8,11 +8,7 @@
 <div class="topic-component">
     <div class="topic-card">
         <div class="author-info">
-            {% if topicUser.picture is not null %}
-			<img class="picture" src="{{'/' ~ topicUser.picture}}">
-			{% else %}
-			<img class="picture" src="/assets/images/default-2.jpg">
-			{% endif %}
+			<img class="picture" src="{{'/upload/' ~ topicUser.profile_picture}}">
 			<p>Auteur: </p>
             <p>{{ topicUser.name }} {{ topicUser.lastname }}</p>
         </div>
@@ -21,7 +17,7 @@
             <div class="date">Posté le {{ topic.created_at|date("d M Y - H:i") }}</div>
             <div class="content">{{ topic.content }}</div>
             {% if topic.picture and topic.fileExist == true %}
-            <img class="picture" src="{{'/upload/' ~ topic.picture}}" alt="Image du topic">
+            <img class="topic-picture" src="{{'/upload/' ~ topic.picture}}" alt="Image du topic">
             {% endif %}
         </div>
     </div>
