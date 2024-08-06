@@ -32,6 +32,7 @@ class TopicController extends AbstractController
         return $this->twig->render('Topic/index.html.twig', [
             'topics' => $topics,
             'topicUsers' => $topicUsers,
+            'categoryId' => $categoryId,
         ]);
     }
 
