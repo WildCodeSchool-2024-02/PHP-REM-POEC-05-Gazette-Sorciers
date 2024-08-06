@@ -123,6 +123,9 @@ INSERT INTO `user` (`name`, `lastname`, `mail`, `created_at`, `password`, `descr
 ('Jean', 'Dupont', 'jean.dupont@gmail.com', NOW(), '$2a$12$gHS6NsmqYqBj6YHyY4T6yOOBXJoEC9L2AD1UWp5T0hxLJNXIivPLW', 'Grand fan de Harry Potter depuis l\'enfance.', 'profile1.jpg', 1),
 ('Marie', 'Durand', 'marie.durand@gmail.com', NOW(), '$2a$12$gHS6NsmqYqBj6YHyY4T6yOOBXJoEC9L2AD1UWp5T0hxLJNXIivPLW', 'Passionnée par les fanfictions et les théories sur Harry Potter.', 'profile2.jpg', 2),
 ('Paul', 'Martin', 'paul.martin@gmail.com', NOW(), '$2a$12$gHS6NsmqYqBj6YHyY4T6yOOBXJoEC9L2AD1UWp5T0hxLJNXIivPLW', 'J\'adore discuter des adaptations cinématographiques de Harry Potter.', 'profile3.jpg', 3);
+('Anonymous', 'Dupont', 'anonymous@gmail.com', NOW(), '$2a$12$gHS6NsmqYqBj6YHyY4T6yOOBXJoEC9L2AD1UWp5T0hxLJNXIivPLW', ' ', 'anonymous.png
+ ', 1),
+
 
 -- Insertion des sujets (topics)
 INSERT INTO `topic` (`title`, `created_at`, `content`, `picture`, `is_modified`, `id_category`, `id_user`) VALUES
