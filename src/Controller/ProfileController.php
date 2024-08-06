@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Model\UserManager;
 use Twig\Environment;
+use App\Service\Upload;
 
 class ProfileController extends AbstractController
 {
@@ -34,7 +35,10 @@ class ProfileController extends AbstractController
     }
     public function editProfile()
     {
-        $this->userModel = new UserManager();
+        $userModel = new UserManager();
+        $uploadService = new Upload();
+        $userId = $_SESSION['user']['id'];
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = $_POST['name'] ?? '';
             $lastname = $_POST['lastname'] ?? '';
@@ -42,16 +46,33 @@ class ProfileController extends AbstractController
             $password = $_POST['password'] ?? '';
             $description = $_POST['description'] ?? '';
 
-            if ($name && $lastname && $mail && $description) {
-                $this->userModel->updateUser($_SESSION['user']['id'], $name, $lastname, $mail, $password, $description);
-                // Ajouter un message flash
-                $_SESSION['flash_message'] = 'Votre profil a été mis à jour !';
+            $currentPp = $_POST['current_pp'] ?? '';
 
+            if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
+                $fileResponse = $uploadService->uploadFile($_FILES['profile_picture']);
+                if (is_string($fileResponse)) {
+                    $profilePicture = $fileResponse;
+                } else {
+                    $error = 'Erreur lors du téléchargement de la photo de profil';
+                    return $this->twig->render(
+                        'UserProfile/editProfile.html.twig',
+                        ['error' => $error, 'user' => $userModel->selectOneById($userId)]
+                    );
+                }
+            } else {
+                $profilePicture = $currentPp;
+            }
+
+            // Mise à jour des informations utilisateur
+            if ($name && $lastname && $mail && $description) {
+                $userModel->updateUser($userId, $name, $lastname, $mail, $password, $description, $profilePicture);
+                $_SESSION['flash_message'] = 'Votre profil a été mis à jour !';
                 header('Location: /profile');
                 exit();
             }
         }
 
-        return $this->twig->render('UserProfile/editProfile.html.twig');
+        $user = $userModel->selectOneById($userId);
+        return $this->twig->render('UserProfile/editProfile.html.twig', ['user' => $user]);
     }
 }

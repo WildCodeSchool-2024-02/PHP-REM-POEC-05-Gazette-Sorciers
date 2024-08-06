@@ -6,10 +6,13 @@ use App\Model\PrivilegeManager;
 use App\Model\RecaptchaManager;
 use App\Model\UserManager;
 use App\Model\TokenManager;
+use App\Model\TopicManager;
+use App\Model\CommentManager;
 use DateTime;
 use PDO;
 use mail\mail\mail;
 use PHPMailer\PHPMailer\PHPMailer;
+use App\Service\Upload;
 
 class UserController extends AbstractController
 {
@@ -65,6 +68,17 @@ class UserController extends AbstractController
             $password = $_POST['password'] ?? '';
             $profilePicture = $_POST['profile_picture'] ?? $defaultImages[array_rand($defaultImages)];
 
+            if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
+                $uploadService = new Upload();
+                $fileResponse = $uploadService->uploadFile($_FILES['profile_picture']);
+
+                if (is_string($fileResponse)) {
+                    $profilePicture = $fileResponse;
+                } else {
+                    $error = 'Erreur lors du téléchargement de la photo de profil';
+                    return $this->twig->render('Auth/register.html.twig', ['error' => $error]);
+                }
+            }
             // Vérification et validation des données
             if ($name && $lastname && $mail && $password) {
                 $userManager = new UserManager();
@@ -135,7 +149,6 @@ class UserController extends AbstractController
 
     public function listUsers()
     {
-
         $this->checkAdminPrivilege();
         $userManager = new UserManager();
         $users = $userManager->getAllUsers();
@@ -154,11 +167,16 @@ class UserController extends AbstractController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id'];
             $userManager = new UserManager();
+            $commentManager = new CommentManager();
+            $topicManager = new TopicManager();
+            $commentManager->giveToAnonymous($id);
+            $topicManager->giveToAnonymous($id);
             $userManager->deleteUserById($id);
             header('Location: /users');
             exit();
         }
         header('Location: /users');
+
         exit();
     }
 
@@ -271,7 +289,7 @@ class UserController extends AbstractController
         $mail->isHTML(true);
         $mail->setFrom(SEND_FROM, SEND_FROM_NAME);
         $mail->addReplyTo(SMTP_USER);
-        $mail->Subject = 'Demande de réinitialisation du mot de passe';
+        $mail->Subject = 'Demande de changement de votre mot de passe';
         $mail->msgHTML($this->twig->render('UserProfile/Reset.html.twig', [
             'name' => $user['name'],
             'idUser' => $id,

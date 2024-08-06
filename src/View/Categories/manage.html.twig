@@ -8,9 +8,17 @@ content %}
     <section class="categories">
         {% for category in categories %}
         <article class="category">
+            <img
+                class="avatar"
+                src="{{ category.picture ? '/upload/' ~ category.picture}}"
+            />
             <div class="category-content">
-                <h2>{{ category.name }}</h2>
-                <p>{{ category.description }}</p>
+                <h2 class="titre">
+                    <a href="/topics?id={{ category.id }}">
+                        {{ category.name }}</a
+                    >
+                </h2>
+                <p class="description">{{ category.description }}</p>
             </div>
             <div class="actions">
                 <form

@@ -13,7 +13,11 @@ content %}
         class="edit-form"
     >
         <input type="hidden" name="id" value="{{ category.id }}" />
-
+        <input
+            type="hidden"
+            name="current_picture"
+            value="{{ category.picture }}"
+        />
         <div class="form-group">
             <label for="name">Nom :</label>
             <input
@@ -33,11 +37,11 @@ content %}
         </div>
 
         <div class="form-group">
-            <label for="image">Image :</label>
-            <input type="file" id="image" name="image" />
-            {% if category.image %}
+            <label for="picture">Image :</label>
+            <input type="file" id="picture" name="picture" />
+            {% if category.picture %}
             <img
-                src="/path/to/images/{{ category.image }}"
+                src="{{ category.picture ? '/upload/' ~ category.picture}}"
                 alt="Image actuelle"
                 class="current-image"
             />
