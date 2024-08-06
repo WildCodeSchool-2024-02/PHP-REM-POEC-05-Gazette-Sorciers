@@ -44,22 +44,30 @@ header img {
 
 .category {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     background-color: var(--text-color);
     border-radius: 10px;
     padding: 1rem;
     margin-bottom: 1rem;
+    position: relative;
+    overflow: hidden;
 }
 
-.category img.avatar {
-    border-radius: 10px;
-    margin-right: 1rem;
+.category .avatar-index {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: 100%;
+    max-width: 180px;
+    border-radius: 10px 0 0 10px;
+    object-fit: cover;
 }
 
 .category-content {
-    text-align: center;
     flex-grow: 1;
     color: var(--content-text-color);
+    margin-left: 200px;
 }
 
 .titre,
@@ -128,6 +136,13 @@ header img {
 
     .header-image2 {
         padding-top: 4vh;
+    }
+    .category-content {
+        margin-left: 0;
+    }
+
+    .category .avatar-index {
+        max-width: 120px;
     }
 }
 @media screen and (max-width: 730px) {

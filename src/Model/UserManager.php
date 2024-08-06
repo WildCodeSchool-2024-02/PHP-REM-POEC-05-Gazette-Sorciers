@@ -117,13 +117,16 @@ class UserManager extends AbstractManager
         string $lastname,
         string $mail,
         string $password,
-        string $description
+        string $description,
+        ?string $profilePicture = null
     ) {
         $sql = "UPDATE " . self::TABLE . " SET name = :name, lastname = :lastname, 
-        mail = :mail, description = :description WHERE id = :id";
+        mail = :mail, description = :description, profile_picture = :profilePicture WHERE id = :id";
+
         if ($password) {
             $sql = "UPDATE " . self::TABLE . " SET name = :name, lastname = :lastname, 
-            mail = :mail, password = :password, description = :description WHERE id = :id";
+            mail = :mail, password = :password, description = :description, 
+            profile_picture = :profilePicture WHERE id = :id";
         }
 
         $statement = $this->pdo->prepare($sql);
@@ -131,6 +134,7 @@ class UserManager extends AbstractManager
         $statement->bindValue(':lastname', $lastname, PDO::PARAM_STR);
         $statement->bindValue(':mail', $mail, PDO::PARAM_STR);
         $statement->bindValue(':description', $description, PDO::PARAM_STR);
+        $statement->bindValue(':profilePicture', $profilePicture, PDO::PARAM_STR);
         $statement->bindValue(':id', $id, PDO::PARAM_INT);
         if ($password) {
             $hashedPassword = password_hash($password, PASSWORD_ARGON2I, [
@@ -142,6 +146,8 @@ class UserManager extends AbstractManager
         }
         $statement->execute();
     }
+
+
 
     public function updatePassword($id, $password)
     {

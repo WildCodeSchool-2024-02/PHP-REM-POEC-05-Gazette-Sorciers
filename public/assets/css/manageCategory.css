@@ -30,12 +30,21 @@
     display: flex;
     align-items: center;
     position: relative;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
-
+.category img.avatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: 100%;
+    max-width: 180px;
+    object-fit: cover;
+}
 .category-content {
     flex-grow: 1;
     text-align: left;
+    margin-left: 200px;
 }
 
 .category-content h2 {
@@ -107,5 +116,12 @@
     .edit-button,
     .delete-button {
         font-size: 0.9rem;
+    }
+    .category img.avatar {
+        max-width: 120px;
+    }
+
+    .category-content {
+        margin-left: 0;
     }
 }
